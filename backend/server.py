@@ -38,6 +38,19 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+class ChatMessage(BaseModel):
+    message: str
+    session_id: str
+
+class ChatResponse(BaseModel):
+    response: str
+    session_id: str
+
+class ChatHistoryItem(BaseModel):
+    role: str
+    content: str
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
