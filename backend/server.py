@@ -80,6 +80,82 @@ async def get_status_checks():
     
     return status_checks
 
+@api_router.post("/chat", response_model=ChatResponse)
+async def chat(chat_message: ChatMessage):
+    try:
+        # Get or create chat history for this session
+        session = await db.chat_sessions.find_one({"session_id": chat_message.session_id})
+        
+        if not session:
+            # Create new session
+            session = {
+                "session_id": chat_message.session_id,
+                "messages": [],
+                "created_at": datetime.now(timezone.utc)
+            }
+        
+        # System message for the chatbot
+        system_message = """You are a helpful AI assistant for Sanjaya - The Observer, 
+        an educational platform that connects children with caring observers who listen to them daily.
+        
+        Key information about Sanjaya:
+        - We provide a 5-minute daily listening session for children
+        - Children are paired with trained observers who patiently listen
+        - AI captures cues and patterns from conversations
+        - Principals review performance and guide parents
+        - The program helps children develop confidence and soft skills
+        - We have three main roles: Parents (for their children), Observers (who listen), and Principals (who manage)
+        - Everything is 100% private and secure with no recordings
+        
+        Answer questions about the program, explain how it works, help users understand which role 
+        is right for them, and provide information about the benefits. Be warm, friendly, and helpful."""
+        
+        # Initialize LLM chat
+        emergent_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not emergent_key:
+            raise HTTPException(status_code=500, detail="LLM key not configured")
+        
+        chat_instance = LlmChat(
+            api_key=emergent_key,
+            session_id=chat_message.session_id,
+            system_message=system_message
+        )
+        
+        # Use GPT-4o-mini for cost-effective responses
+        chat_instance.with_model("openai", "gpt-4o-mini")
+        
+        # Create user message
+        user_msg = UserMessage(text=chat_message.message)
+        
+        # Get response from LLM
+        response = await chat_instance.send_message(user_msg)
+        
+        # Save messages to database
+        session["messages"].append({
+            "role": "user",
+            "content": chat_message.message,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
+        session["messages"].append({
+            "role": "assistant",
+            "content": response,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
+        session["updated_at"] = datetime.now(timezone.utc).isoformat()
+        
+        # Update session in database
+        await db.chat_sessions.update_one(
+            {"session_id": chat_message.session_id},
+            {"$set": session},
+            upsert=True
+        )
+        
+        return ChatResponse(response=response, session_id=chat_message.session_id)
+        
+    except Exception as e:
+        logging.error(f"Error in chat endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing chat: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
