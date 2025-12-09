@@ -176,10 +176,12 @@ const Home = () => {
               </div>
             </div>
             <div className="order-1 md:order-2 flex justify-center">
-              <div className="w-80 h-80 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full flex items-center justify-center shadow-2xl">
-                <div className="w-72 h-72 bg-white rounded-full flex items-center justify-center text-6xl">
-                  👩‍🏫
-                </div>
+              <div className="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-200">
+                <img 
+                  src="/images/punam-jaiswal.jpg" 
+                  alt="Punam Jaiswal - Founder" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
