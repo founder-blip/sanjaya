@@ -193,10 +193,9 @@ const Home = () => {
       {/* Founder Section */}
       <section className="py-16 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Meet Our Founder</h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Meet Our Founder</h2>
-              <p className="text-xl text-blue-600 font-semibold mb-6">Founder and Former Principal</p>
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 With years of experience in education and understanding child psychology, Punam Ma'am, as Principal, brings a unique blend of empathy and expertise to every interaction.
               </p>
@@ -204,14 +203,15 @@ const Home = () => {
                 Her gentle approach and profound understanding of children's needs make her the ideal guide for your child's growth journey.
               </p>
             </div>
-            <div className="order-1 md:order-2 flex justify-center">
-              <div className="relative w-72 h-72 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="order-1 md:order-2 flex flex-col items-center">
+              <div className="relative w-64 h-64 rounded-full overflow-hidden shadow-2xl mb-6">
                 <img 
                   src="/images/punam-jaiswal.jpg" 
                   alt="Punam Jaiswal - Founder and Former Principal" 
                   className="w-full h-full object-cover"
                 />
               </div>
+              <p className="text-xl text-blue-600 font-semibold text-center">Founder and Former Principal</p>
             </div>
           </div>
         </div>
