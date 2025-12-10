@@ -66,13 +66,13 @@ const PrincipalLanding = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-indigo-50">
       <Navigation />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <Badge className="px-6 py-2 text-lg bg-purple-100 text-purple-700 border-2 border-purple-300 mb-6">
+          <Badge className="px-6 py-2 text-lg bg-blue-100 text-blue-700 border-2 border-blue-300 mb-6">
             For Educational Leaders
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6">
@@ -83,11 +83,11 @@ const PrincipalLanding = () => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <Button size="lg" className="bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all">
+            <Button size="lg" className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all">
               Partner With Us
               <ArrowRight className="ml-2" />
             </Button>
-            <Button size="lg" variant="outline" className="border-2 border-purple-400 text-purple-600 hover:bg-purple-50 px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all">
+            <Button size="lg" variant="outline" className="border-2 border-blue-500 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all">
               <Phone className="mr-2" />
               Request a Demo
             </Button>
