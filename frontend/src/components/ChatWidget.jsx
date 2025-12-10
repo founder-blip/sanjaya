@@ -94,7 +94,7 @@ const ChatWidget = ({ onClose }) => {
                 <div
                   className={`max-w-[80%] p-3 rounded-2xl ${
                     message.role === 'user'
-                      ? 'bg-blue-600 text-white rounded-br-none'
+                      ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-br-none'
                       : 'bg-white text-gray-800 rounded-bl-none shadow-md'
                   }`}
                 >
