@@ -125,7 +125,7 @@ const ChatWidget = ({ onClose }) => {
               <Button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white"
+                className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white"
               >
                 <Send className="w-5 h-5" />
               </Button>
