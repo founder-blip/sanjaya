@@ -58,18 +58,25 @@ const Navigation = () => {
               Home
             </Link>
             <Link
-              to="/observer"
+              to="/about"
               className="block text-gray-700 hover:text-blue-600 transition-colors font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              For Observers
+              About
             </Link>
             <Link
-              to="/principal"
+              to="/how-it-works"
               className="block text-gray-700 hover:text-blue-600 transition-colors font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              For Principals
+              How It Works
+            </Link>
+            <Link
+              to="/faq"
+              className="block text-gray-700 hover:text-blue-600 transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              FAQ
             </Link>
             <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full">
               Get Started
