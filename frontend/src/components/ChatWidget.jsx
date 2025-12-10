@@ -66,8 +66,8 @@ const ChatWidget = ({ onClose }) => {
 
   return (
     <div className="fixed bottom-8 right-8 w-96 max-w-[calc(100vw-2rem)] z-50 animate-in slide-in-from-bottom-4">
-      <Card className="shadow-2xl border-2 border-blue-200">
-        <CardHeader className="bg-blue-600 text-white p-4 rounded-t-lg">
+      <Card className="shadow-2xl border-2 border-indigo-200">
+        <CardHeader className="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white p-4 rounded-t-lg">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="font-bold text-lg">Sanjaya Assistant</h3>
