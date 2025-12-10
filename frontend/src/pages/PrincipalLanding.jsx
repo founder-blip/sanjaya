@@ -162,9 +162,9 @@ const PrincipalLanding = () => {
               { step: 4, title: 'Program Launch', description: 'Observers begin daily interactions with students, with full platform access for monitoring.' },
               { step: 5, title: 'Continuous Insights', description: 'Review AI-generated analytics, guide parents, and demonstrate measurable impact.' }
             ].map((item, index) => (
-              <Card key={index} className="border-2 border-purple-200 hover:border-purple-400 transition-all transform hover:scale-102">
+              <Card key={index} className="border-2 border-blue-200 hover:border-blue-400 transition-all transform hover:scale-102">
                 <CardContent className="p-6 flex items-center gap-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg flex-shrink-0">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg flex-shrink-0">
                     {item.step}
                   </div>
                   <div>
