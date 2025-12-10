@@ -234,7 +234,7 @@ const PrincipalLanding = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-purple-100 via-purple-50 to-blue-100">
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-100 via-blue-50 to-indigo-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
             Ready to Transform Your Institution?
@@ -243,11 +243,11 @@ const PrincipalLanding = () => {
             Join leading schools in providing exceptional holistic care for your students.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white px-12 py-6 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
+            <Button size="lg" className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-12 py-6 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
               Schedule a Demo
               <ArrowRight className="ml-2" />
             </Button>
-            <Button size="lg" variant="outline" className="border-2 border-purple-400 text-purple-600 hover:bg-purple-50 px-12 py-6 text-xl rounded-full shadow-lg">
+            <Button size="lg" variant="outline" className="border-2 border-blue-500 text-blue-600 hover:bg-blue-50 px-12 py-6 text-xl rounded-full shadow-lg">
               Download Brochure
             </Button>
           </div>
