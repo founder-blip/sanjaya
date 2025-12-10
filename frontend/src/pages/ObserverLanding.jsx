@@ -197,7 +197,7 @@ const ObserverLanding = () => {
       </section>
 
       {/* Application Process Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-purple-50 to-white">
+      <section className="py-20 px-4 bg-gradient-to-b from-indigo-50 to-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-5xl font-bold text-center text-gray-800 mb-16">Application Process</h2>
           <div className="space-y-8">
@@ -208,9 +208,9 @@ const ObserverLanding = () => {
               { step: 4, title: 'Training Program', description: 'Complete our comprehensive training on child psychology and observation techniques.' },
               { step: 5, title: 'Start Making Impact', description: 'Begin your journey as an Observer and transform lives.' }
             ].map((item, index) => (
-              <Card key={index} className="border-2 border-blue-200 hover:border-blue-400 transition-all transform hover:scale-102">
+              <Card key={index} className="border-2 border-purple-200 hover:border-purple-400 transition-all transform hover:scale-102">
                 <CardContent className="p-6 flex items-center gap-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg flex-shrink-0">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg flex-shrink-0">
                     {item.step}
                   </div>
                   <div>
@@ -225,7 +225,7 @@ const ObserverLanding = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-100 via-blue-50 to-purple-100">
+      <section className="py-20 px-4 bg-gradient-to-br from-purple-100 via-purple-50 to-indigo-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
             Ready to Make a Difference?
@@ -233,7 +233,7 @@ const ObserverLanding = () => {
           <p className="text-xl text-gray-600 mb-8">
             Join our team of compassionate observers and help shape the future of children's emotional development.
           </p>
-          <Button size="lg" className="bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white px-12 py-6 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
+          <Button size="lg" className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-12 py-6 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
             Apply to Become an Observer
             <ArrowRight className="ml-2" />
           </Button>
