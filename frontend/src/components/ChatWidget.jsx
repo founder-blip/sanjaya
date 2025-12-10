@@ -71,7 +71,7 @@ const ChatWidget = ({ onClose }) => {
           <div className="flex justify-between items-center">
             <div>
               <h3 className="font-bold text-lg">Sanjaya Assistant</h3>
-              <p className="text-sm text-blue-50">Ask me anything!</p>
+              <p className="text-sm text-indigo-50">Ask me anything!</p>
             </div>
             <button
               onClick={onClose}
