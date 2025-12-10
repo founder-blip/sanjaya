@@ -12,13 +12,10 @@ const Navigation = () => {
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3">
             <img 
-              src="/images/alphabetical.png" 
+              src="/images/sanjaya-logo.png" 
               alt="Sanjaya Logo" 
-              className="h-10 w-auto"
+              className="h-12 w-auto"
             />
-            <div className="text-xl font-bold text-gray-900">
-              Sanjaya <span className="text-blue-600">– The Observer</span>
-            </div>
           </Link>
           
           {/* Desktop Navigation */}
@@ -26,11 +23,14 @@ const Navigation = () => {
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Home
             </Link>
-            <Link to="/observer" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              For Observers
+            <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              About
             </Link>
-            <Link to="/principal" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              For Principals
+            <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              How It Works
+            </Link>
+            <Link to="/faq" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              FAQ
             </Link>
             <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full">
               Get Started
