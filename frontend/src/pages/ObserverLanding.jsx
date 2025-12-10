@@ -147,10 +147,10 @@ const ObserverLanding = () => {
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {responsibilities.map((responsibility, index) => (
-              <Card key={index} className="border-2 hover:border-blue-300 transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+              <Card key={index} className="border-2 hover:border-purple-300 transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
                 <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mb-4">
-                    <responsibility.icon className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mb-4">
+                    <responsibility.icon className="w-8 h-8 text-purple-600" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-3">{responsibility.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{responsibility.description}</p>
