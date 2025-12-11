@@ -81,6 +81,35 @@ async def get_status_checks():
     
     return status_checks
 
+# Public content endpoints (no auth required)
+@api_router.get("/content/hero")
+async def get_public_hero_content():
+    content = await db.hero_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/founder")
+async def get_public_founder_content():
+    content = await db.founder_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/what-is-sanjaya")
+async def get_public_what_is_sanjaya():
+    content = await db.what_is_sanjaya.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/contact")
+async def get_public_contact_info():
+    content = await db.contact_info.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat(chat_message: ChatMessage):
     try:
