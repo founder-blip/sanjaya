@@ -1,13 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Shield, CheckCircle, Users, Phone, Clock, Heart, ArrowRight, Mail, MessageCircle, Star, Sparkles, Calendar, Award } from 'lucide-react';
 import ChatWidget from '../components/ChatWidget';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Home = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  
+  // Content states
+  const [heroContent, setHeroContent] = useState({
+    main_tagline: 'Nurturing Your Child\'s Emotional Voice',
+    sub_headline: 'Daily Emotional Support Through Caring Conversations',
+    description: 'Sanjaya connects your child with trained observers for gentle 5-minute daily check-ins, helping them express feelings and build emotional confidence.',
+    cta_primary: 'Start Free Trial',
+    cta_secondary: 'Watch How It Works'
+  });
+  
+  const [founderContent, setFounderContent] = useState({
+    name: 'Smt. Punam Jaiswal',
+    title: 'Founder and Former Principal',
+    description: 'With years of experience in education and child psychology, Punam Ma\'am, as a former principal, brings an unique blend of empathy and expertise to every interaction. Her gentle approach and profound understanding of children\'s needs make her the ideal guide for your child\'s inner growth journey.',
+    quote: 'Every child has a story to tell. My role is simply to listen, understand, and help parents see the beautiful complexity of their child\'s world.',
+    image_url: '/images/punam-jaiswal.jpg'
+  });
+  
+  const [whatIsSanjaya, setWhatIsSanjaya] = useState({
+    heading: 'What is Sanjaya – The Observer?',
+    description: [
+      'Sanjaya is a specialized, non-judgmental listening support system.',
+      'A confidential companion to help your child process their inner world.'
+    ],
+    highlight_text: 'Sanjaya – The Observer is India\'s first structured daily observation program supervised by Legendary Principals.'
+  });
+  
+  const [contactInfo, setContactInfo] = useState({
+    email: 'support@sanjaya.com',
+    phone: '+91 98765 43210',
+    address: 'India'
+  });
+  
+  // Load content from backend on mount
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const [heroRes, founderRes, sanjayaRes, contactRes] = await Promise.all([
+          axios.get(`${BACKEND_URL}/api/content/hero`).catch(() => ({ data: null })),
+          axios.get(`${BACKEND_URL}/api/content/founder`).catch(() => ({ data: null })),
+          axios.get(`${BACKEND_URL}/api/content/what-is-sanjaya`).catch(() => ({ data: null })),
+          axios.get(`${BACKEND_URL}/api/content/contact`).catch(() => ({ data: null }))
+        ]);
+        
+        if (heroRes.data && Object.keys(heroRes.data).length > 0) {
+          setHeroContent(prev => ({ ...prev, ...heroRes.data }));
+        }
+        if (founderRes.data && Object.keys(founderRes.data).length > 0) {
+          setFounderContent(prev => ({ ...prev, ...founderRes.data }));
+        }
+        if (sanjayaRes.data && Object.keys(sanjayaRes.data).length > 0) {
+          setWhatIsSanjaya(prev => ({ ...prev, ...sanjayaRes.data }));
+        }
+        if (contactRes.data && Object.keys(contactRes.data).length > 0) {
+          setContactInfo(prev => ({ ...prev, ...contactRes.data }));
+        }
+      } catch (error) {
+        console.error('Error loading content:', error);
+      }
+    };
+    
+    loadContent();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
