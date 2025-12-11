@@ -175,8 +175,10 @@ const AdminDashboard = () => {
 
           {/* Hero Content Tab */}
           <TabsContent value="hero">
-            <Card>
-              <CardContent className="p-6 space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Edit Form */}
+              <Card>
+                <CardContent className="p-6 space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900">Edit Hero Section</h2>
                 
                 <div>
