@@ -296,8 +296,9 @@ const AdminDashboard = () => {
 
           {/* Founder Content Tab */}
           <TabsContent value="founder">
-            <Card>
-              <CardContent className="p-6 space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardContent className="p-6 space-y-6">
                 <h2 className="text-2xl font-bold text-gray-900">Edit Founder Section</h2>
                 
                 <div>
