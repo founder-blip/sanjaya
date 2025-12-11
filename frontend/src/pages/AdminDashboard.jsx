@@ -97,7 +97,11 @@ const AdminDashboard = () => {
     setIsLoading(true);
     try {
       await axios.put(`${API}/admin/content/hero`, heroContent, getAuthHeaders());
-      toast({ title: 'Success', description: 'Hero content updated successfully!' });
+      toast({ 
+        title: '✅ Changes Saved!', 
+        description: 'Click "View Changes (No Cache)" button to see updates on public site',
+        duration: 5000
+      });
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to update hero content', variant: 'destructive' });
     } finally {
@@ -115,7 +119,11 @@ const AdminDashboard = () => {
     setIsLoading(true);
     try {
       await axios.put(`${API}/admin/content/founder`, founderContent, getAuthHeaders());
-      toast({ title: 'Success', description: 'Founder content updated successfully!' });
+      toast({ 
+        title: '✅ Changes Saved!', 
+        description: 'Click "View Changes (No Cache)" button to see updates on public site',
+        duration: 5000
+      });
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to update founder content', variant: 'destructive' });
     } finally {
@@ -127,7 +135,11 @@ const AdminDashboard = () => {
     setIsLoading(true);
     try {
       await axios.put(`${API}/admin/content/what-is-sanjaya`, whatIsSanjaya, getAuthHeaders());
-      toast({ title: 'Success', description: 'What is Sanjaya content updated successfully!' });
+      toast({ 
+        title: '✅ Changes Saved!', 
+        description: 'Click "View Changes (No Cache)" button to see updates on public site',
+        duration: 5000
+      });
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to update content', variant: 'destructive' });
     } finally {
@@ -139,7 +151,11 @@ const AdminDashboard = () => {
     setIsLoading(true);
     try {
       await axios.put(`${API}/admin/content/contact`, contactInfo, getAuthHeaders());
-      toast({ title: 'Success', description: 'Contact info updated successfully!' });
+      toast({ 
+        title: '✅ Changes Saved!', 
+        description: 'Click "View Changes (No Cache)" button to see updates on public site',
+        duration: 5000
+      });
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to update contact info', variant: 'destructive' });
     } finally {
