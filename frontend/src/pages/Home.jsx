@@ -14,9 +14,9 @@ const Home = () => {
       <Navigation />
       
       {/* Hero Section - Warm & Child-Centric */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <div className="inline-block bg-orange-100 rounded-full px-6 py-2 mb-6">
                 <p className="text-orange-700 font-semibold">🌟 Every Child Deserves to Be Heard</p>
