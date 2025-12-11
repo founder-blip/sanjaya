@@ -22,15 +22,15 @@ const Home = () => {
                 <p className="text-orange-700 font-semibold">🌟 Every Child Deserves to Be Heard</p>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
                 Nurturing Your Child's Emotional Voice
               </h1>
               
-              <p className="text-2xl text-gray-700 mb-4 font-medium">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-700 mb-3 md:mb-4 font-medium">
                 Daily Emotional Support Through Caring Conversations
               </p>
               
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 leading-relaxed">
                 Sanjaya connects your child with trained observers for gentle 5-minute daily check-ins, helping them express feelings and build emotional confidence.
               </p>
               
