@@ -157,6 +157,10 @@ async def chat(chat_message: ChatMessage):
         logging.error(f"Error in chat endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error processing chat: {str(e)}")
 
+# Set database for admin routes
+import admin_routes
+admin_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
