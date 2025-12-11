@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script for Sanjaya Chat Application
-Tests the chat endpoint functionality, session persistence, and error handling.
+Backend API Testing Script for Sanjaya Application
+Tests the chat endpoint functionality, session persistence, error handling,
+and admin-to-frontend content sync functionality.
 """
 
 import requests
