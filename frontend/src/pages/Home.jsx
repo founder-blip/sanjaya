@@ -321,7 +321,7 @@ const Home = () => {
                 { 
                   icon: '📧', 
                   title: 'You Receive Insights', 
-                  description: 'Get weekly summaries highlighting your child's emotional wellbeing trends.',
+                  description: 'Get weekly summaries highlighting your child\\'s emotional wellbeing trends.',
                   color: 'green'
                 }
               ].map((step, index) => (
