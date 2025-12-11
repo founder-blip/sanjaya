@@ -102,11 +102,11 @@ const Home = () => {
               
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8">
                 <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 md:px-10 py-5 md:py-7 text-base md:text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
-                  Start Free Trial
+                  {heroContent.cta_primary}
                   <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                 </Button>
                 <Button size="lg" variant="outline" className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-6 md:px-10 py-5 md:py-7 text-base md:text-xl rounded-full shadow-lg">
-                  Watch How It Works
+                  {heroContent.cta_secondary}
                 </Button>
               </div>
 
