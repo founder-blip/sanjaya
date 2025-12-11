@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import { Users, Shield, Clock, Heart, Star, ArrowRight, MessageCircle, CheckCircle, Sparkles, Phone, Calendar, TrendingUp, Zap } from 'lucide-react';
+import { Shield, CheckCircle, Users, Phone, Clock, Heart, ArrowRight, Mail, MessageCircle } from 'lucide-react';
 import ChatWidget from '../components/ChatWidget';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
@@ -11,350 +9,497 @@ import Navigation from '../components/Navigation';
 const Home = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const features = [
-    {
-      icon: Heart,
-      title: 'Matched with a Caring Observer',
-      description: 'Every child is thoughtfully paired with a warm, understanding observer who patiently listens.'
-    },
-    {
-      icon: Clock,
-      title: 'A Daily 5 Minute Sharing Time',
-      description: 'Just five minutes a day to share stories, daily activities, dreams, or simply feelings.'
-    },
-    {
-      icon: Sparkles,
-      title: 'Encouragement & Guidance',
-      description: 'Observers listen with care, celebrate little wins, and note progress that matters.'
-    },
-    {
-      icon: Users,
-      title: 'Growth Updates for Parents',
-      description: 'Parents receive simple, easy-to-read reports highlighting their child\'s progress.'
-    },
-    {
-      icon: Star,
-      title: 'Journey to Confidence',
-      description: 'With time, children blossom – becoming more expressive, confident, and joyful.'
-    },
-    {
-      icon: Shield,
-      title: 'Secure & Regulated',
-      description: 'All sessions are recorded and stored securely as per regulations, ensuring safety and accountability.'
-    }
-  ];
-
-  const automationFeatures = [
-    {
-      icon: Phone,
-      title: 'Automated Calling System',
-      description: 'Smart scheduling ensures timely, consistent observer-child interactions.'
-    },
-    {
-      icon: Calendar,
-      title: 'Call Scheduling System',
-      description: 'Intelligent scheduling adapts to each child\'s routine and availability.'
-    },
-    {
-      icon: Zap,
-      title: 'Streamlined Onboarding',
-      description: 'Automated onboarding process makes enrollment quick and simple for families.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'AI-Powered Insights',
-      description: 'Session metadata automation and trend generation provide deeper understanding of each child\'s development.'
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Mr. Shah',
-      role: 'Parent',
-      text: 'I am very happy with this programme as I can see a remarkable change in my child. She was an introvert but now she is opening up and is more confident.'
-    },
-    {
-      name: 'Mrs. Dsouza',
-      role: 'Parent',
-      text: 'After going through the growth reports I have realized that my child\'s study habits and social interactions are very positive. The reports are helping me to guide him in the right direction.'
-    },
-    {
-      name: 'Daivik',
-      role: 'Student, 16 years',
-      text: 'This platform allows me to share my views and ideas freely. It helps me express positive thoughts and open up about negative ones.'
-    },
-    {
-      name: 'Ovi',
-      role: 'Student, 6 years',
-      text: 'I am happy because I get a chance to talk, share, narrate stories and recite poems daily.'
-    }
-  ];
-
-  const howItWorks = [
-    { step: 1, title: 'Principals Nominate & Train Observers' },
-    { step: 2, title: 'Automated Call Scheduling' },
-    { step: 3, title: 'Observer Calls Child & Listens' },
-    { step: 4, title: 'Sessions Recorded (Per Regulations)' },
-    { step: 5, title: 'AI Captures Cues & Metadata' },
-    { step: 6, title: 'AI Highlights Trends & Patterns' },
-    { step: 7, title: 'Principal Reviews Performance' },
-    { step: 8, title: 'Principal Guides Parents' },
-    { step: 9, title: 'The Child Develops Soft Skills' }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-white">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex justify-center gap-4 mb-8 animate-bounce-slow">
-            <div className="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center transform hover:scale-110 transition-transform">
-              <span className="text-2xl">🎨</span>
-            </div>
-            <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center transform hover:scale-110 transition-transform">
-              <span className="text-2xl">🎪</span>
-            </div>
-            <div className="w-12 h-12 bg-pink-200 rounded-full flex items-center justify-center transform hover:scale-110 transition-transform">
-              <span className="text-2xl">🎭</span>
-            </div>
-            <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center transform hover:scale-110 transition-transform">
-              <span className="text-2xl">🎈</span>
-            </div>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6">
-            Sanjaya – The Observer
-          </h1>
-          <p className="text-2xl md:text-3xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Every child needs someone who truly listens.
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-6 mb-12">
-            <Badge variant="secondary" className="px-6 py-3 text-lg bg-white border-2 border-indigo-300 hover:bg-indigo-50 transition-colors">
-              <Users className="w-5 h-5 mr-2" />
-              Trusted by 100+ Parents
-            </Badge>
-            <Badge variant="secondary" className="px-6 py-3 text-lg bg-white border-2 border-purple-300 hover:bg-purple-50 transition-colors">
-              <CheckCircle className="w-5 h-5 mr-2" />
-              Endorsed by Principals
-            </Badge>
-            <Badge variant="secondary" className="px-6 py-3 text-lg bg-white border-2 border-blue-300 hover:bg-blue-50 transition-colors">
-              <Shield className="w-5 h-5 mr-2" />
-              Secure & Regulated
-            </Badge>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all">
-              Get Started for Your Child
-              <ArrowRight className="ml-2" />
-            </Button>
-            <Button size="lg" variant="outline" className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all">
-              Learn More
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Impact Stats Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-indigo-600 mb-2">100+</div>
-              <div className="text-gray-600">Happy Parents</div>
-            </div>
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-purple-600 mb-2">500+</div>
-              <div className="text-gray-600">Children Helped</div>
-            </div>
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-blue-600 mb-2">50+</div>
-              <div className="text-gray-600">Trained Observers</div>
-            </div>
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-pink-600 mb-2">95%</div>
-              <div className="text-gray-600">Success Rate</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-indigo-50 to-white">
+      <section className="pt-32 pb-20 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1">
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">Meet Our Founder</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                With years of experience in child psychology and education, Punam Ma'am, as Principal, brings a unique blend of empathy and expertise to every interaction. Her gentle approach and profound understanding of children's needs make her the ideal guide for your child's educational journey.
+            <div>
+              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Daily Emotional Support for Your Child
+              </h1>
+              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
+                Sanjaya helps children express feelings and build emotional confidence through short daily check-ins with trained observers.
               </p>
-              <div className="bg-indigo-100 border-l-4 border-indigo-600 p-6 rounded-r-lg">
-                <p className="text-gray-700 italic text-lg">
-                  "Every child has a story to tell. My role is simply to listen, understand, and help parents see the beautiful complexity of their child's world."
-                </p>
-                <p className="text-gray-800 font-semibold mt-4">— Punam Jaiswal</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-full shadow-lg">
+                  Start Free Trial
+                  <ArrowRight className="ml-2" />
+                </Button>
+                <Button size="lg" variant="outline" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg rounded-full">
+                  Schedule a Demo
+                </Button>
+              </div>
+
+              <div className="flex items-center gap-6 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>No long-term commitment</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>Cancel anytime</span>
+                </div>
               </div>
             </div>
-            <div className="order-1 md:order-2 flex justify-center">
-              <div className="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl ring-8 ring-indigo-200">
+
+            <div className="relative">
+              <div className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl p-8 shadow-2xl">
                 <img 
                   src="/images/punam-jaiswal.jpg" 
-                  alt="Punam Jaiswal - Founder" 
-                  className="w-full h-full object-cover"
+                  alt="Happy child with parent" 
+                  className="rounded-2xl w-full h-96 object-cover shadow-lg"
                 />
+              </div>
+              <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-6 shadow-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <Heart className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">500+</div>
+                    <div className="text-sm text-gray-600">Happy Children</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Problem Statement Section */}
       <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center text-gray-800 mb-4">FEATURES</h2>
-          <p className="text-center text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
-            Our comprehensive approach ensures every child receives the care and attention they deserve
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+            Many Children Struggle to Express Their Emotions
+          </h2>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Between school, activities, and busy family schedules, children often don't have a dedicated space to share how they're really feeling.
           </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="border-2 hover:border-indigo-300 transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-2xl flex items-center justify-center mb-4">
-                    <feature.icon className="w-8 h-8 text-indigo-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="border-2 border-gray-100 rounded-3xl">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">😔</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Bottled Up Feelings</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Children keep emotions inside, leading to stress and anxiety.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-100 rounded-3xl">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">😰</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">No Safe Outlet</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Parents are busy, and children don't want to burden them.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-100 rounded-3xl">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">😟</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Unnoticed Patterns</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Small emotional changes go unnoticed until they become big problems.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Future Automation Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-purple-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center text-gray-800 mb-4">NEXT-GENERATION AUTOMATION</h2>
-          <p className="text-center text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
-            We're building advanced systems to enhance efficiency, reduce manpower needs, and strengthen privacy protection
-          </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {automationFeatures.map((feature, index) => (
-              <Card key={index} className="border-2 hover:border-purple-300 transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mb-4">
-                    <feature.icon className="w-8 h-8 text-purple-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-indigo-50 to-white">
+      {/* 3-Step Solution Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl font-bold text-center text-gray-800 mb-16">HOW IT WORKS</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              How Sanjaya Helps
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              A simple, gentle process that makes emotional wellbeing a daily habit.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Step 1 */}
+            <div className="relative">
+              <Card className="border-2 border-blue-200 rounded-3xl bg-blue-50 h-full">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
+                    <span className="text-3xl font-bold text-white">1</span>
+                  </div>
+                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-4">
+                    <Phone className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Daily 5-Minute Check-In</h3>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    Your child receives a friendly call from their trained observer. No pressure, just a warm conversation about their day.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative">
+              <Card className="border-2 border-purple-200 rounded-3xl bg-purple-50 h-full">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-6">
+                    <span className="text-3xl font-bold text-white">2</span>
+                  </div>
+                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-4">
+                    <Heart className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Patterns Identified</h3>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    Observers notice emotional patterns and trends. AI assists by identifying themes across conversations.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative">
+              <Card className="border-2 border-green-200 rounded-3xl bg-green-50 h-full">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6">
+                    <span className="text-3xl font-bold text-white">3</span>
+                  </div>
+                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-4">
+                    <Users className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">You Get Insights</h3>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    Receive thoughtful summaries about your child's emotional wellbeing, helping you support them better.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Safety Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Shield className="w-10 h-10 text-green-600" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              Your Child's Safety is Our Priority
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              We take trust, privacy, and safety seriously. Here's how we protect your child.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-2 border-green-100 rounded-2xl">
+              <CardContent className="p-6 flex items-start gap-4">
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Parent Consent Required</h4>
+                  <p className="text-gray-600">Your explicit consent is mandatory. You control everything.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-100 rounded-2xl">
+              <CardContent className="p-6 flex items-start gap-4">
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Trained & Supervised Observers</h4>
+                  <p className="text-gray-600">All observers are trained and supervised by experienced principals.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-100 rounded-2xl">
+              <CardContent className="p-6 flex items-start gap-4">
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Sessions Recorded Securely</h4>
+                  <p className="text-gray-600">All calls are recorded and stored securely per regulations.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-100 rounded-2xl">
+              <CardContent className="p-6 flex items-start gap-4">
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Not Clinical Treatment</h4>
+                  <p className="text-gray-600">This is emotional support, not therapy or counseling.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-100 rounded-2xl">
+              <CardContent className="p-6 flex items-start gap-4">
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">You Control Your Data</h4>
+                  <p className="text-gray-600">Access your child's insights anytime. Cancel whenever you want.</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-100 rounded-2xl">
+              <CardContent className="p-6 flex items-start gap-4">
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Human-Led, AI-Assisted</h4>
+                  <p className="text-gray-600">AI helps spot patterns, but humans make all decisions.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Visual Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-purple-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              The Complete Process
+            </h2>
+            <p className="text-xl text-gray-600">
+              From enrollment to insights, here's how Sanjaya works end-to-end.
+            </p>
+          </div>
+
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-indigo-400 via-purple-400 to-blue-400 hidden md:block"></div>
-            {howItWorks.map((item, index) => (
-              <div key={index} className={`flex items-center mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
-                  <Card className="inline-block border-2 border-indigo-200 hover:border-indigo-400 transition-all hover:shadow-lg">
+            {/* Vertical line connector */}
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-300 via-purple-300 to-green-300 hidden md:block"></div>
+
+            <div className="space-y-8">
+              {[
+                { 
+                  icon: '📝', 
+                  title: 'You Enroll Your Child', 
+                  description: 'Sign up online and provide consent. Choose your plan and schedule preferences.',
+                  color: 'blue'
+                },
+                { 
+                  icon: '👥', 
+                  title: 'We Match an Observer', 
+                  description: 'Your child is paired with a caring, trained observer supervised by principals.',
+                  color: 'purple'
+                },
+                { 
+                  icon: '📞', 
+                  title: 'Daily Check-Ins Begin', 
+                  description: 'Observer calls for 5-minute conversations. Your child shares at their own pace.',
+                  color: 'indigo'
+                },
+                { 
+                  icon: '🧠', 
+                  title: 'AI Identifies Patterns', 
+                  description: 'Our system notices emotional trends and themes across conversations.',
+                  color: 'violet'
+                },
+                { 
+                  icon: '📊', 
+                  title: 'Principal Reviews Data', 
+                  description: 'Experienced principals review patterns and prepare parent-friendly summaries.',
+                  color: 'purple'
+                },
+                { 
+                  icon: '📧', 
+                  title: 'You Receive Insights', 
+                  description: 'Get weekly summaries highlighting your child's emotional wellbeing trends.',
+                  color: 'green'
+                }
+              ].map((step, index) => (
+                <div key={index} className="flex gap-6 items-start relative">
+                  <div className={`w-16 h-16 bg-${step.color}-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg`}>
+                    {step.icon}
+                  </div>
+                  <Card className={`flex-1 border-2 border-${step.color}-100 rounded-2xl`}>
                     <CardContent className="p-6">
-                      <p className="text-lg font-medium text-gray-700">{item.title}</p>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{step.description}</p>
                     </CardContent>
                   </Card>
                 </div>
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg z-10 flex-shrink-0 mx-4 md:mx-0">
-                  {item.step}
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-gray-600">
+              Choose the plan that works best for your family. Cancel anytime.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Basic Plan */}
+            <Card className="border-2 border-gray-200 rounded-3xl">
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
+                  <p className="text-gray-600">Perfect for getting started</p>
                 </div>
-                <div className="flex-1"></div>
+                
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-bold text-gray-900">₹1,499</span>
+                    <span className="text-gray-600">/month</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">5-minute daily check-ins (5 days/week)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">Trained observer matched to your child</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">Weekly summary reports</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">Email support</span>
+                  </li>
+                </ul>
+
+                <Button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-6 text-lg rounded-full">
+                  Start Basic Plan
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Premium Plan */}
+            <Card className="border-2 border-blue-500 rounded-3xl relative shadow-xl">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold">
+                  MOST POPULAR
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center text-gray-800 mb-4">Hear From Our Community</h2>
-          <p className="text-center text-xl text-gray-600 mb-16">Real stories from parents and students who've experienced transformation</p>
-          <div className="grid md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-2 border-indigo-100 hover:border-indigo-300 transition-all hover:shadow-xl transform hover:scale-105">
-                <CardContent className="p-8">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
+              
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+                  <p className="text-gray-600">For complete emotional support</p>
+                </div>
+                
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-bold text-gray-900">₹2,499</span>
+                    <span className="text-gray-600">/month</span>
                   </div>
-                  <p className="text-gray-700 text-lg mb-6 italic leading-relaxed">"{testimonial.text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-200 to-indigo-300 rounded-full flex items-center justify-center">
-                      <span className="text-xl">{testimonial.role.includes('Parent') ? '👨' : '👧'}</span>
-                    </div>
-                    <div>
-                      <p className="font-bold text-gray-800">{testimonial.name}</p>
-                      <p className="text-sm text-gray-600">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+                </div>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-indigo-100 via-indigo-50 to-purple-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-            No advice. No analysis. Just awareness.
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            When someone truly listens, clarity follows. And children flourish.
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700"><strong>7-day check-ins</strong> with weekend support</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">Priority observer matching</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700"><strong>Daily micro-insights</strong> + weekly summaries</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">Monthly video consultation with principal</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+                    <span className="text-gray-700">Priority phone & email support</span>
+                  </li>
+                </ul>
+
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg rounded-full">
+                  Start Premium Plan
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <p className="text-center text-gray-600 mt-8">
+            All plans include a <strong>7-day free trial</strong>. No credit card required.
           </p>
-          <Button size="lg" className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-12 py-6 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
-            Start Your Child's Journey Today
-            <ArrowRight className="ml-2" />
-          </Button>
         </div>
       </section>
 
-      {/* Why Trust Section */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center text-gray-800 mb-16">Why Parents Trust Sanjaya</h2>
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center transform hover:scale-105 transition-transform">
-              <div className="w-24 h-24 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="w-12 h-12 text-indigo-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Expert Guidance</h3>
-              <p className="text-gray-600 text-lg">Supervised by legendary educators</p>
-            </div>
-            <div className="text-center transform hover:scale-105 transition-transform">
-              <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Shield className="w-12 h-12 text-purple-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Secure & Regulated</h3>
-              <p className="text-gray-600 text-lg">Recordings stored securely per regulations</p>
-            </div>
-            <div className="text-center transform hover:scale-105 transition-transform">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Clock className="w-12 h-12 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Daily Insights</h3>
-              <p className="text-gray-600 text-lg">Confidential reports delivered daily</p>
-            </div>
+      {/* Contact / CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-blue-50 to-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+            Ready to Support Your Child's Emotional Growth?
+          </h2>
+          <p className="text-xl text-gray-600 mb-12">
+            Join hundreds of families who trust Sanjaya to nurture their children's emotional wellbeing.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-12 py-6 text-xl rounded-full shadow-lg">
+              Get Started Now
+              <ArrowRight className="ml-2" />
+            </Button>
+            <Button size="lg" variant="outline" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-12 py-6 text-xl rounded-full">
+              <Phone className="mr-2" />
+              Talk to Us
+            </Button>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 text-left">
+            <Card className="border-2 border-gray-100 rounded-2xl">
+              <CardContent className="p-6">
+                <Mail className="w-8 h-8 text-blue-600 mb-3" />
+                <h4 className="font-bold text-gray-900 mb-2">Email Us</h4>
+                <p className="text-gray-600 text-sm mb-2">support@sanjaya.com</p>
+                <p className="text-gray-500 text-xs">Response within 24 hours</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-100 rounded-2xl">
+              <CardContent className="p-6">
+                <Phone className="w-8 h-8 text-blue-600 mb-3" />
+                <h4 className="font-bold text-gray-900 mb-2">Call Us</h4>
+                <p className="text-gray-600 text-sm mb-2">+91 98765 43210</p>
+                <p className="text-gray-500 text-xs">Mon-Fri, 9 AM - 6 PM</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-100 rounded-2xl">
+              <CardContent className="p-6">
+                <MessageCircle className="w-8 h-8 text-blue-600 mb-3" />
+                <h4 className="font-bold text-gray-900 mb-2">Live Chat</h4>
+                <p className="text-gray-600 text-sm mb-2">Instant support</p>
+                <p className="text-gray-500 text-xs">Click the chat icon below</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -365,7 +510,7 @@ const Home = () => {
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 transition-all z-50"
+          className="fixed bottom-8 right-8 w-16 h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 transition-all z-50"
         >
           <MessageCircle className="w-8 h-8" />
         </button>
