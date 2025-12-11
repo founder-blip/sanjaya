@@ -214,20 +214,18 @@ const Home = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
-              What is Sanjaya – The Observer?
+              {whatIsSanjaya.heading}
             </h2>
           </div>
 
           <Card className="border-2 border-orange-200 rounded-3xl bg-white shadow-2xl">
             <CardContent className="p-10">
               <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-                <p className="text-xl font-medium text-gray-900">
-                  Sanjaya is a specialized, non-judgmental listening support system.
-                </p>
-                
-                <p className="text-xl font-medium text-gray-900">
-                  A confidential companion to help your child process their inner world.
-                </p>
+                {whatIsSanjaya.description && whatIsSanjaya.description.map((desc, index) => (
+                  <p key={index} className="text-xl font-medium text-gray-900">
+                    {desc}
+                  </p>
+                ))}
                 
                 <div className="flex items-start gap-3 my-6">
                   <span className="text-red-600 text-2xl flex-shrink-0">✕</span>
@@ -245,7 +243,7 @@ const Home = () => {
 
                 <div className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl p-8 my-8">
                   <p className="text-2xl font-bold text-gray-900 text-center">
-                    Sanjaya – The Observer is India's first structured daily observation program supervised by Legendary Principals.
+                    {whatIsSanjaya.highlight_text}
                   </p>
                 </div>
 
