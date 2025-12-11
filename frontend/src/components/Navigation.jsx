@@ -8,13 +8,13 @@ const Navigation = () => {
 
   return (
     <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4">
+      <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-2 md:gap-3">
             <img 
               src="/images/sanjaya-logo.png" 
               alt="Sanjaya Logo" 
-              className="h-16 w-auto"
+              className="h-10 md:h-16 w-auto"
             />
           </Link>
           
