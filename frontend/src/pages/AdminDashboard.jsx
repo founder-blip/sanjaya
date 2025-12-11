@@ -231,14 +231,52 @@ const AdminDashboard = () => {
                   </div>
                 </div>
 
-                <Button
-                  onClick={saveHeroContent}
-                  disabled={isLoading}
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2"
-                >
-                  <Save className="w-4 h-4" />
-                  {isLoading ? 'Saving...' : 'Save Hero Content'}
-                </Button>
+                <div className="flex gap-4">
+                  <Button
+                    onClick={saveHeroContent}
+                    disabled={isLoading}
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    {isLoading ? 'Saving...' : 'Save Hero Content'}
+                  </Button>
+                  <Button
+                    onClick={() => window.open('/', '_blank')}
+                    variant="outline"
+                    className="gap-2"
+                  >
+                    Preview Website
+                  </Button>
+                </div>
+
+                {/* Live Preview */}
+                <Card className="mt-6 bg-gradient-to-br from-orange-50 to-yellow-50">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Preview</h3>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Main Tagline:</p>
+                        <p className="text-2xl font-bold text-gray-900">{heroContent.main_tagline || 'Not set'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Sub Headline:</p>
+                        <p className="text-lg text-gray-700">{heroContent.sub_headline || 'Not set'}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Description:</p>
+                        <p className="text-gray-600">{heroContent.description || 'Not set'}</p>
+                      </div>
+                      <div className="flex gap-3">
+                        <Button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+                          {heroContent.cta_primary || 'Primary CTA'}
+                        </Button>
+                        <Button variant="outline">
+                          {heroContent.cta_secondary || 'Secondary CTA'}
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </CardContent>
             </Card>
           </TabsContent>
