@@ -63,6 +63,27 @@ const Navigation = () => {
               Home
             </Link>
             <Link
+              to="/about"
+              className="block text-gray-700 hover:text-indigo-600 transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              to="/how-it-works"
+              className="block text-gray-700 hover:text-indigo-600 transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              How It Works
+            </Link>
+            <Link
+              to="/faq"
+              className="block text-gray-700 hover:text-indigo-600 transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              FAQ
+            </Link>
+            <Link
               to="/observer"
               className="block text-gray-700 hover:text-purple-600 transition-colors font-medium"
               onClick={() => setIsMenuOpen(false)}
