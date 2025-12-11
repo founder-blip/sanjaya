@@ -569,7 +569,7 @@ const Home = () => {
                   <Mail className="w-8 h-8 text-orange-600" />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2 text-xl">Email Us</h4>
-                <p className="text-gray-600 mb-2">support@sanjaya.com</p>
+                <p className="text-gray-600 mb-2">{contactInfo.email}</p>
                 <p className="text-gray-500 text-sm">Response within 24 hours</p>
               </CardContent>
             </Card>
@@ -580,7 +580,7 @@ const Home = () => {
                   <Phone className="w-8 h-8 text-blue-600" />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2 text-xl">Call Us</h4>
-                <p className="text-gray-600 mb-2">+91 98765 43210</p>
+                <p className="text-gray-600 mb-2">{contactInfo.phone}</p>
                 <p className="text-gray-500 text-sm">Mon-Fri, 9 AM - 6 PM IST</p>
               </CardContent>
             </Card>
