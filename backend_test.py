@@ -300,15 +300,212 @@ class BackendTester:
             self.log_result("Status Endpoints", False, f"Request error: {str(e)}")
             return False
     
+    def test_admin_login(self):
+        """Test admin login functionality"""
+        try:
+            payload = {
+                "username": "admin",
+                "password": "admin123"
+            }
+            
+            response = requests.post(
+                f"{API_BASE}/admin/login",
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                if 'access_token' not in data or 'token_type' not in data or 'username' not in data:
+                    self.log_result("Admin Login", False, "Missing required fields in response", data)
+                    return False, None
+                
+                # Check token type
+                if data['token_type'] != 'bearer':
+                    self.log_result("Admin Login", False, f"Expected token_type 'bearer', got '{data['token_type']}'")
+                    return False, None
+                
+                # Check username
+                if data['username'] != 'admin':
+                    self.log_result("Admin Login", False, f"Expected username 'admin', got '{data['username']}'")
+                    return False, None
+                
+                self.log_result("Admin Login", True, "Admin login successful")
+                return True, data['access_token']
+                
+            else:
+                self.log_result("Admin Login", False, f"HTTP {response.status_code}: {response.text}")
+                return False, None
+                
+        except Exception as e:
+            self.log_result("Admin Login", False, f"Request error: {str(e)}")
+            return False, None
+    
+    def test_admin_content_update_and_sync(self):
+        """Test admin content update and frontend sync"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Content Sync", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Test Hero Content Update
+            test_hero_content = {
+                "main_tagline": "TEST: Updated Tagline from Admin",
+                "sub_headline": "This is a test to verify admin-to-frontend sync is working correctly",
+                "description": "Test description for admin sync verification",
+                "cta_primary": "Test Primary CTA",
+                "cta_secondary": "Test Secondary CTA"
+            }
+            
+            # Update hero content via admin API
+            response = requests.put(
+                f"{API_BASE}/admin/content/hero",
+                json=test_hero_content,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                self.log_result("Admin Content Sync", False, f"Failed to update hero content: HTTP {response.status_code}")
+                return False
+            
+            # Wait a moment for database update
+            time.sleep(1)
+            
+            # Fetch content from public API (what frontend uses)
+            public_response = requests.get(f"{API_BASE}/content/hero", timeout=10)
+            
+            if public_response.status_code != 200:
+                self.log_result("Admin Content Sync", False, f"Failed to fetch public hero content: HTTP {public_response.status_code}")
+                return False
+            
+            public_data = public_response.json()
+            
+            # Verify the content matches
+            if public_data.get('main_tagline') != test_hero_content['main_tagline']:
+                self.log_result("Admin Content Sync", False, f"Hero tagline mismatch: expected '{test_hero_content['main_tagline']}', got '{public_data.get('main_tagline')}'")
+                return False
+            
+            if public_data.get('description') != test_hero_content['description']:
+                self.log_result("Admin Content Sync", False, f"Hero description mismatch")
+                return False
+            
+            # Test Founder Content Update
+            test_founder_content = {
+                "name": "TEST: Dr. Punam Jaiswal Updated",
+                "title": "Test Founder Title",
+                "description": "Test founder description",
+                "quote": "Test quote to verify sync",
+                "image_url": "/test-image.jpg"
+            }
+            
+            # Update founder content via admin API
+            response = requests.put(
+                f"{API_BASE}/admin/content/founder",
+                json=test_founder_content,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                self.log_result("Admin Content Sync", False, f"Failed to update founder content: HTTP {response.status_code}")
+                return False
+            
+            # Wait a moment for database update
+            time.sleep(1)
+            
+            # Fetch founder content from public API
+            public_response = requests.get(f"{API_BASE}/content/founder", timeout=10)
+            
+            if public_response.status_code != 200:
+                self.log_result("Admin Content Sync", False, f"Failed to fetch public founder content: HTTP {public_response.status_code}")
+                return False
+            
+            public_data = public_response.json()
+            
+            # Verify the founder content matches
+            if public_data.get('name') != test_founder_content['name']:
+                self.log_result("Admin Content Sync", False, f"Founder name mismatch: expected '{test_founder_content['name']}', got '{public_data.get('name')}'")
+                return False
+            
+            if public_data.get('quote') != test_founder_content['quote']:
+                self.log_result("Admin Content Sync", False, f"Founder quote mismatch")
+                return False
+            
+            self.log_result("Admin Content Sync", True, "Admin-to-frontend content sync working correctly for both Hero and Founder sections")
+            return True
+            
+        except Exception as e:
+            self.log_result("Admin Content Sync", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_public_content_endpoints(self):
+        """Test all public content endpoints that frontend uses"""
+        try:
+            endpoints = [
+                ("/content/hero", "Hero Content"),
+                ("/content/founder", "Founder Content"),
+                ("/content/what-is-sanjaya", "What is Sanjaya Content"),
+                ("/content/contact", "Contact Info")
+            ]
+            
+            all_passed = True
+            
+            for endpoint, name in endpoints:
+                response = requests.get(f"{API_BASE}{endpoint}", timeout=10)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    self.log_result(f"Public Content - {name}", True, f"Endpoint accessible, returned data: {len(str(data))} chars")
+                else:
+                    self.log_result(f"Public Content - {name}", False, f"HTTP {response.status_code}: {response.text}")
+                    all_passed = False
+            
+            return all_passed
+            
+        except Exception as e:
+            self.log_result("Public Content Endpoints", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_authentication_protection(self):
+        """Test that admin endpoints are properly protected"""
+        try:
+            # Test accessing admin endpoint without token
+            response = requests.get(f"{API_BASE}/admin/content/hero", timeout=10)
+            
+            if response.status_code == 401:
+                self.log_result("Admin Auth Protection", True, "Admin endpoints properly protected - returns 401 without token")
+                return True
+            else:
+                self.log_result("Admin Auth Protection", False, f"Expected HTTP 401, got {response.status_code}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Auth Protection", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("=" * 60)
-        print("STARTING BACKEND API TESTS")
+        print("STARTING COMPREHENSIVE BACKEND API TESTS")
         print("=" * 60)
         
         tests = [
             self.test_root_endpoint,
             self.test_status_endpoints,
+            self.test_public_content_endpoints,
+            self.test_admin_authentication_protection,
+            self.test_admin_content_update_and_sync,
             self.test_chat_endpoint_basic,
             self.test_chat_context_persistence,
             self.test_chat_new_session,
