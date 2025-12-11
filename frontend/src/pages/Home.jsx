@@ -287,56 +287,77 @@ const Home = () => {
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-300 via-purple-300 to-green-300 hidden md:block"></div>
 
             <div className="space-y-8">
-              {[
-                { 
-                  icon: '📝', 
-                  title: 'You Enroll Your Child', 
-                  description: 'Sign up online and provide consent. Choose your plan and schedule preferences.',
-                  color: 'blue'
-                },
-                { 
-                  icon: '👥', 
-                  title: 'We Match an Observer', 
-                  description: 'Your child is paired with a caring, trained observer supervised by principals.',
-                  color: 'purple'
-                },
-                { 
-                  icon: '📞', 
-                  title: 'Daily Check-Ins Begin', 
-                  description: 'Observer calls for 5-minute conversations. Your child shares at their own pace.',
-                  color: 'indigo'
-                },
-                { 
-                  icon: '🧠', 
-                  title: 'AI Identifies Patterns', 
-                  description: 'Our system notices emotional trends and themes across conversations.',
-                  color: 'violet'
-                },
-                { 
-                  icon: '📊', 
-                  title: 'Principal Reviews Data', 
-                  description: 'Experienced principals review patterns and prepare parent-friendly summaries.',
-                  color: 'purple'
-                },
-                { 
-                  icon: '📧', 
-                  title: 'You Receive Insights', 
-                  description: 'Get weekly summaries highlighting your child\\'s emotional wellbeing trends.',
-                  color: 'green'
-                }
-              ].map((step, index) => (
-                <div key={index} className="flex gap-6 items-start relative">
-                  <div className={`w-16 h-16 bg-${step.color}-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg`}>
-                    {step.icon}
-                  </div>
-                  <Card className={`flex-1 border-2 border-${step.color}-100 rounded-2xl`}>
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-                      <p className="text-gray-600 leading-relaxed">{step.description}</p>
-                    </CardContent>
-                  </Card>
+              <div className="flex gap-6 items-start relative">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg">
+                  📝
                 </div>
-              ))}
+                <Card className="flex-1 border-2 border-blue-100 rounded-2xl">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">You Enroll Your Child</h3>
+                    <p className="text-gray-600 leading-relaxed">Sign up online and provide consent. Choose your plan and schedule preferences.</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="flex gap-6 items-start relative">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg">
+                  👥
+                </div>
+                <Card className="flex-1 border-2 border-purple-100 rounded-2xl">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">We Match an Observer</h3>
+                    <p className="text-gray-600 leading-relaxed">Your child is paired with a caring, trained observer supervised by principals.</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="flex gap-6 items-start relative">
+                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg">
+                  📞
+                </div>
+                <Card className="flex-1 border-2 border-indigo-100 rounded-2xl">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Daily Check-Ins Begin</h3>
+                    <p className="text-gray-600 leading-relaxed">Observer calls for 5-minute conversations. Your child shares at their own pace.</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="flex gap-6 items-start relative">
+                <div className="w-16 h-16 bg-violet-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg">
+                  🧠
+                </div>
+                <Card className="flex-1 border-2 border-violet-100 rounded-2xl">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">AI Identifies Patterns</h3>
+                    <p className="text-gray-600 leading-relaxed">Our system notices emotional trends and themes across conversations.</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="flex gap-6 items-start relative">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg">
+                  📊
+                </div>
+                <Card className="flex-1 border-2 border-purple-100 rounded-2xl">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Principal Reviews Data</h3>
+                    <p className="text-gray-600 leading-relaxed">Experienced principals review patterns and prepare parent-friendly summaries.</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="flex gap-6 items-start relative">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0 z-10 shadow-lg">
+                  📧
+                </div>
+                <Card className="flex-1 border-2 border-green-100 rounded-2xl">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">You Receive Insights</h3>
+                    <p className="text-gray-600 leading-relaxed">Get weekly summaries highlighting your child's emotional wellbeing trends.</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
