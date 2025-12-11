@@ -354,13 +354,52 @@ const AdminDashboard = () => {
                 <Button
                   onClick={saveFounderContent}
                   disabled={isLoading}
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2"
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2 w-full"
                 >
                   <Save className="w-4 h-4" />
-                  {isLoading ? 'Saving...' : 'Save Founder Content'}
+                  {isLoading ? 'Saving...' : 'Save Changes'}
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Founder Preview Panel */}
+            <Card className="lg:sticky lg:top-8 h-fit">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Live Preview</h3>
+                
+                <div className="bg-white rounded-2xl p-6 border-2 border-orange-100">
+                  <div className="flex flex-col items-center text-center space-y-4">
+                    <div className="w-40 h-40 rounded-full overflow-hidden ring-4 ring-orange-200 bg-gray-200 flex items-center justify-center">
+                      {founderContent.image_url ? (
+                        <img src={founderContent.image_url} alt="Founder" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-4xl">👤</span>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <p className="font-bold text-gray-900 text-lg">
+                        {founderContent.name || 'Founder Name'}
+                      </p>
+                      <p className="text-orange-600 font-semibold">
+                        {founderContent.title || 'Title'}
+                      </p>
+                    </div>
+                    
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {founderContent.description || 'Description will appear here...'}
+                    </p>
+                    
+                    <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-500 p-4 rounded-r-lg w-full">
+                      <p className="text-gray-700 italic text-sm">
+                        "{founderContent.quote || 'Founder quote will appear here...'}"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            </div>
           </TabsContent>
 
           {/* What is Sanjaya Tab */}
