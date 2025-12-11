@@ -8,14 +8,15 @@ from models import (
     AdminLogin, HeroContent, FounderContent, WhatIsSanjaya,
     WhatWeOffer, HowItWorks, TrustSafety, ContactInfo
 )
-from motor.motor_asyncio import AsyncIOMotorClient
 
-router = APIRouter(prefix="/admin", tags=["admin"])
+router = APIRouter(prefix="/api/admin", tags=["admin"])
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# Database will be injected from server.py
+db = None
+
+def set_database(database):
+    global db
+    db = database
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
