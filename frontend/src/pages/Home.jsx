@@ -95,6 +95,103 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Meet Our Founder Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-block bg-orange-100 rounded-full px-6 py-2 mb-6">
+              <p className="text-orange-700 font-semibold">👋 Meet Our Founder</p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Meet Our Founder</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-200">
+                  <img 
+                    src="/images/punam-jaiswal.jpg" 
+                    alt="Smt. Punam Jaiswal" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-8 py-4 rounded-full shadow-xl">
+                  <p className="text-center font-bold text-gray-900 text-lg">Smt. Punam Jaiswal</p>
+                  <p className="text-center text-orange-600 font-semibold">Founder and Former Principal</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                With years of experience in education and child psychology, Punam Ma'am, as a former principal, brings an unique blend of empathy and expertise to every interaction. Her gentle approach and profound understanding of children's needs make her the ideal guide for your child's inner growth journey.
+              </p>
+              
+              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-500 p-6 rounded-r-2xl">
+                <div className="flex items-start gap-3">
+                  <span className="text-4xl text-orange-500">"</span>
+                  <div>
+                    <p className="text-gray-800 italic text-lg leading-relaxed mb-2">
+                      Every child has a story to tell. My role is simply to listen, understand, and help parents see the beautiful complexity of their child's world.
+                    </p>
+                    <p className="text-gray-700 font-semibold">— Smt. Punam Jaiswal</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What is Sanjaya - The Observer Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
+              What is Sanjaya – The Observer?
+            </h2>
+          </div>
+
+          <Card className="border-2 border-orange-200 rounded-3xl bg-white shadow-2xl">
+            <CardContent className="p-10">
+              <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                <p className="text-xl font-medium text-gray-900">
+                  Sanjaya is a specialized, non-judgmental listening support system.
+                </p>
+                
+                <p className="text-xl font-medium text-gray-900">
+                  A confidential companion to help your child process their inner world.
+                </p>
+                
+                <div className="flex items-start gap-3 my-6">
+                  <span className="text-red-600 text-2xl flex-shrink-0">✕</span>
+                  <p className="text-xl font-medium text-gray-700">
+                    Not counseling, therapy, or teaching.
+                  </p>
+                </div>
+                
+                <div className="flex items-start gap-3 my-6">
+                  <span className="text-green-600 text-2xl flex-shrink-0">✓</span>
+                  <p className="text-xl font-medium text-gray-900">
+                    We listen patiently and your child finds their own clarity.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-2xl p-8 my-8">
+                  <p className="text-2xl font-bold text-gray-900 text-center">
+                    Sanjaya – The Observer is India's first structured daily observation program supervised by Legendary Principals.
+                  </p>
+                </div>
+
+                <p className="text-xl text-gray-700 text-center">
+                  Every child is paired with a trained ethical observer who listens to them for 5 minutes a day and simply documents what they heard.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* What is Sanjaya Section */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
