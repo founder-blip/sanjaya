@@ -72,12 +72,19 @@ const Home = () => {
             </div>
 
             <div className="relative">
-              <div className="relative z-10">
-                <img 
-                  src="/images/sanjaya-poster.png" 
-                  alt="Sanjaya - The Observer" 
-                  className="rounded-3xl shadow-2xl w-full"
-                />
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-3xl p-8 flex items-center justify-center">
+                  <span className="text-6xl">💭</span>
+                </div>
+                <div className="bg-gradient-to-br from-blue-200 to-blue-300 rounded-3xl p-8 flex items-center justify-center">
+                  <span className="text-6xl">🎯</span>
+                </div>
+                <div className="bg-gradient-to-br from-purple-200 to-purple-300 rounded-3xl p-8 flex items-center justify-center">
+                  <span className="text-6xl">🌱</span>
+                </div>
+                <div className="bg-gradient-to-br from-pink-200 to-pink-300 rounded-3xl p-8 flex items-center justify-center">
+                  <span className="text-6xl">✨</span>
+                </div>
               </div>
               
               {/* Floating elements */}
