@@ -34,17 +34,17 @@ const Home = () => {
                 Sanjaya connects your child with trained observers for gentle 5-minute daily check-ins, helping them express feelings and build emotional confidence.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-10 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8">
+                <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 md:px-10 py-5 md:py-7 text-base md:text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
                   Start Free Trial
-                  <ArrowRight className="ml-2" />
+                  <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-full shadow-lg">
+                <Button size="lg" variant="outline" className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-6 md:px-10 py-5 md:py-7 text-base md:text-xl rounded-full shadow-lg">
                   Watch How It Works
                 </Button>
               </div>
 
-              <div className="flex items-center gap-8 flex-wrap">
+              <div className="flex items-center gap-4 md:gap-8 flex-wrap">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-sm font-bold">A</div>
