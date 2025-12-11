@@ -176,21 +176,21 @@ const Home = () => {
               <div className="relative">
                 <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-200">
                   <img 
-                    src="/images/punam-jaiswal.jpg" 
-                    alt="Smt. Punam Jaiswal" 
+                    src={founderContent.image_url} 
+                    alt={founderContent.name} 
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-8 py-4 rounded-full shadow-xl">
-                  <p className="text-center font-bold text-gray-900 text-lg">Smt. Punam Jaiswal</p>
-                  <p className="text-center text-orange-600 font-semibold">Founder and Former Principal</p>
+                  <p className="text-center font-bold text-gray-900 text-lg">{founderContent.name}</p>
+                  <p className="text-center text-orange-600 font-semibold">{founderContent.title}</p>
                 </div>
               </div>
             </div>
 
             <div>
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                With years of experience in education and child psychology, Punam Ma'am, as a former principal, brings an unique blend of empathy and expertise to every interaction. Her gentle approach and profound understanding of children's needs make her the ideal guide for your child's inner growth journey.
+                {founderContent.description}
               </p>
               
               <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-500 p-6 rounded-r-2xl">
@@ -198,9 +198,9 @@ const Home = () => {
                   <span className="text-4xl text-orange-500">"</span>
                   <div>
                     <p className="text-gray-800 italic text-lg leading-relaxed mb-2">
-                      Every child has a story to tell. My role is simply to listen, understand, and help parents see the beautiful complexity of their child's world.
+                      {founderContent.quote}
                     </p>
-                    <p className="text-gray-700 font-semibold">— Smt. Punam Jaiswal</p>
+                    <p className="text-gray-700 font-semibold">— {founderContent.name}</p>
                   </div>
                 </div>
               </div>
