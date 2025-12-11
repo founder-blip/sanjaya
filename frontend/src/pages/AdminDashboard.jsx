@@ -237,50 +237,61 @@ const AdminDashboard = () => {
                   <Button
                     onClick={saveHeroContent}
                     disabled={isLoading}
-                    className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2"
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2 flex-1"
                   >
                     <Save className="w-4 h-4" />
-                    {isLoading ? 'Saving...' : 'Save Hero Content'}
+                    {isLoading ? 'Saving...' : 'Save Changes'}
                   </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Live Preview Panel */}
+            <Card className="lg:sticky lg:top-8 h-fit">
+              <CardContent className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-bold text-gray-900">Live Preview</h3>
                   <Button
                     onClick={() => window.open('/', '_blank')}
                     variant="outline"
+                    size="sm"
                     className="gap-2"
                   >
-                    Preview Website
+                    Open Website
                   </Button>
                 </div>
-
-                {/* Live Preview */}
-                <Card className="mt-6 bg-gradient-to-br from-orange-50 to-yellow-50">
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Preview</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">Main Tagline:</p>
-                        <p className="text-2xl font-bold text-gray-900">{heroContent.main_tagline || 'Not set'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">Sub Headline:</p>
-                        <p className="text-lg text-gray-700">{heroContent.sub_headline || 'Not set'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">Description:</p>
-                        <p className="text-gray-600">{heroContent.description || 'Not set'}</p>
-                      </div>
-                      <div className="flex gap-3">
-                        <Button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-                          {heroContent.cta_primary || 'Primary CTA'}
-                        </Button>
-                        <Button variant="outline">
-                          {heroContent.cta_secondary || 'Secondary CTA'}
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                
+                <div className="bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 rounded-2xl p-6 space-y-4">
+                  <div className="space-y-2">
+                    <span className="inline-block bg-orange-100 rounded-full px-4 py-1 text-sm text-orange-700 font-semibold">
+                      🌟 Every Child Deserves to Be Heard
+                    </span>
+                  </div>
+                  
+                  <h1 className="text-3xl font-bold text-gray-900 leading-tight">
+                    {heroContent.main_tagline || 'Main Tagline Here'}
+                  </h1>
+                  
+                  <p className="text-xl text-gray-700 font-medium">
+                    {heroContent.sub_headline || 'Sub Headline Here'}
+                  </p>
+                  
+                  <p className="text-gray-600 leading-relaxed">
+                    {heroContent.description || 'Description text will appear here'}
+                  </p>
+                  
+                  <div className="flex flex-col gap-2 pt-4">
+                    <Button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+                      {heroContent.cta_primary || 'Primary CTA'}
+                    </Button>
+                    <Button variant="outline" className="border-2 border-orange-500 text-orange-600">
+                      {heroContent.cta_secondary || 'Secondary CTA'}
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
+            </div>
           </TabsContent>
 
           {/* Founder Content Tab */}
