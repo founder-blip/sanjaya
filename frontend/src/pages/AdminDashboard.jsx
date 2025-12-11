@@ -105,6 +105,12 @@ const AdminDashboard = () => {
     }
   };
 
+  const openPublicSiteWithCacheBust = () => {
+    // Open public site with timestamp to bypass cache
+    const timestamp = new Date().getTime();
+    window.open(`/?v=${timestamp}`, '_blank');
+  };
+
   const saveFounderContent = async () => {
     setIsLoading(true);
     try {
@@ -251,14 +257,16 @@ const AdminDashboard = () => {
               <CardContent className="p-6">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-lg font-bold text-gray-900">Live Preview</h3>
-                  <Button
-                    onClick={() => window.open('/', '_blank')}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    Open Website
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={openPublicSiteWithCacheBust}
+                      className="bg-green-600 hover:bg-green-700 text-white gap-2"
+                      size="sm"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      View Changes (No Cache)
+                    </Button>
+                  </div>
                 </div>
                 
                 <div className="bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 rounded-2xl p-6 space-y-4">
