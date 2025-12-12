@@ -594,6 +594,213 @@ class BackendTester:
             self.log_result("Admin CMS Access", False, f"General error: {str(e)}")
             return False
 
+    def test_inquiry_submission(self):
+        """Test POST /api/inquiries endpoint for form submission"""
+        try:
+            # Test valid inquiry submission
+            test_inquiry = {
+                "parent_name": "Sarah Johnson",
+                "email": "sarah.johnson@example.com",
+                "phone": "+91 9876543210",
+                "child_name": "Emma Johnson",
+                "child_age": 10,
+                "school_name": "Greenwood Elementary School",
+                "message": "I'm interested in enrolling my daughter Emma in the Sanjaya program. She's been struggling with confidence lately and I think having a caring observer to talk to would really help her."
+            }
+            
+            response = requests.post(
+                f"{API_BASE}/inquiries",
+                json=test_inquiry,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['success', 'message', 'inquiry_id']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Inquiry Submission", False, f"Missing required field '{field}' in response", data)
+                        return False
+                
+                # Check success status
+                if not data.get('success'):
+                    self.log_result("Inquiry Submission", False, f"Success field is False: {data}")
+                    return False
+                
+                # Check inquiry_id is valid UUID format
+                inquiry_id = data.get('inquiry_id')
+                if not inquiry_id or len(inquiry_id) < 10:
+                    self.log_result("Inquiry Submission", False, f"Invalid inquiry_id: {inquiry_id}")
+                    return False
+                
+                self.log_result("Inquiry Submission", True, f"Inquiry submitted successfully with ID: {inquiry_id}")
+                self.test_inquiry_id = inquiry_id  # Store for later tests
+                return True
+                
+            else:
+                self.log_result("Inquiry Submission", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Inquiry Submission", False, f"Request error: {str(e)}")
+            return False
+
+    def test_inquiry_validation(self):
+        """Test form validation for inquiry submission"""
+        try:
+            # Test cases for validation
+            validation_tests = [
+                {
+                    "name": "Missing parent_name",
+                    "data": {
+                        "email": "test@example.com",
+                        "phone": "+91 1234567890",
+                        "child_name": "Test Child",
+                        "child_age": 10
+                    },
+                    "expected_status": [400, 422]
+                },
+                {
+                    "name": "Missing email",
+                    "data": {
+                        "parent_name": "Test Parent",
+                        "phone": "+91 1234567890",
+                        "child_name": "Test Child",
+                        "child_age": 10
+                    },
+                    "expected_status": [400, 422]
+                },
+                {
+                    "name": "Invalid email format",
+                    "data": {
+                        "parent_name": "Test Parent",
+                        "email": "invalid-email",
+                        "phone": "+91 1234567890",
+                        "child_name": "Test Child",
+                        "child_age": 10
+                    },
+                    "expected_status": [400, 422]
+                },
+                {
+                    "name": "Missing child_age",
+                    "data": {
+                        "parent_name": "Test Parent",
+                        "email": "test@example.com",
+                        "phone": "+91 1234567890",
+                        "child_name": "Test Child"
+                    },
+                    "expected_status": [400, 422]
+                },
+                {
+                    "name": "Invalid child_age (too young)",
+                    "data": {
+                        "parent_name": "Test Parent",
+                        "email": "test@example.com",
+                        "phone": "+91 1234567890",
+                        "child_name": "Test Child",
+                        "child_age": 3
+                    },
+                    "expected_status": [200, 400, 422]  # May accept but note it
+                },
+                {
+                    "name": "Invalid child_age (too old)",
+                    "data": {
+                        "parent_name": "Test Parent",
+                        "email": "test@example.com",
+                        "phone": "+91 1234567890",
+                        "child_name": "Test Child",
+                        "child_age": 25
+                    },
+                    "expected_status": [200, 400, 422]  # May accept but note it
+                }
+            ]
+            
+            all_passed = True
+            
+            for test_case in validation_tests:
+                try:
+                    response = requests.post(
+                        f"{API_BASE}/inquiries",
+                        json=test_case["data"],
+                        headers={"Content-Type": "application/json"},
+                        timeout=10
+                    )
+                    
+                    if response.status_code in test_case["expected_status"]:
+                        if response.status_code == 200:
+                            self.log_result(f"Validation - {test_case['name']}", True, f"Accepted (HTTP 200) - validation may be lenient")
+                        else:
+                            self.log_result(f"Validation - {test_case['name']}", True, f"Correctly rejected with HTTP {response.status_code}")
+                    else:
+                        self.log_result(f"Validation - {test_case['name']}", False, f"Expected HTTP {test_case['expected_status']}, got {response.status_code}")
+                        all_passed = False
+                        
+                except Exception as e:
+                    self.log_result(f"Validation - {test_case['name']}", False, f"Request error: {str(e)}")
+                    all_passed = False
+            
+            return all_passed
+            
+        except Exception as e:
+            self.log_result("Inquiry Validation", False, f"General error: {str(e)}")
+            return False
+
+    def test_admin_inquiries_view(self):
+        """Test admin endpoint for viewing inquiries"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Inquiries View", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Test admin inquiries endpoint
+            response = requests.get(f"{API_BASE}/admin/inquiries", headers=headers, timeout=10)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check if response is a list
+                if not isinstance(data, list):
+                    self.log_result("Admin Inquiries View", False, f"Expected list response, got {type(data)}")
+                    return False
+                
+                # Check if we have at least one inquiry (from previous test)
+                if len(data) == 0:
+                    self.log_result("Admin Inquiries View", True, "Admin inquiries endpoint accessible but no inquiries found (may need to submit one first)")
+                    return True
+                
+                # Check structure of first inquiry
+                first_inquiry = data[0]
+                required_fields = ['id', 'parent_name', 'email', 'child_name', 'child_age', 'status', 'created_at']
+                
+                for field in required_fields:
+                    if field not in first_inquiry:
+                        self.log_result("Admin Inquiries View", False, f"Missing required field '{field}' in inquiry data")
+                        return False
+                
+                self.log_result("Admin Inquiries View", True, f"Admin inquiries view working correctly, found {len(data)} inquiries")
+                return True
+                
+            elif response.status_code == 404:
+                self.log_result("Admin Inquiries View", False, "Admin inquiries endpoint not found (may not be implemented yet)")
+                return False
+            else:
+                self.log_result("Admin Inquiries View", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Inquiries View", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("=" * 60)
