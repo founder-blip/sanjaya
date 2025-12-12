@@ -38,9 +38,11 @@ const Navigation = () => {
             <Link to="/principal" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               For Principals
             </Link>
-            <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full">
-              Get Started
-            </Button>
+            <Link to="/get-started">
+              <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full">
+                Get Started
+              </Button>
+            </Link>
           </div>
           
           {/* Mobile Menu Button */}
@@ -97,9 +99,11 @@ const Navigation = () => {
             >
               For Principals
             </Link>
-            <Button className="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full">
-              Get Started
-            </Button>
+            <Link to="/get-started" onClick={() => setIsMenuOpen(false)}>
+              <Button className="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full">
+                Get Started
+              </Button>
+            </Link>
           </div>
         )}
       </div>
