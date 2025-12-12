@@ -768,18 +768,26 @@ class BackendTester:
             if response.status_code == 200:
                 data = response.json()
                 
-                # Check if response is a list
-                if not isinstance(data, list):
-                    self.log_result("Admin Inquiries View", False, f"Expected list response, got {type(data)}")
+                # Check if response has the expected structure
+                if not isinstance(data, dict) or 'inquiries' not in data or 'total' not in data:
+                    self.log_result("Admin Inquiries View", False, f"Expected dict with 'inquiries' and 'total' fields, got {type(data)} with keys: {list(data.keys()) if isinstance(data, dict) else 'N/A'}")
+                    return False
+                
+                inquiries_list = data['inquiries']
+                total_count = data['total']
+                
+                # Check if inquiries is a list
+                if not isinstance(inquiries_list, list):
+                    self.log_result("Admin Inquiries View", False, f"Expected inquiries to be a list, got {type(inquiries_list)}")
                     return False
                 
                 # Check if we have at least one inquiry (from previous test)
-                if len(data) == 0:
+                if len(inquiries_list) == 0:
                     self.log_result("Admin Inquiries View", True, "Admin inquiries endpoint accessible but no inquiries found (may need to submit one first)")
                     return True
                 
                 # Check structure of first inquiry
-                first_inquiry = data[0]
+                first_inquiry = inquiries_list[0]
                 required_fields = ['id', 'parent_name', 'email', 'child_name', 'child_age', 'status', 'created_at']
                 
                 for field in required_fields:
@@ -787,7 +795,12 @@ class BackendTester:
                         self.log_result("Admin Inquiries View", False, f"Missing required field '{field}' in inquiry data")
                         return False
                 
-                self.log_result("Admin Inquiries View", True, f"Admin inquiries view working correctly, found {len(data)} inquiries")
+                # Check if total count matches list length
+                if total_count != len(inquiries_list):
+                    self.log_result("Admin Inquiries View", False, f"Total count mismatch: total={total_count}, list length={len(inquiries_list)}")
+                    return False
+                
+                self.log_result("Admin Inquiries View", True, f"Admin inquiries view working correctly, found {len(inquiries_list)} inquiries (total: {total_count})")
                 return True
                 
             elif response.status_code == 404:
