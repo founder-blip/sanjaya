@@ -553,6 +553,7 @@ class BackendTester:
             self.test_root_endpoint,
             self.test_status_endpoints,
             self.test_public_content_endpoints,
+            self.test_new_cms_content_endpoints,
             self.test_admin_authentication_protection,
             self.test_admin_content_update_and_sync,
             self.test_chat_endpoint_basic,
