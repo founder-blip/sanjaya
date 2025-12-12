@@ -58,6 +58,12 @@ const AdminDashboard = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    if (selectedPage === 'inquiries') {
+      loadInquiries();
+    }
+  }, [selectedPage]);
+
   const getAuthHeaders = () => {
     const token = localStorage.getItem('admin_token');
     return {
