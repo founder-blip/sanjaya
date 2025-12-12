@@ -546,6 +546,53 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
         </Tabs>
+        )}
+
+        {/* Other Pages - Simple JSON Editor for now */}
+        {selectedPage !== 'home' && (
+          <Card>
+            <CardContent className="p-6">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Edit {selectedPage.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} Page
+                </h2>
+                <p className="text-gray-600">
+                  Use the JSON editor below to modify page content. Changes will reflect immediately on the public page after saving.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <p className="text-sm text-blue-800">
+                  💡 <strong>Tip:</strong> This page uses JSON format for editing. A visual editor will be added soon. 
+                  Make sure to maintain the JSON structure when editing.
+                </p>
+              </div>
+
+              <Textarea
+                className="font-mono text-sm h-96 mb-4"
+                placeholder="Loading content..."
+                defaultValue="Content management for this page coming soon..."
+              />
+
+              <div className="flex gap-4">
+                <Button
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white gap-2"
+                  disabled
+                >
+                  <Save className="w-4 h-4" />
+                  Save Changes (Coming Soon)
+                </Button>
+                <Button
+                  onClick={openPublicSiteWithCacheBust}
+                  className="bg-green-600 hover:bg-green-700 text-white gap-2"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  View Page (No Cache)
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
