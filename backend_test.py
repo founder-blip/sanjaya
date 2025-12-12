@@ -476,6 +476,55 @@ class BackendTester:
         except Exception as e:
             self.log_result("Public Content Endpoints", False, f"Request error: {str(e)}")
             return False
+
+    def test_new_cms_content_endpoints(self):
+        """Test all 6 new CMS content endpoints from the integration"""
+        try:
+            # Test the 6 new content endpoints mentioned in the review request
+            new_endpoints = [
+                ("/content/about", "About Page Content"),
+                ("/content/faq", "FAQ Page Content"),
+                ("/content/how-it-works-page", "How It Works Page Content"),
+                ("/content/observer", "Observer Page Content"),
+                ("/content/principal", "Principal Page Content"),
+                ("/content/get-started", "Get Started Page Content")
+            ]
+            
+            all_passed = True
+            
+            for endpoint, name in new_endpoints:
+                try:
+                    response = requests.get(f"{API_BASE}{endpoint}", timeout=10)
+                    
+                    if response.status_code == 200:
+                        data = response.json()
+                        
+                        # Check if we got valid JSON data
+                        if isinstance(data, dict):
+                            # Check if it has some content (not just empty dict)
+                            if data:  # Non-empty dict
+                                self.log_result(f"CMS Content - {name}", True, f"Endpoint working, returned valid data with {len(data)} fields")
+                            else:  # Empty dict - still valid but note it
+                                self.log_result(f"CMS Content - {name}", True, f"Endpoint accessible but returned empty data (may need seeding)")
+                        else:
+                            self.log_result(f"CMS Content - {name}", False, f"Invalid response format: expected dict, got {type(data)}")
+                            all_passed = False
+                    else:
+                        self.log_result(f"CMS Content - {name}", False, f"HTTP {response.status_code}: {response.text}")
+                        all_passed = False
+                        
+                except requests.exceptions.Timeout:
+                    self.log_result(f"CMS Content - {name}", False, "Request timeout")
+                    all_passed = False
+                except Exception as e:
+                    self.log_result(f"CMS Content - {name}", False, f"Request error: {str(e)}")
+                    all_passed = False
+            
+            return all_passed
+            
+        except Exception as e:
+            self.log_result("New CMS Content Endpoints", False, f"General error: {str(e)}")
+            return False
     
     def test_admin_authentication_protection(self):
         """Test that admin endpoints are properly protected"""
