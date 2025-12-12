@@ -115,8 +115,8 @@ class DynamicPagesTester:
             if response.status_code == 200:
                 data = response.json()
                 
-                # Check for expected FAQ page fields
-                expected_fields = ['hero_title', 'faq_items']
+                # Check for expected FAQ page fields (actual field names from API)
+                expected_fields = ['hero_title', 'faqs']  # Note: it's 'faqs' not 'faq_items'
                 missing_fields = []
                 
                 for field in expected_fields:
@@ -128,7 +128,7 @@ class DynamicPagesTester:
                     return False
                 
                 # Check FAQ items structure
-                faq_items = data.get('faq_items', [])
+                faq_items = data.get('faqs', [])  # Use correct field name
                 if not isinstance(faq_items, list):
                     self.log_result("Dynamic FAQ Page", False, f"FAQ items should be a list, got {type(faq_items)}")
                     return False
@@ -144,7 +144,12 @@ class DynamicPagesTester:
                         self.log_result("Dynamic FAQ Page", False, "FAQ items should have 'question' and 'answer' fields")
                         return False
                 
-                self.log_result("Dynamic FAQ Page", True, f"FAQ page API working correctly with {len(faq_items)} FAQ items")
+                # Check for CTA section
+                if 'cta_title' not in data:
+                    self.log_result("Dynamic FAQ Page", False, "Missing CTA title section")
+                    return False
+                
+                self.log_result("Dynamic FAQ Page", True, f"FAQ page API working correctly with {len(faq_items)} FAQ items and CTA section")
                 return True
                 
             else:
