@@ -74,15 +74,29 @@ class DynamicPagesTester:
                     self.log_result("Dynamic About Page", False, f"Expected at least 4 core values, got {len(core_values) if isinstance(core_values, list) else 'invalid format'}")
                     return False
                 
-                # Check for intent sections
-                intent_fields = ['for_children', 'for_parents', 'for_families']
-                has_intent_sections = any(field in data for field in intent_fields)
+                # Check for intent sections (actual field names from API)
+                intent_fields = ['intent_for_children', 'intent_for_parents', 'intent_for_families']
+                missing_intent_fields = []
                 
-                if not has_intent_sections:
-                    self.log_result("Dynamic About Page", False, "Missing intent sections (for_children, for_parents, for_families)")
+                for field in intent_fields:
+                    if field not in data:
+                        missing_intent_fields.append(field)
+                
+                if missing_intent_fields:
+                    self.log_result("Dynamic About Page", False, f"Missing intent sections: {missing_intent_fields}")
                     return False
                 
-                self.log_result("Dynamic About Page", True, f"About page API working correctly with {len(data)} fields including hero content, core values, and intent sections")
+                # Check for "What We're Not" list
+                if 'what_we_are_not' not in data:
+                    self.log_result("Dynamic About Page", False, "Missing 'what_we_are_not' list")
+                    return False
+                
+                what_we_are_not = data.get('what_we_are_not', [])
+                if not isinstance(what_we_are_not, list) or len(what_we_are_not) < 3:
+                    self.log_result("Dynamic About Page", False, f"Expected at least 3 'what we are not' items, got {len(what_we_are_not) if isinstance(what_we_are_not, list) else 'invalid format'}")
+                    return False
+                
+                self.log_result("Dynamic About Page", True, f"About page API working correctly with {len(data)} fields including hero content, {len(core_values)} core values, intent sections, and {len(what_we_are_not)} 'what we are not' items")
                 return True
                 
             else:
