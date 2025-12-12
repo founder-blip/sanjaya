@@ -189,3 +189,26 @@ class GetStartedContent(BaseModel):
     form_description: str
     success_message: str
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Inquiry/Contact Form Model
+class InquirySubmission(BaseModel):
+    parent_name: str
+    email: str
+    phone: str
+    child_name: str
+    child_age: int
+    school_name: Optional[str] = ""
+    message: Optional[str] = ""
+
+class Inquiry(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    parent_name: str
+    email: str
+    phone: str
+    child_name: str
+    child_age: int
+    school_name: str
+    message: str
+    status: str = "new"  # new, contacted, enrolled, closed
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    notes: Optional[str] = ""
