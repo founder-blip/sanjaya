@@ -16,6 +16,7 @@ const API = `${BACKEND_URL}/api`;
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPage, setSelectedPage] = useState('home');
   const [activeTab, setActiveTab] = useState('hero');
 
   // Content states
@@ -187,6 +188,29 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Page Selector */}
+        <div className="mb-6">
+          <Label className="text-lg font-semibold mb-2 block">Select Page to Edit</Label>
+          <select
+            value={selectedPage}
+            onChange={(e) => {
+              setSelectedPage(e.target.value);
+              setActiveTab('hero');
+            }}
+            className="w-full max-w-md px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"
+          >
+            <option value="home">🏠 Homepage Content</option>
+            <option value="about">ℹ️ About Page</option>
+            <option value="faq">❓ FAQ Page</option>
+            <option value="how-it-works">🔧 How It Works Page</option>
+            <option value="observer">👁️ For Observers Page</option>
+            <option value="principal">🏫 For Principals Page</option>
+            <option value="get-started">🚀 Get Started Page</option>
+          </select>
+        </div>
+
+        {/* Homepage Content */}
+        {selectedPage === 'home' && (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-4 w-full mb-8">
             <TabsTrigger value="hero">Hero Section</TabsTrigger>
