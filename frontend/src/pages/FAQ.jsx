@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '../components/ui/card';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +35,29 @@ const FAQItem = ({ question, answer }) => {
 };
 
 const FAQ = () => {
-  const faqs = [
+  const [content, setContent] = useState({
+    hero_title: 'Frequently Asked Questions',
+    hero_description: 'Clear answers to common questions about Sanjaya.',
+    faqs: [],
+    cta_title: 'Still Have Questions?',
+    cta_description: 'We\'re here to help. Reach out anytime.'
+  });
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/content/faq`);
+        if (response.data && Object.keys(response.data).length > 0) {
+          setContent(response.data);
+        }
+      } catch (error) {
+        console.error('Error loading FAQ content:', error);
+      }
+    };
+    loadContent();
+  }, []);
+
+  const faqs = content.faqs.length > 0 ? content.faqs : [
     {
       question: "Is this therapy or counseling?",
       answer: "No. Sanjaya is not therapy, counseling, or clinical treatment. We provide gentle emotional support through daily check-ins. Observers are trained listeners, not therapists. If your child needs professional mental health care, please consult a licensed professional."
@@ -103,10 +128,10 @@ const FAQ = () => {
       <section className="pt-32 pb-16 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Frequently Asked Questions
+            {content.hero_title}
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Clear answers to common questions about Sanjaya.
+            {content.hero_description}
           </p>
         </div>
       </section>
@@ -124,10 +149,10 @@ const FAQ = () => {
       <section className="py-16 px-4 bg-blue-50">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Still Have Questions?
+            {content.cta_title}
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            We're here to help. Reach out anytime.
+            {content.cta_description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
