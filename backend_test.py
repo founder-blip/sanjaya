@@ -543,6 +543,57 @@ class BackendTester:
             self.log_result("Admin Auth Protection", False, f"Request error: {str(e)}")
             return False
 
+    def test_admin_cms_endpoints_access(self):
+        """Test that admin CMS endpoints are accessible with proper authentication"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin CMS Access", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Test admin endpoints for the 6 new CMS pages
+            admin_endpoints = [
+                ("/admin/content/about", "About Admin"),
+                ("/admin/content/faq", "FAQ Admin"),
+                ("/admin/content/how-it-works-page", "How It Works Page Admin"),
+                ("/admin/content/observer", "Observer Admin"),
+                ("/admin/content/principal", "Principal Admin"),
+                ("/admin/content/get-started", "Get Started Admin")
+            ]
+            
+            all_passed = True
+            
+            for endpoint, name in admin_endpoints:
+                try:
+                    response = requests.get(f"{API_BASE}{endpoint}", headers=headers, timeout=10)
+                    
+                    if response.status_code == 200:
+                        data = response.json()
+                        if isinstance(data, dict):
+                            self.log_result(f"Admin CMS - {name}", True, f"Admin endpoint accessible, returned {len(data)} fields")
+                        else:
+                            self.log_result(f"Admin CMS - {name}", False, f"Invalid response format: expected dict, got {type(data)}")
+                            all_passed = False
+                    else:
+                        self.log_result(f"Admin CMS - {name}", False, f"HTTP {response.status_code}: {response.text}")
+                        all_passed = False
+                        
+                except Exception as e:
+                    self.log_result(f"Admin CMS - {name}", False, f"Request error: {str(e)}")
+                    all_passed = False
+            
+            return all_passed
+            
+        except Exception as e:
+            self.log_result("Admin CMS Access", False, f"General error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("=" * 60)
