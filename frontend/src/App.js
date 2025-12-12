@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import HowItWorks from './pages/HowItWorks';
 import FAQ from './pages/FAQ';
+import GetStarted from './pages/GetStarted';
 import ObserverLanding from './pages/ObserverLanding';
 import PrincipalLanding from './pages/PrincipalLanding';
 import AdminLogin from './pages/AdminLogin';
@@ -20,6 +21,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/get-started" element={<GetStarted />} />
           <Route path="/observer" element={<ObserverLanding />} />
           <Route path="/principal" element={<PrincipalLanding />} />
           <Route path="/admin/login" element={<AdminLogin />} />
