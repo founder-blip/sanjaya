@@ -208,3 +208,111 @@ async def update_contact_info(content: ContactInfo, payload: dict = Depends(veri
     await db.contact_info.insert_one(content_dict)
     
     return {"message": "Contact info updated successfully"}
+
+# About Page
+@router.get("/content/about")
+async def get_about_content(payload: dict = Depends(verify_token)):
+    content = await db.about_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content
+
+@router.put("/content/about")
+async def update_about_content(content: AboutContent, payload: dict = Depends(verify_token)):
+    content_dict = content.dict()
+    content_dict['updated_at'] = datetime.utcnow()
+    
+    await db.about_content.delete_many({})
+    await db.about_content.insert_one(content_dict)
+    
+    return {"message": "About content updated successfully"}
+
+# FAQ Page
+@router.get("/content/faq")
+async def get_faq_content(payload: dict = Depends(verify_token)):
+    content = await db.faq_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content
+
+@router.put("/content/faq")
+async def update_faq_content(content: FAQContent, payload: dict = Depends(verify_token)):
+    content_dict = content.dict()
+    content_dict['updated_at'] = datetime.utcnow()
+    
+    await db.faq_content.delete_many({})
+    await db.faq_content.insert_one(content_dict)
+    
+    return {"message": "FAQ content updated successfully"}
+
+# How It Works Page
+@router.get("/content/how-it-works-page")
+async def get_how_it_works_page_content(payload: dict = Depends(verify_token)):
+    content = await db.how_it_works_page_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content
+
+@router.put("/content/how-it-works-page")
+async def update_how_it_works_page_content(content: HowItWorksPageContent, payload: dict = Depends(verify_token)):
+    content_dict = content.dict()
+    content_dict['updated_at'] = datetime.utcnow()
+    
+    await db.how_it_works_page_content.delete_many({})
+    await db.how_it_works_page_content.insert_one(content_dict)
+    
+    return {"message": "How It Works page content updated successfully"}
+
+# Observer Landing Page
+@router.get("/content/observer")
+async def get_observer_content(payload: dict = Depends(verify_token)):
+    content = await db.observer_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content
+
+@router.put("/content/observer")
+async def update_observer_content(content: ObserverContent, payload: dict = Depends(verify_token)):
+    content_dict = content.dict()
+    content_dict['updated_at'] = datetime.utcnow()
+    
+    await db.observer_content.delete_many({})
+    await db.observer_content.insert_one(content_dict)
+    
+    return {"message": "Observer content updated successfully"}
+
+# Principal Landing Page
+@router.get("/content/principal")
+async def get_principal_content(payload: dict = Depends(verify_token)):
+    content = await db.principal_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content
+
+@router.put("/content/principal")
+async def update_principal_content(content: PrincipalContent, payload: dict = Depends(verify_token)):
+    content_dict = content.dict()
+    content_dict['updated_at'] = datetime.utcnow()
+    
+    await db.principal_content.delete_many({})
+    await db.principal_content.insert_one(content_dict)
+    
+    return {"message": "Principal content updated successfully"}
+
+# Get Started Page
+@router.get("/content/get-started")
+async def get_get_started_content(payload: dict = Depends(verify_token)):
+    content = await db.get_started_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content
+
+@router.put("/content/get-started")
+async def update_get_started_content(content: GetStartedContent, payload: dict = Depends(verify_token)):
+    content_dict = content.dict()
+    content_dict['updated_at'] = datetime.utcnow()
+    
+    await db.get_started_content.delete_many({})
+    await db.get_started_content.insert_one(content_dict)
+    
+    return {"message": "Get Started content updated successfully"}
