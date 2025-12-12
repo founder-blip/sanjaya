@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPage, setSelectedPage] = useState('home');
   const [activeTab, setActiveTab] = useState('hero');
+  const [inquiries, setInquiries] = useState([]);
 
   // Content states
   const [heroContent, setHeroContent] = useState({
@@ -85,6 +86,17 @@ const AdminDashboard = () => {
         navigate('/admin/login');
       }
       console.error('Error loading content:', error);
+    }
+  };
+
+  const loadInquiries = async () => {
+    try {
+      const response = await axios.get(`${API}/admin/inquiries`, getAuthHeaders());
+      if (response.data) {
+        setInquiries(response.data.inquiries || []);
+      }
+    } catch (error) {
+      console.error('Error loading inquiries:', error);
     }
   };
 
@@ -206,6 +218,7 @@ const AdminDashboard = () => {
             <option value="observer">👁️ For Observers Page</option>
             <option value="principal">🏫 For Principals Page</option>
             <option value="get-started">🚀 Get Started Page</option>
+            <option value="inquiries">📧 Form Inquiries</option>
           </select>
         </div>
 
@@ -548,8 +561,72 @@ const AdminDashboard = () => {
         </Tabs>
         )}
 
+        {/* Inquiries Management */}
+        {selectedPage === 'inquiries' && (
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Form Inquiries</h2>
+                  <p className="text-gray-600">Manage submissions from the Get Started form</p>
+                </div>
+                <Button onClick={loadInquiries} className="gap-2">
+                  <RefreshCw className="w-4 h-4" />
+                  Refresh
+                </Button>
+              </div>
+
+              {inquiries.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 text-lg">No inquiries yet. Check back later!</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {inquiries.map((inquiry, index) => (
+                    <Card key={inquiry.id || index} className="border-2 border-blue-100">
+                      <CardContent className="p-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <h3 className="font-bold text-lg text-gray-900 mb-3">Parent Information</h3>
+                            <p><strong>Name:</strong> {inquiry.parent_name}</p>
+                            <p><strong>Email:</strong> {inquiry.email}</p>
+                            <p><strong>Phone:</strong> {inquiry.phone}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-lg text-gray-900 mb-3">Child Information</h3>
+                            <p><strong>Name:</strong> {inquiry.child_name}</p>
+                            <p><strong>Age:</strong> {inquiry.child_age}</p>
+                            <p><strong>School:</strong> {inquiry.school_name || 'Not provided'}</p>
+                          </div>
+                        </div>
+                        {inquiry.message && (
+                          <div className="mt-4">
+                            <h3 className="font-bold text-gray-900 mb-2">Message:</h3>
+                            <p className="text-gray-700 bg-gray-50 p-3 rounded-lg">{inquiry.message}</p>
+                          </div>
+                        )}
+                        <div className="mt-4 flex items-center gap-4 text-sm text-gray-600">
+                          <span className={`px-3 py-1 rounded-full ${
+                            inquiry.status === 'new' ? 'bg-green-100 text-green-700' :
+                            inquiry.status === 'contacted' ? 'bg-blue-100 text-blue-700' :
+                            inquiry.status === 'enrolled' ? 'bg-purple-100 text-purple-700' :
+                            'bg-gray-100 text-gray-700'
+                          }`}>
+                            {inquiry.status.charAt(0).toUpperCase() + inquiry.status.slice(1)}
+                          </span>
+                          <span>Submitted: {new Date(inquiry.created_at).toLocaleDateString()}</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
         {/* Other Pages - Simple JSON Editor for now */}
-        {selectedPage !== 'home' && (
+        {selectedPage !== 'home' && selectedPage !== 'inquiries' && (
           <Card>
             <CardContent className="p-6">
               <div className="mb-4">
