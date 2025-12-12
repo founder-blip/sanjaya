@@ -110,6 +110,48 @@ async def get_public_contact_info():
         content['_id'] = str(content['_id'])
     return content or {}
 
+@api_router.get("/content/about")
+async def get_public_about_content():
+    content = await db.about_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/faq")
+async def get_public_faq_content():
+    content = await db.faq_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/how-it-works-page")
+async def get_public_how_it_works_page_content():
+    content = await db.how_it_works_page_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/observer")
+async def get_public_observer_content():
+    content = await db.observer_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/principal")
+async def get_public_principal_content():
+    content = await db.principal_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
+@api_router.get("/content/get-started")
+async def get_public_get_started_content():
+    content = await db.get_started_content.find_one()
+    if content:
+        content['_id'] = str(content['_id'])
+    return content or {}
+
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat(chat_message: ChatMessage):
     try:
