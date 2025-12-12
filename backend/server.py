@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
@@ -51,6 +51,15 @@ class ChatHistoryItem(BaseModel):
     role: str
     content: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class InquirySubmission(BaseModel):
+    parent_name: str
+    email: str
+    phone: str
+    child_name: str
+    child_age: int
+    school_name: Optional[str] = ""
+    message: Optional[str] = ""
 
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
@@ -151,6 +160,35 @@ async def get_public_get_started_content():
     if content:
         content['_id'] = str(content['_id'])
     return content or {}
+
+@api_router.post("/inquiries")
+async def submit_inquiry(inquiry: InquirySubmission):
+    """Public endpoint for submitting Get Started form"""
+    try:
+        inquiry_doc = {
+            "id": str(uuid.uuid4()),
+            "parent_name": inquiry.parent_name,
+            "email": inquiry.email,
+            "phone": inquiry.phone,
+            "child_name": inquiry.child_name,
+            "child_age": inquiry.child_age,
+            "school_name": inquiry.school_name or "",
+            "message": inquiry.message or "",
+            "status": "new",
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "notes": ""
+        }
+        
+        await db.inquiries.insert_one(inquiry_doc)
+        
+        return {
+            "success": True,
+            "message": "Inquiry submitted successfully",
+            "inquiry_id": inquiry_doc["id"]
+        }
+    except Exception as e:
+        logging.error(f"Error submitting inquiry: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error submitting inquiry")
 
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat(chat_message: ChatMessage):
