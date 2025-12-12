@@ -8,7 +8,7 @@ from models import (
     AdminLogin, HeroContent, FounderContent, WhatIsSanjaya,
     WhatWeOffer, HowItWorks, TrustSafety, ContactInfo,
     AboutContent, FAQContent, HowItWorksPageContent,
-    ObserverContent, PrincipalContent, GetStartedContent
+    ObserverContent, PrincipalContent, GetStartedContent, Inquiry
 )
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
@@ -316,3 +316,23 @@ async def update_get_started_content(content: GetStartedContent, payload: dict =
     await db.get_started_content.insert_one(content_dict)
     
     return {"message": "Get Started content updated successfully"}
+
+# Inquiries Management
+@router.get("/inquiries")
+async def get_all_inquiries(payload: dict = Depends(verify_token)):
+    """Get all form inquiries for admin view"""
+    inquiries = await db.inquiries.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    return {"inquiries": inquiries, "total": len(inquiries)}
+
+@router.put("/inquiries/{inquiry_id}")
+async def update_inquiry_status(inquiry_id: str, status: str, notes: str = "", payload: dict = Depends(verify_token)):
+    """Update inquiry status and add notes"""
+    result = await db.inquiries.update_one(
+        {"id": inquiry_id},
+        {"$set": {"status": status, "notes": notes}}
+    )
+    
+    if result.modified_count > 0:
+        return {"message": "Inquiry updated successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Inquiry not found")
