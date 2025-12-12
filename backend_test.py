@@ -606,6 +606,7 @@ class BackendTester:
             self.test_public_content_endpoints,
             self.test_new_cms_content_endpoints,
             self.test_admin_authentication_protection,
+            self.test_admin_cms_endpoints_access,
             self.test_admin_content_update_and_sync,
             self.test_chat_endpoint_basic,
             self.test_chat_context_persistence,
