@@ -6,7 +6,9 @@ from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from models import (
     AdminLogin, HeroContent, FounderContent, WhatIsSanjaya,
-    WhatWeOffer, HowItWorks, TrustSafety, ContactInfo
+    WhatWeOffer, HowItWorks, TrustSafety, ContactInfo,
+    AboutContent, FAQContent, HowItWorksPageContent,
+    ObserverContent, PrincipalContent, GetStartedContent
 )
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
