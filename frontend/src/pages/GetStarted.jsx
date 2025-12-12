@@ -29,12 +29,17 @@ const GetStarted = () => {
     setIsSubmitting(true);
 
     try {
-      // For now, just simulate submission
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setIsSubmitted(true);
+      // Convert childAge to number
+      const submissionData = {
+        ...formData,
+        childAge: parseInt(formData.childAge)
+      };
       
-      // In production, you would send to backend:
-      // await axios.post(`${BACKEND_URL}/api/inquiries`, formData);
+      const response = await axios.post(`${BACKEND_URL}/api/inquiries`, submissionData);
+      
+      if (response.data.success) {
+        setIsSubmitted(true);
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('There was an error submitting your form. Please try again.');
