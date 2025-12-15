@@ -326,3 +326,47 @@ async def get_child_appointments(child_id: str, current_user: dict = Depends(ver
 
 # Import uuid at top of file
 import uuid
+
+
+# ==================== GUARDIAN MANAGEMENT (PARENT VIEW) ====================
+
+@router.get("/child/{child_id}/co-guardians")
+async def get_co_guardians(
+    child_id: str,
+    current_user: dict = Depends(verify_parent_token)
+):
+    """Get all co-guardians for a child (excluding current user)"""
+    try:
+        parent_id = current_user['id']
+        
+        # Verify parent has access to this child
+        child = await db.children.find_one({
+            "id": child_id,
+            "parent_ids": parent_id
+        }, {"_id": 0})
+        
+        if not child:
+            raise HTTPException(status_code=404, detail="Child not found or access denied")
+        
+        # Get all guardians except current user
+        co_guardians = []
+        for guardian_id in child.get('parent_ids', []):
+            if guardian_id != parent_id:
+                guardian = await db.parents.find_one(
+                    {"id": guardian_id},
+                    {"_id": 0, "hashed_password": 0}
+                )
+                if guardian:
+                    co_guardians.append(guardian)
+        
+        return {
+            "child": child,
+            "co_guardians": co_guardians,
+            "total_guardians": len(child.get('parent_ids', []))
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching co-guardians: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to load co-guardians")
+
