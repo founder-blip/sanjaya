@@ -29,10 +29,15 @@ const GetStarted = () => {
     setIsSubmitting(true);
 
     try {
-      // Convert childAge to number
+      // Convert to snake_case for backend
       const submissionData = {
-        ...formData,
-        childAge: parseInt(formData.childAge)
+        parent_name: formData.parentName,
+        email: formData.email,
+        phone: formData.phone,
+        child_name: formData.childName,
+        child_age: parseInt(formData.childAge),
+        school_name: formData.schoolName,
+        message: formData.message
       };
       
       const response = await axios.post(`${BACKEND_URL}/api/inquiries`, submissionData);
