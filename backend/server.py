@@ -13,6 +13,7 @@ import uuid
 from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from admin_routes import router as admin_router
+from parent_routes import router as parent_router
 
 
 ROOT_DIR = Path(__file__).parent
