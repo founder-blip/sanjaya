@@ -428,11 +428,16 @@ parent_routes.set_database(db)
 import phase2_routes
 phase2_routes.set_database(db)
 
+# Set database for phase 3 routes
+import phase3_routes
+phase3_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
 app.include_router(parent_router, prefix="/api")
 app.include_router(phase2_router, prefix="/api")
+app.include_router(phase3_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
