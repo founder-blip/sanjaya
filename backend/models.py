@@ -366,3 +366,89 @@ class ChildStreak(BaseModel):
     last_session_date: Optional[str] = None
     total_sessions: int = 0
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Phase 3: Mood Journal Models
+class MoodEntry(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    observer_id: str
+    session_id: Optional[str] = None  # Link to session note if logged during session
+    mood: str  # "very_happy", "happy", "neutral", "sad", "very_sad"
+    mood_emoji: str  # "😊", "🙂", "😐", "😔", "😢"
+    notes: Optional[str] = ""
+    triggers: List[str] = []  # What affected the mood
+    logged_date: str  # YYYY-MM-DD format
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Phase 3: Goal Setting Models
+class Goal(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    observer_id: str  # Who created the goal
+    title: str
+    description: str
+    category: str  # "emotional", "social", "academic", "behavioral"
+    target_date: Optional[str] = None  # YYYY-MM-DD
+    progress: int = 0  # 0-100
+    status: str = "active"  # "active", "completed", "paused", "cancelled"
+    milestones: List[dict] = []  # [{"text": "...", "completed": true/false}]
+    parent_notes: Optional[str] = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    completed_at: Optional[datetime] = None
+
+# Phase 3: Community Forum Models
+class ForumPost(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    parent_id: str  # Anonymous to others, but tracked for moderation
+    category: str  # "emotional_support", "school_issues", "activities", "general"
+    title: str
+    content: str
+    is_anonymous: bool = True  # Always true for now
+    likes_count: int = 0
+    comments_count: int = 0
+    is_pinned: bool = False
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ForumComment(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    post_id: str
+    parent_id: str  # Anonymous to others
+    content: str
+    is_anonymous: bool = True
+    likes_count: int = 0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ForumLike(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    parent_id: str
+    target_id: str  # post_id or comment_id
+    target_type: str  # "post" or "comment"
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Phase 3: Group Coaching Sessions Models
+class GroupSession(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: str
+    facilitator_name: str
+    facilitator_title: str
+    topic: str  # "managing_emotions", "communication_skills", "parent_wellness", etc.
+    session_date: datetime
+    duration_minutes: int = 60
+    max_participants: int = 20
+    current_participants: int = 0
+    meeting_link: Optional[str] = ""
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class SessionRegistration(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    session_id: str
+    parent_id: str
+    parent_name: str
+    parent_email: str
+    status: str = "registered"  # "registered", "attended", "cancelled", "no_show"
+    registered_at: datetime = Field(default_factory=datetime.utcnow)
+
