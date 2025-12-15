@@ -418,6 +418,10 @@ async def chat(chat_message: ChatMessage):
 import admin_routes
 admin_routes.set_database(db)
 
+# Set database for parent routes
+import parent_routes
+parent_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
