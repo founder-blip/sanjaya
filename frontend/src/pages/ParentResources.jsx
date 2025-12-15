@@ -148,7 +148,9 @@ const ParentResources = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
+                </div>
+              )}
+            </>
           )}
 
           {/* Articles Tab */}
@@ -180,7 +182,9 @@ const ParentResources = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
