@@ -209,6 +209,7 @@ const ParentDashboard = () => {
 
       {/* Children Selector */}
       <div className="max-w-7xl mx-auto px-4 mb-6">
+        <h3 className="text-sm font-semibold text-gray-600 mb-3 px-2">Your Children</h3>
         <div className="flex gap-4">
           {children.map((child) => (
             <Card
@@ -221,7 +222,21 @@ const ParentDashboard = () => {
               }`}
             >
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg">{child.name}</h3>
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-bold text-lg">{child.name}</h3>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/parent/co-guardians/${child.id}`);
+                    }}
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 px-2 text-xs"
+                  >
+                    <Users className="w-3 h-3 mr-1" />
+                    Guardians
+                  </Button>
+                </div>
                 <p className="text-sm text-gray-600">Age {child.age} • {child.grade}</p>
                 <p className="text-xs text-gray-500 mt-1">{child.school}</p>
               </CardContent>
