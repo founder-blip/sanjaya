@@ -593,8 +593,13 @@ const AdminDashboard = () => {
           <InquiriesManager inquiries={inquiries} loadInquiries={loadInquiries} />
         )}
 
+        {/* Guardian Management */}
+        {selectedPage === 'guardians' && (
+          <GuardianManager />
+        )}
+
         {/* Other Pages - Simple JSON Editor for now */}
-        {selectedPage !== 'home' && selectedPage !== 'inquiries' && (
+        {selectedPage !== 'home' && selectedPage !== 'inquiries' && selectedPage !== 'guardians' && (
           <Card>
             <CardContent className="p-6">
               <div className="mb-4">
