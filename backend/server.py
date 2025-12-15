@@ -23,6 +23,41 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# Email configuration
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'founder@sanjaya.com')
+
+if RESEND_API_KEY and RESEND_API_KEY != 're_placeholder_get_real_key_from_resend':
+    resend.api_key = RESEND_API_KEY
+    logger.info("Resend email service configured")
+else:
+    logger.warning("Resend API key not configured - emails will be logged only")
+
+async def send_email_async(to_email: str, subject: str, html_content: str):
+    """Send email using Resend API (non-blocking)"""
+    if not RESEND_API_KEY or RESEND_API_KEY == 're_placeholder_get_real_key_from_resend':
+        logger.info(f"[EMAIL MOCK] To: {to_email}, Subject: {subject}")
+        return {"status": "mocked", "message": "Email mocked (API key not configured)"}
+    
+    try:
+        params = {
+            "from": SENDER_EMAIL,
+            "to": [to_email],
+            "subject": subject,
+            "html": html_content
+        }
+        
+        email_response = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Email sent to {to_email}: {email_response.get('id')}")
+        return {"status": "success", "email_id": email_response.get("id")}
+    except Exception as e:
+        logger.error(f"Failed to send email to {to_email}: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
 # Create the main app without a prefix
 app = FastAPI()
 
