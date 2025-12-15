@@ -6,7 +6,7 @@ import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { RefreshCw, Search, Download, Trash2, ChevronDown, ChevronUp, Mail, Phone, User, Calendar } from 'lucide-react';
 import axios from 'axios';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../hooks/use-toast';
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
