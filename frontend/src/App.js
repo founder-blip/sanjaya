@@ -12,6 +12,9 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ParentLogin from './pages/ParentLogin';
 import ParentDashboard from './pages/ParentDashboard';
+import ParentMessages from './pages/ParentMessages';
+import ParentResources from './pages/ParentResources';
+import ParentRewards from './pages/ParentRewards';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -30,6 +33,9 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/parent/login" element={<ParentLogin />} />
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
+          <Route path="/parent/messages" element={<ParentMessages />} />
+          <Route path="/parent/resources" element={<ParentResources />} />
+          <Route path="/parent/rewards/:childId" element={<ParentRewards />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
