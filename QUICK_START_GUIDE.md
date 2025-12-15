@@ -4,7 +4,7 @@
 
 ### 1️⃣ Access Enhanced Admin Dashboard
 
-**URL:** https://sanjaya-support.preview.emergentagent.com/admin/dashboard
+**URL:** https://youth-support-3.preview.emergentagent.com/admin/dashboard
 
 **Login:**
 - Username: `admin`
@@ -88,7 +88,7 @@ It will:
    ```
 
 4. **Test:**
-   - Go to https://sanjaya-support.preview.emergentagent.com/get-started
+   - Go to https://youth-support-3.preview.emergentagent.com/get-started
    - Submit a form
    - Check your email!
 

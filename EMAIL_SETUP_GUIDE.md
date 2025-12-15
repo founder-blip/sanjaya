@@ -54,7 +54,7 @@
 ## Testing Email System
 
 ### Test 1: Submit a Form
-1. Go to https://sanjaya-support.preview.emergentagent.com/get-started
+1. Go to https://youth-support-3.preview.emergentagent.com/get-started
 2. Fill out the form with your own email
 3. Submit
 4. Check your inbox for confirmation email
