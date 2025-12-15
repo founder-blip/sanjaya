@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '../components/ui/card';
 import { Phone, Heart, Users, FileText, TrendingUp, CheckCircle, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const HowItWorks = () => {
+  const [content, setContent] = useState({
+    hero_title: 'How Sanjaya Works',
+    hero_description: 'A simple, gentle process designed around your child\'s comfort and your peace of mind.',
+    steps: [],
+    cta_title: 'Ready to Get Started?',
+    cta_description: 'Give your child the gift of being heard.'
+  });
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/content/how-it-works-page`);
+        if (response.data && Object.keys(response.data).length > 0) {
+          setContent(response.data);
+        }
+      } catch (error) {
+        console.error('Error loading how it works content:', error);
+      }
+    };
+    loadContent();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
