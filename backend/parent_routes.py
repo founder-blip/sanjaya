@@ -17,10 +17,13 @@ import logging
 
 router = APIRouter()
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# Database will be set by main server.py
+db = None
+
+def set_database(database):
+    """Set the database instance from main server"""
+    global db
+    db = database
 
 # JWT configuration
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'your-secret-key-change-in-production')
