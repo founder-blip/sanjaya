@@ -153,6 +153,8 @@ class ObserverContent(BaseModel):
     application_steps: List[dict]
     cta_title: str
     cta_description: str
+    cta_button_text: Optional[str] = "Apply Now"
+    cta_button_link: Optional[str] = "/get-started"
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 # Principal Landing Page Models
@@ -180,6 +182,8 @@ class PrincipalContent(BaseModel):
     pricing_description: str
     cta_title: str
     cta_description: str
+    cta_button_text: Optional[str] = "Schedule Demo"
+    cta_button_link: Optional[str] = "/get-started"
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 # Get Started Page Models
