@@ -101,15 +101,22 @@ const ParentRewards = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="bg-white/10 rounded-lg p-4">
+                <div className="bg-white/10 backdrop-blur rounded-lg p-4">
                   <p className="text-white/80 text-sm">Longest Streak</p>
                   <p className="text-2xl font-bold">{rewards.streak.longest_streak} days</p>
                 </div>
-                <div className="bg-white/10 rounded-lg p-4">
+                <div className="bg-white/10 backdrop-blur rounded-lg p-4">
                   <p className="text-white/80 text-sm">Total Sessions</p>
                   <p className="text-2xl font-bold">{rewards.streak.total_sessions}</p>
                 </div>
               </div>
+              
+              {rewards.streak.last_session_date && (
+                <div className="mt-4 bg-white/10 backdrop-blur rounded-lg p-3">
+                  <p className="text-white/80 text-xs">Last Session</p>
+                  <p className="text-sm font-semibold">{new Date(rewards.streak.last_session_date).toLocaleDateString()}</p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
