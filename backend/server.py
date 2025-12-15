@@ -16,6 +16,8 @@ from admin_routes import router as admin_router
 from parent_routes import router as parent_router
 from phase2_routes import router as phase2_router
 from phase3_routes import router as phase3_router
+from observer_routes import router as observer_router
+from principal_routes import router as principal_router
 
 
 ROOT_DIR = Path(__file__).parent
@@ -432,12 +434,22 @@ phase2_routes.set_database(db)
 import phase3_routes
 phase3_routes.set_database(db)
 
+# Set database for observer routes
+import observer_routes
+observer_routes.set_database(db)
+
+# Set database for principal routes
+import principal_routes
+principal_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
 app.include_router(parent_router, prefix="/api")
 app.include_router(phase2_router, prefix="/api")
 app.include_router(phase3_router, prefix="/api")
+app.include_router(observer_router, prefix="/api")
+app.include_router(principal_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
