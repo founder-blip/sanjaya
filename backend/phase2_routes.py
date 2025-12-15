@@ -103,8 +103,9 @@ async def send_message(
             raise HTTPException(status_code=404, detail="Conversation not found")
         
         # Create message
+        message_id = str(uuid.uuid4())
         message = {
-            "id": str(uuid.uuid4()),
+            "id": message_id,
             "conversation_id": conversation_id,
             "sender_id": parent_id,
             "sender_type": "parent",
@@ -130,7 +131,19 @@ async def send_message(
             }
         )
         
-        return {"success": True, "message": message}
+        # Return message without _id
+        return {"success": True, "message": {
+            "id": message_id,
+            "conversation_id": conversation_id,
+            "sender_id": parent_id,
+            "sender_type": "parent",
+            "recipient_id": conversation['observer_id'],
+            "recipient_type": "observer",
+            "child_id": conversation['child_id'],
+            "message_text": message_text,
+            "read": False,
+            "created_at": message['created_at']
+        }}
     except HTTPException:
         raise
     except Exception as e:
