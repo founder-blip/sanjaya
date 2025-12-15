@@ -10,6 +10,8 @@ import ObserverLanding from './pages/ObserverLanding';
 import PrincipalLanding from './pages/PrincipalLanding';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import ParentLogin from './pages/ParentLogin';
+import ParentDashboard from './pages/ParentDashboard';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route path="/principal" element={<PrincipalLanding />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/parent/login" element={<ParentLogin />} />
+          <Route path="/parent/dashboard" element={<ParentDashboard />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
