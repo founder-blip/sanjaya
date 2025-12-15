@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { LogOut, Calendar, TrendingUp, Clock, User, Heart, MessageCircle, Book, Award } from 'lucide-react';
+import { LogOut, Calendar, TrendingUp, Clock, User, Heart, MessageCircle, Book, Award, Smile, Target, Users, Video } from 'lucide-react';
 import Navigation from '../components/Navigation';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -144,9 +144,10 @@ const ParentDashboard = () => {
         </div>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - Phase 2 & 3 */}
       <div className="max-w-7xl mx-auto px-4 -mt-6 mb-6">
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <h3 className="text-sm font-semibold text-gray-600 mb-3 px-2">Engagement Tools</h3>
+        <div className="grid grid-cols-3 gap-4 mb-4">
           <Button
             onClick={() => navigate('/parent/messages')}
             className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
@@ -168,6 +169,40 @@ const ParentDashboard = () => {
           >
             <Award className="w-5 h-5 mr-2" />
             Rewards
+          </Button>
+        </div>
+        
+        <h3 className="text-sm font-semibold text-gray-600 mb-3 px-2">Tracking & Community</h3>
+        <div className="grid grid-cols-4 gap-4">
+          <Button
+            onClick={() => selectedChild && navigate(`/parent/mood-journal/${selectedChild.id}`)}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+            disabled={!selectedChild}
+          >
+            <Smile className="w-5 h-5 mr-2" />
+            Mood Journal
+          </Button>
+          <Button
+            onClick={() => selectedChild && navigate(`/parent/goals/${selectedChild.id}`)}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+            disabled={!selectedChild}
+          >
+            <Target className="w-5 h-5 mr-2" />
+            Goals
+          </Button>
+          <Button
+            onClick={() => navigate('/parent/community')}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+          >
+            <Users className="w-5 h-5 mr-2" />
+            Community
+          </Button>
+          <Button
+            onClick={() => navigate('/parent/group-sessions')}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+          >
+            <Video className="w-5 h-5 mr-2" />
+            Sessions
           </Button>
         </div>
       </div>
