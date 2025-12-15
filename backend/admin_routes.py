@@ -336,3 +336,165 @@ async def update_inquiry_status(inquiry_id: str, status: str, notes: str = "", p
         return {"message": "Inquiry updated successfully"}
     else:
         raise HTTPException(status_code=404, detail="Inquiry not found")
+
+
+# ==================== GUARDIAN MANAGEMENT ====================
+
+@router.get("/children")
+async def get_all_children(current_user: dict = Depends(verify_token)):
+    """Get all children with their guardians"""
+    try:
+        children = await db.children.find({}, {"_id": 0}).to_list(1000)
+        
+        # For each child, get guardian details
+        for child in children:
+            guardians = []
+            for parent_id in child.get('parent_ids', []):
+                parent = await db.parents.find_one({"id": parent_id}, {"_id": 0, "hashed_password": 0})
+                if parent:
+                    guardians.append(parent)
+            child['guardians'] = guardians
+        
+        return {"children": children}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load children: {str(e)}")
+
+@router.get("/child/{child_id}/guardians")
+async def get_child_guardians(child_id: str, current_user: dict = Depends(verify_token)):
+    """Get all guardians for a specific child"""
+    try:
+        child = await db.children.find_one({"id": child_id}, {"_id": 0})
+        if not child:
+            raise HTTPException(status_code=404, detail="Child not found")
+        
+        guardians = []
+        for parent_id in child.get('parent_ids', []):
+            parent = await db.parents.find_one({"id": parent_id}, {"_id": 0, "hashed_password": 0})
+            if parent:
+                guardians.append(parent)
+        
+        return {"child": child, "guardians": guardians}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load guardians: {str(e)}")
+
+@router.post("/guardian")
+async def create_guardian(
+    name: str,
+    email: str,
+    phone: str,
+    password: str,
+    current_user: dict = Depends(verify_token)
+):
+    """Create a new guardian (parent) account"""
+    try:
+        # Check if email already exists
+        existing = await db.parents.find_one({"email": email})
+        if existing:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        
+        import uuid
+        guardian = {
+            "id": str(uuid.uuid4()),
+            "email": email,
+            "name": name,
+            "phone": phone,
+            "hashed_password": pwd_context.hash(password),
+            "role": "parent",
+            "is_active": True,
+            "created_at": datetime.utcnow().isoformat(),
+            "last_login": None
+        }
+        
+        await db.parents.insert_one(guardian)
+        
+        return {
+            "success": True,
+            "guardian": {
+                "id": guardian["id"],
+                "name": name,
+                "email": email,
+                "phone": phone
+            }
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to create guardian: {str(e)}")
+
+@router.post("/child/{child_id}/guardian")
+async def add_guardian_to_child(
+    child_id: str,
+    guardian_id: str,
+    current_user: dict = Depends(verify_token)
+):
+    """Add an existing guardian to a child"""
+    try:
+        # Verify child exists
+        child = await db.children.find_one({"id": child_id}, {"_id": 0})
+        if not child:
+            raise HTTPException(status_code=404, detail="Child not found")
+        
+        # Verify guardian exists
+        guardian = await db.parents.find_one({"id": guardian_id}, {"_id": 0})
+        if not guardian:
+            raise HTTPException(status_code=404, detail="Guardian not found")
+        
+        # Check if already added
+        if guardian_id in child.get('parent_ids', []):
+            raise HTTPException(status_code=400, detail="Guardian already has access to this child")
+        
+        # Add guardian to child's parent_ids
+        await db.children.update_one(
+            {"id": child_id},
+            {"$push": {"parent_ids": guardian_id}}
+        )
+        
+        return {"success": True, "message": "Guardian added successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add guardian: {str(e)}")
+
+@router.delete("/child/{child_id}/guardian/{guardian_id}")
+async def remove_guardian_from_child(
+    child_id: str,
+    guardian_id: str,
+    current_user: dict = Depends(verify_token)
+):
+    """Remove a guardian from a child"""
+    try:
+        # Verify child exists
+        child = await db.children.find_one({"id": child_id}, {"_id": 0})
+        if not child:
+            raise HTTPException(status_code=404, detail="Child not found")
+        
+        # Check if this is the last guardian
+        if len(child.get('parent_ids', [])) <= 1:
+            raise HTTPException(status_code=400, detail="Cannot remove the last guardian. Child must have at least one guardian.")
+        
+        # Remove guardian from child's parent_ids
+        result = await db.children.update_one(
+            {"id": child_id},
+            {"$pull": {"parent_ids": guardian_id}}
+        )
+        
+        if result.modified_count == 0:
+            raise HTTPException(status_code=404, detail="Guardian not found for this child")
+        
+        return {"success": True, "message": "Guardian removed successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to remove guardian: {str(e)}")
+
+@router.get("/guardians")
+async def get_all_guardians(current_user: dict = Depends(verify_token)):
+    """Get all guardian (parent) accounts"""
+    try:
+        guardians = await db.parents.find({}, {"_id": 0, "hashed_password": 0}).to_list(1000)
+        return {"guardians": guardians}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load guardians: {str(e)}")
+
