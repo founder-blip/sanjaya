@@ -14,10 +14,10 @@ const HowItWorks = () => {
       <section className="pt-32 pb-16 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            How Sanjaya Works
+            {content.hero_title}
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
-            A simple, gentle process designed around your child's comfort and your peace of mind.
+            {content.hero_description}
           </p>
         </div>
       </section>
@@ -218,10 +218,10 @@ const HowItWorks = () => {
       <section className="py-16 px-4 bg-blue-50">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Ready to Get Started?
+            {content.cta_title}
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Give your child the gift of being heard.
+            {content.cta_description}
           </p>
           <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-full shadow-lg">
             Request Information
