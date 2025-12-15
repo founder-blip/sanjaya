@@ -49,7 +49,7 @@ async def get_conversation_messages(
         conversation = await db.conversations.find_one({
             "id": conversation_id,
             "parent_id": parent_id
-        })
+        }, {"_id": 0})
         
         if not conversation:
             raise HTTPException(status_code=404, detail="Conversation not found")
