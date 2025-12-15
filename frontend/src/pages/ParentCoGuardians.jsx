@@ -32,7 +32,7 @@ const ParentCoGuardians = () => {
   const loadCoGuardians = async () => {
     try {
       const response = await axios.get(
-        `${BACKEND_URL}/api/parent/child/${childId}/co-guardians`,
+        `${BACKEND_URL}/api/child/${childId}/co-guardians`,
         getAuthHeaders()
       );
       setData(response.data);
