@@ -38,6 +38,9 @@ const Navigation = () => {
             <Link to="/principal" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               For Principals
             </Link>
+            <Link to="/parent/login" className="text-gray-700 hover:text-green-600 transition-colors font-medium">
+              Parent Portal
+            </Link>
             <Link to="/get-started">
               <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full">
                 Get Started
