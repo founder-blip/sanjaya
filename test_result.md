@@ -333,6 +333,18 @@ backend:
           agent: "testing"
           comment: "✅ Complete end-to-end form flow working perfectly. Verified full cycle: Form submission via POST /api/inquiries → Data storage in MongoDB → Admin dashboard retrieval via GET /api/admin/inquiries → Data integrity maintained throughout. Submitted inquiry data matches exactly in admin view with proper status, timestamps, and all field values preserved."
 
+  - task: "Form Submission Fix Verification (User Reported Issue)"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ CRITICAL USER ISSUE RESOLVED! Form submission fix verified with comprehensive end-to-end testing. Tested realistic form submission (Priya Sharma family inquiry) - form data properly processed, stored in MongoDB with inquiry_id 'b96e7bcd-7041-4657-93f6-bf93b11d0f32', and successfully retrieved via admin dashboard. All field values preserved (parent_name, email, phone, child_name, child_age, school_name, message). Data integrity confirmed. The camelCase to snake_case conversion issue has been fixed and form submission is working correctly."
+
 frontend:
   - task: "Home Page UI Components"
     implemented: true
