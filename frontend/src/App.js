@@ -15,6 +15,10 @@ import ParentDashboard from './pages/ParentDashboard';
 import ParentMessages from './pages/ParentMessages';
 import ParentResources from './pages/ParentResources';
 import ParentRewards from './pages/ParentRewards';
+import ParentMoodJournal from './pages/ParentMoodJournal';
+import ParentGoals from './pages/ParentGoals';
+import ParentCommunity from './pages/ParentCommunity';
+import ParentGroupSessions from './pages/ParentGroupSessions';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -36,6 +40,10 @@ function App() {
           <Route path="/parent/messages" element={<ParentMessages />} />
           <Route path="/parent/resources" element={<ParentResources />} />
           <Route path="/parent/rewards/:childId" element={<ParentRewards />} />
+          <Route path="/parent/mood-journal/:childId" element={<ParentMoodJournal />} />
+          <Route path="/parent/goals/:childId" element={<ParentGoals />} />
+          <Route path="/parent/community" element={<ParentCommunity />} />
+          <Route path="/parent/group-sessions" element={<ParentGroupSessions />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
