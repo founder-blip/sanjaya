@@ -23,6 +23,8 @@ class HeroContent(BaseModel):
     description: str
     cta_primary: str
     cta_secondary: str
+    cta_primary_link: Optional[str] = "/get-started"
+    cta_secondary_link: Optional[str] = "/how-it-works"
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class FounderContent(BaseModel):
