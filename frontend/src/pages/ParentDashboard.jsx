@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { LogOut, Calendar, TrendingUp, Clock, User, Heart } from 'lucide-react';
+import { LogOut, Calendar, TrendingUp, Clock, User, Heart, MessageCircle, Book, Award } from 'lucide-react';
 import Navigation from '../components/Navigation';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -144,8 +144,36 @@ const ParentDashboard = () => {
         </div>
       </div>
 
-      {/* Children Selector */}
+      {/* Quick Actions */}
       <div className="max-w-7xl mx-auto px-4 -mt-6 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <Button
+            onClick={() => navigate('/parent/messages')}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+          >
+            <MessageCircle className="w-5 h-5 mr-2" />
+            Messages
+          </Button>
+          <Button
+            onClick={() => navigate('/parent/resources')}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+          >
+            <Book className="w-5 h-5 mr-2" />
+            Resources
+          </Button>
+          <Button
+            onClick={() => selectedChild && navigate(`/parent/rewards/${selectedChild.id}`)}
+            className="bg-white text-gray-900 hover:bg-gray-50 border-2 border-gray-200 h-16"
+            disabled={!selectedChild}
+          >
+            <Award className="w-5 h-5 mr-2" />
+            Rewards
+          </Button>
+        </div>
+      </div>
+
+      {/* Children Selector */}
+      <div className="max-w-7xl mx-auto px-4 mb-6">
         <div className="flex gap-4">
           {children.map((child) => (
             <Card
