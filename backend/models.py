@@ -218,3 +218,75 @@ class Inquiry(BaseModel):
     status: str = "new"  # new, contacted, enrolled, closed
     created_at: datetime = Field(default_factory=datetime.utcnow)
     notes: Optional[str] = ""
+
+# Phase 1: Parent Dashboard & User Management Models
+class ParentUser(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: str
+    name: str
+    phone: str
+    hashed_password: str
+    role: str = "parent"  # parent, observer, principal
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    last_login: Optional[datetime] = None
+
+class Child(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    age: int
+    date_of_birth: Optional[str] = ""
+    school: Optional[str] = ""
+    grade: Optional[str] = ""
+    parent_ids: List[str] = []  # Multiple guardians support
+    observer_id: Optional[str] = None
+    enrollment_date: datetime = Field(default_factory=datetime.utcnow)
+    status: str = "active"  # active, paused, inactive
+    notes: Optional[str] = ""
+
+class SessionNote(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    observer_id: str
+    session_date: datetime
+    duration_minutes: int = 5
+    mood_rating: Optional[int] = None  # 1-5 scale
+    engagement_level: Optional[str] = ""  # low, medium, high
+    topics_discussed: List[str] = []
+    key_observations: str
+    concerns: Optional[str] = ""
+    recommended_activities: List[str] = []
+    parent_visible: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ProgressMetric(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    metric_type: str  # emotional_regulation, confidence, communication
+    score: int  # 1-10 scale
+    notes: str
+    recorded_by: str  # observer_id
+    recorded_at: datetime = Field(default_factory=datetime.utcnow)
+
+class Appointment(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    observer_id: str
+    scheduled_time: datetime
+    duration_minutes: int = 5
+    status: str = "scheduled"  # scheduled, completed, cancelled, missed
+    reminder_sent: bool = False
+    notes: Optional[str] = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Authentication Models
+class ParentLogin(BaseModel):
+    email: str
+    password: str
+
+class ParentRegistration(BaseModel):
+    email: str
+    name: str
+    phone: str
+    password: str
