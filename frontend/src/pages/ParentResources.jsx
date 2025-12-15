@@ -117,37 +117,37 @@ const ParentResources = () => {
               ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {activities.map((activity) => (
-                <Card
-                  key={activity.id}
-                  className="hover:shadow-lg transition-shadow cursor-pointer"
-                  onClick={() => setSelectedActivity(activity)}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-bold text-lg">{activity.title}</h3>
-                      <span className={`text-xs font-semibold ${getDifficultyColor(activity.difficulty)}`}>
-                        {activity.difficulty.toUpperCase()}
-                      </span>
-                    </div>
-                    
-                    <p className="text-gray-600 text-sm mb-4">{activity.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className={`text-xs px-2 py-1 rounded-full ${getCategoryColor(activity.category)}`}>
-                        {activity.category.replace('_', ' ')}
-                      </span>
-                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
-                        Ages {activity.age_range}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {activity.duration_minutes} minutes
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    <Card
+                      key={activity.id}
+                      className="hover:shadow-lg transition-shadow cursor-pointer"
+                      onClick={() => setSelectedActivity(activity)}
+                    >
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-3">
+                          <h3 className="font-bold text-lg">{activity.title}</h3>
+                          <span className={`text-xs font-semibold ${getDifficultyColor(activity.difficulty)}`}>
+                            {activity.difficulty.toUpperCase()}
+                          </span>
+                        </div>
+                        
+                        <p className="text-gray-600 text-sm mb-4">{activity.description}</p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          <span className={`text-xs px-2 py-1 rounded-full ${getCategoryColor(activity.category)}`}>
+                            {activity.category.replace('_', ' ')}
+                          </span>
+                          <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
+                            Ages {activity.age_range}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {activity.duration_minutes} minutes
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
               )}
             </>
