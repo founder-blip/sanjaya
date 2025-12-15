@@ -10,7 +10,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const ParentDashboard = () => {
   const navigate = useNavigate();
-  const [dashboard Data, setDashboardData] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedChild, setSelectedChild] = useState(null);
 
