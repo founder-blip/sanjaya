@@ -421,6 +421,7 @@ admin_routes.set_database(db)
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
+app.include_router(parent_router)
 
 app.add_middleware(
     CORSMiddleware,
