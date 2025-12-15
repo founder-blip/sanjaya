@@ -164,24 +164,24 @@ const ParentResources = () => {
               ) : (
                 <div className="space-y-4">
                   {articles.map((article) => (
-                <Card key={article.id} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <h3 className="font-bold text-xl mb-2">{article.title}</h3>
-                        <p className="text-gray-600 mb-3">{article.excerpt}</p>
-                        <div className="flex gap-4 text-sm text-gray-500">
-                          <span className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {article.read_time_minutes} min read
-                          </span>
-                          <span>By {article.author}</span>
+                    <Card key={article.id} className="hover:shadow-lg transition-shadow">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-xl mb-2">{article.title}</h3>
+                            <p className="text-gray-600 mb-3">{article.excerpt}</p>
+                            <div className="flex gap-4 text-sm text-gray-500">
+                              <span className="flex items-center">
+                                <Clock className="w-4 h-4 mr-1" />
+                                {article.read_time_minutes} min read
+                              </span>
+                              <span>By {article.author}</span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
               )}
             </>
