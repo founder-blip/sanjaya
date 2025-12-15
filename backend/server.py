@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from admin_routes import router as admin_router
 from parent_routes import router as parent_router
+from phase2_routes import router as phase2_router
 
 
 ROOT_DIR = Path(__file__).parent
@@ -422,10 +423,15 @@ admin_routes.set_database(db)
 import parent_routes
 parent_routes.set_database(db)
 
+# Set database for phase 2 routes
+import phase2_routes
+phase2_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
 app.include_router(parent_router, prefix="/api")
+app.include_router(phase2_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
