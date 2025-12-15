@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { LogOut, Save, RefreshCw } from 'lucide-react';
 import axios from 'axios';
 import { toast } from '../hooks/use-toast';
+import InquiriesManager from '../components/InquiriesManager';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
