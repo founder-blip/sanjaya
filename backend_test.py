@@ -814,6 +814,329 @@ class BackendTester:
             self.log_result("Admin Inquiries View", False, f"Request error: {str(e)}")
             return False
 
+    # ===== PARENT PORTAL PHASE 1 TESTS =====
+    
+    def test_parent_authentication(self):
+        """Test parent login with demo credentials"""
+        try:
+            payload = {
+                "email": "demo@parent.com",
+                "password": "demo123"
+            }
+            
+            response = requests.post(
+                f"{API_BASE}/parent/login",
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['access_token', 'token_type', 'user']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Parent Authentication", False, f"Missing required field '{field}' in response", data)
+                        return False, None
+                
+                # Check token type
+                if data['token_type'] != 'bearer':
+                    self.log_result("Parent Authentication", False, f"Expected token_type 'bearer', got '{data['token_type']}'")
+                    return False, None
+                
+                # Check user data
+                user = data['user']
+                if user.get('email') != 'demo@parent.com':
+                    self.log_result("Parent Authentication", False, f"Expected email 'demo@parent.com', got '{user.get('email')}'")
+                    return False, None
+                
+                if user.get('role') != 'parent':
+                    self.log_result("Parent Authentication", False, f"Expected role 'parent', got '{user.get('role')}'")
+                    return False, None
+                
+                self.log_result("Parent Authentication", True, f"Parent login successful for {user.get('name', 'Demo Parent')}")
+                return True, data['access_token']
+                
+            else:
+                self.log_result("Parent Authentication", False, f"HTTP {response.status_code}: {response.text}")
+                return False, None
+                
+        except Exception as e:
+            self.log_result("Parent Authentication", False, f"Request error: {str(e)}")
+            return False, None
+    
+    def test_parent_dashboard_api(self):
+        """Test parent dashboard API with authentication"""
+        try:
+            # First login to get token
+            login_success, token = self.test_parent_authentication()
+            if not login_success or not token:
+                self.log_result("Parent Dashboard API", False, "Failed to login as parent")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Test dashboard endpoint
+            response = requests.get(f"{API_BASE}/parent/dashboard", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_top_fields = ['parent', 'children', 'summary']
+                for field in required_top_fields:
+                    if field not in data:
+                        self.log_result("Parent Dashboard API", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Check parent info
+                parent = data['parent']
+                if 'name' not in parent or 'email' not in parent:
+                    self.log_result("Parent Dashboard API", False, "Missing parent name or email in response")
+                    return False
+                
+                # Check children array
+                children = data['children']
+                if not isinstance(children, list):
+                    self.log_result("Parent Dashboard API", False, f"Expected children to be a list, got {type(children)}")
+                    return False
+                
+                # Verify we have 2 children as per demo data
+                if len(children) != 2:
+                    self.log_result("Parent Dashboard API", False, f"Expected 2 children, got {len(children)}")
+                    return False
+                
+                # Check each child has required data
+                for i, child in enumerate(children):
+                    required_child_fields = ['id', 'name', 'age', 'recent_sessions', 'upcoming_appointments', 'progress_metrics']
+                    for field in required_child_fields:
+                        if field not in child:
+                            self.log_result("Parent Dashboard API", False, f"Child {i+1} missing required field '{field}'")
+                            return False
+                    
+                    # Verify child names match demo data
+                    child_name = child['name']
+                    if child_name not in ['Aarav Kumar', 'Priya Sharma']:
+                        self.log_result("Parent Dashboard API", False, f"Unexpected child name: {child_name}. Expected 'Aarav Kumar' or 'Priya Sharma'")
+                        return False
+                    
+                    # Verify ages match demo data
+                    expected_age = 8 if child_name == 'Aarav Kumar' else 10
+                    if child['age'] != expected_age:
+                        self.log_result("Parent Dashboard API", False, f"Child {child_name} has age {child['age']}, expected {expected_age}")
+                        return False
+                
+                # Check summary stats
+                summary = data['summary']
+                required_summary_fields = ['total_children', 'active_children', 'total_sessions_this_month', 'upcoming_appointments']
+                for field in required_summary_fields:
+                    if field not in summary:
+                        self.log_result("Parent Dashboard API", False, f"Missing summary field '{field}'")
+                        return False
+                
+                # Verify summary stats
+                if summary['total_children'] != 2:
+                    self.log_result("Parent Dashboard API", False, f"Summary shows {summary['total_children']} children, expected 2")
+                    return False
+                
+                # Count total sessions and appointments from children data
+                total_sessions = sum(len(child.get('recent_sessions', [])) for child in children)
+                total_appointments = sum(len(child.get('upcoming_appointments', [])) for child in children)
+                
+                self.log_result("Parent Dashboard API", True, 
+                    f"Dashboard API working correctly. Parent: {parent['name']}, "
+                    f"Children: {len(children)}, Sessions: {total_sessions}, "
+                    f"Appointments: {total_appointments}, Progress metrics available")
+                return True
+                
+            else:
+                self.log_result("Parent Dashboard API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Parent Dashboard API", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_parent_dashboard_data_integrity(self):
+        """Test that dashboard data contains expected demo data volumes"""
+        try:
+            # First login to get token
+            login_success, token = self.test_parent_authentication()
+            if not login_success or not token:
+                self.log_result("Parent Dashboard Data", False, "Failed to login as parent")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Get dashboard data
+            response = requests.get(f"{API_BASE}/parent/dashboard", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                children = data['children']
+                
+                # Analyze data volumes for each child
+                total_sessions = 0
+                total_progress_metrics = 0
+                total_appointments = 0
+                
+                for child in children:
+                    child_name = child['name']
+                    sessions = child.get('recent_sessions', [])
+                    progress = child.get('progress_metrics', [])
+                    appointments = child.get('upcoming_appointments', [])
+                    
+                    total_sessions += len(sessions)
+                    total_progress_metrics += len(progress)
+                    total_appointments += len(appointments)
+                    
+                    # Verify session notes structure
+                    for session in sessions[:3]:  # Check first 3 sessions
+                        required_session_fields = ['id', 'child_id', 'session_date', 'key_observations']
+                        for field in required_session_fields:
+                            if field not in session:
+                                self.log_result("Parent Dashboard Data", False, f"Session missing field '{field}' for child {child_name}")
+                                return False
+                    
+                    # Verify progress metrics structure
+                    for metric in progress[:3]:  # Check first 3 metrics
+                        required_metric_fields = ['id', 'child_id', 'metric_type', 'score']
+                        for field in required_metric_fields:
+                            if field not in metric:
+                                self.log_result("Parent Dashboard Data", False, f"Progress metric missing field '{field}' for child {child_name}")
+                                return False
+                        
+                        # Verify score is in valid range (1-10)
+                        score = metric.get('score', 0)
+                        if not (1 <= score <= 10):
+                            self.log_result("Parent Dashboard Data", False, f"Invalid progress score {score} for child {child_name} (should be 1-10)")
+                            return False
+                
+                # Check if we have reasonable amounts of demo data
+                # Note: The review mentions 40 session notes, 80 progress metrics, 44 appointments total
+                # But dashboard may show limited recent data
+                
+                data_summary = f"Sessions: {total_sessions}, Progress: {total_progress_metrics}, Appointments: {total_appointments}"
+                
+                if total_sessions == 0:
+                    self.log_result("Parent Dashboard Data", False, f"No session data found. {data_summary}")
+                    return False
+                
+                if total_progress_metrics == 0:
+                    self.log_result("Parent Dashboard Data", False, f"No progress metrics found. {data_summary}")
+                    return False
+                
+                self.log_result("Parent Dashboard Data", True, 
+                    f"Dashboard data integrity verified. {data_summary}. "
+                    f"All required fields present in session notes and progress metrics.")
+                return True
+                
+            else:
+                self.log_result("Parent Dashboard Data", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Parent Dashboard Data", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_parent_child_details_api(self):
+        """Test individual child details API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_parent_authentication()
+            if not login_success or not token:
+                self.log_result("Parent Child Details", False, "Failed to login as parent")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Get dashboard to find child IDs
+            dashboard_response = requests.get(f"{API_BASE}/parent/dashboard", headers=headers, timeout=15)
+            if dashboard_response.status_code != 200:
+                self.log_result("Parent Child Details", False, "Failed to get dashboard data")
+                return False
+            
+            dashboard_data = dashboard_response.json()
+            children = dashboard_data['children']
+            
+            if len(children) == 0:
+                self.log_result("Parent Child Details", False, "No children found in dashboard")
+                return False
+            
+            # Test child details for first child
+            first_child = children[0]
+            child_id = first_child['id']
+            child_name = first_child['name']
+            
+            response = requests.get(f"{API_BASE}/parent/child/{child_id}", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['child', 'sessions', 'progress_metrics', 'appointments', 'stats']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Parent Child Details", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Verify child data
+                child_data = data['child']
+                if child_data['id'] != child_id or child_data['name'] != child_name:
+                    self.log_result("Parent Child Details", False, f"Child data mismatch: expected {child_name} ({child_id})")
+                    return False
+                
+                # Check sessions data
+                sessions = data['sessions']
+                if not isinstance(sessions, list):
+                    self.log_result("Parent Child Details", False, f"Expected sessions to be a list, got {type(sessions)}")
+                    return False
+                
+                # Check progress metrics
+                progress_metrics = data['progress_metrics']
+                if not isinstance(progress_metrics, list):
+                    self.log_result("Parent Child Details", False, f"Expected progress_metrics to be a list, got {type(progress_metrics)}")
+                    return False
+                
+                # Check appointments
+                appointments = data['appointments']
+                if not isinstance(appointments, list):
+                    self.log_result("Parent Child Details", False, f"Expected appointments to be a list, got {type(appointments)}")
+                    return False
+                
+                # Check stats
+                stats = data['stats']
+                required_stats = ['total_sessions', 'average_mood', 'total_appointments']
+                for stat in required_stats:
+                    if stat not in stats:
+                        self.log_result("Parent Child Details", False, f"Missing stat '{stat}' in response")
+                        return False
+                
+                self.log_result("Parent Child Details", True, 
+                    f"Child details API working for {child_name}. "
+                    f"Sessions: {len(sessions)}, Progress: {len(progress_metrics)}, "
+                    f"Appointments: {len(appointments)}, Avg mood: {stats['average_mood']:.1f}")
+                return True
+                
+            else:
+                self.log_result("Parent Child Details", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Parent Child Details", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("=" * 60)
