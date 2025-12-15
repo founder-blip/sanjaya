@@ -18,6 +18,7 @@ const ParentMessages = () => {
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const messagesEndRef = React.useRef(null);
 
   const getAuthHeaders = () => ({
     headers: { Authorization: `Bearer ${localStorage.getItem('parent_token')}` }
@@ -54,6 +55,11 @@ const ParentMessages = () => {
       );
       setMessages(response.data.messages || []);
       setSelectedConversation(response.data.conversation);
+      
+      // Auto-scroll to bottom
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     } catch (error) {
       console.error('Error loading messages:', error);
     }
@@ -65,20 +71,14 @@ const ParentMessages = () => {
     setSending(true);
     try {
       await axios.post(
-        `${BACKEND_URL}/api/parent/messages`,
+        `${BACKEND_URL}/api/parent/messages?conversation_id=${selectedConversation.id}&message_text=${encodeURIComponent(newMessage)}`,
         null,
-        {
-          ...getAuthHeaders(),
-          params: {
-            conversation_id: selectedConversation.id,
-            message_text: newMessage
-          }
-        }
+        getAuthHeaders()
       );
 
       setNewMessage('');
-      loadMessages(selectedConversation.id);
-      loadConversations();
+      await loadMessages(selectedConversation.id);
+      await loadConversations();
     } catch (error) {
       console.error('Error sending message:', error);
       alert('Failed to send message. Please try again.');
@@ -165,27 +165,36 @@ const ParentMessages = () => {
                   <>
                     {/* Messages Area */}
                     <div className="h-96 overflow-y-auto p-4 space-y-4">
-                      {messages.map((msg) => (
-                        <div
-                          key={msg.id}
-                          className={`flex ${msg.sender_type === 'parent' ? 'justify-end' : 'justify-start'}`}
-                        >
-                          <div
-                            className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                              msg.sender_type === 'parent'
-                                ? 'bg-blue-500 text-white'
-                                : 'bg-gray-100 text-gray-900'
-                            }`}
-                          >
-                            <p className="text-sm">{msg.message_text}</p>
-                            <p className={`text-xs mt-1 ${
-                              msg.sender_type === 'parent' ? 'text-blue-100' : 'text-gray-500'
-                            }`}>
-                              {new Date(msg.created_at).toLocaleString()}
-                            </p>
-                          </div>
+                      {messages.length === 0 ? (
+                        <div className="flex items-center justify-center h-full">
+                          <p className="text-gray-400">No messages yet. Start the conversation!</p>
                         </div>
-                      ))}
+                      ) : (
+                        <>
+                          {messages.map((msg) => (
+                            <div
+                              key={msg.id}
+                              className={`flex ${msg.sender_type === 'parent' ? 'justify-end' : 'justify-start'}`}
+                            >
+                              <div
+                                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
+                                  msg.sender_type === 'parent'
+                                    ? 'bg-blue-500 text-white'
+                                    : 'bg-gray-100 text-gray-900'
+                                }`}
+                              >
+                                <p className="text-sm">{msg.message_text}</p>
+                                <p className={`text-xs mt-1 ${
+                                  msg.sender_type === 'parent' ? 'text-blue-100' : 'text-gray-500'
+                                }`}>
+                                  {new Date(msg.created_at).toLocaleString()}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                          <div ref={messagesEndRef} />
+                        </>
+                      )}
                     </div>
 
                     {/* Send Message */}
