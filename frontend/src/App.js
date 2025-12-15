@@ -20,6 +20,10 @@ import ParentGoals from './pages/ParentGoals';
 import ParentCommunity from './pages/ParentCommunity';
 import ParentGroupSessions from './pages/ParentGroupSessions';
 import ParentCoGuardians from './pages/ParentCoGuardians';
+import ObserverLogin from './pages/ObserverLogin';
+import ObserverDashboard from './pages/ObserverDashboard';
+import PrincipalLogin from './pages/PrincipalLogin';
+import PrincipalDashboard from './pages/PrincipalDashboard';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -46,6 +50,14 @@ function App() {
           <Route path="/parent/community" element={<ParentCommunity />} />
           <Route path="/parent/group-sessions" element={<ParentGroupSessions />} />
           <Route path="/parent/co-guardians/:childId" element={<ParentCoGuardians />} />
+          
+          {/* Observer Routes */}
+          <Route path="/observer/login" element={<ObserverLogin />} />
+          <Route path="/observer/dashboard" element={<ObserverDashboard />} />
+          
+          {/* Principal Routes */}
+          <Route path="/principal/login" element={<PrincipalLogin />} />
+          <Route path="/principal/dashboard" element={<PrincipalDashboard />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
