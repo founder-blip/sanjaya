@@ -290,3 +290,79 @@ class ParentRegistration(BaseModel):
     name: str
     phone: str
     password: str
+
+# Phase 2: Messaging System Models
+class Message(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    conversation_id: str  # Links messages together
+    sender_id: str  # parent_id or observer_id
+    sender_type: str  # "parent" or "observer"
+    recipient_id: str
+    recipient_type: str  # "parent" or "observer"
+    child_id: str  # Context of conversation
+    message_text: str
+    read: bool = False
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class Conversation(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    parent_id: str
+    observer_id: str
+    child_id: str
+    last_message: Optional[str] = ""
+    last_message_at: Optional[datetime] = None
+    unread_count_parent: int = 0
+    unread_count_observer: int = 0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Phase 2: Resources & Activities Models
+class Activity(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: str
+    age_range: str  # "5-7", "8-10", "11-13", "14+"
+    category: str  # "emotional_regulation", "communication", "confidence", "social_skills"
+    duration_minutes: int
+    materials_needed: List[str]
+    instructions: List[str]
+    tips: List[str]
+    difficulty: str  # "easy", "medium", "hard"
+    image_url: Optional[str] = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ResourceArticle(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    category: str  # "parenting_tips", "emotional_development", "communication", etc.
+    excerpt: str
+    content: str  # Full article text
+    age_relevant: List[str] = []  # ["5-7", "8-10", etc.]
+    read_time_minutes: int
+    author: str
+    image_url: Optional[str] = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+# Phase 2: Gamification Models
+class Badge(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    description: str
+    icon: str
+    criteria: str  # How to earn it
+    rarity: str  # "common", "rare", "epic", "legendary"
+
+class ChildBadge(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    badge_id: str
+    earned_at: datetime = Field(default_factory=datetime.utcnow)
+    displayed: bool = True
+
+class ChildStreak(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    child_id: str
+    current_streak: int = 0  # Days in a row
+    longest_streak: int = 0
+    last_session_date: Optional[str] = None
+    total_sessions: int = 0
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
