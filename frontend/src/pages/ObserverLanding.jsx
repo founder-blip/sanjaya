@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
@@ -6,9 +6,36 @@ import { Badge } from '../components/ui/badge';
 import { Heart, Clock, BookOpen, Award, TrendingUp, CheckCircle, ArrowRight, Phone } from 'lucide-react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const ObserverLanding = () => {
-  const responsibilities = [
+  const [content, setContent] = useState({
+    hero_title: 'Become an Observer',
+    hero_subtitle: 'Transform lives by simply listening.',
+    responsibilities: [],
+    benefits: [],
+    qualifications: [],
+    cta_title: 'Ready to Make a Difference?',
+    cta_description: 'Join our team of compassionate observers.'
+  });
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/content/observer`);
+        if (response.data && Object.keys(response.data).length > 0) {
+          setContent(response.data);
+        }
+      } catch (error) {
+        console.error('Error loading observer content:', error);
+      }
+    };
+    loadContent();
+  }, []);
+
+  const responsibilities = content.responsibilities.length > 0 ? content.responsibilities : [
     {
       icon: Heart,
       title: 'Listen with Empathy',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
@@ -6,9 +6,36 @@ import { Badge } from '../components/ui/badge';
 import { Users, BarChart3, Shield, Zap, Target, Award, ArrowRight, Phone, CheckCircle } from 'lucide-react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const PrincipalLanding = () => {
-  const features = [
+  const [content, setContent] = useState({
+    hero_title: 'Empower Your Institution',
+    hero_subtitle: 'Transform student outcomes with AI-powered observation.',
+    features: [],
+    benefits: [],
+    testimonials: [],
+    cta_title: 'Ready to Transform Your Institution?',
+    cta_description: 'Join leading schools in providing exceptional care.'
+  });
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/content/principal`);
+        if (response.data && Object.keys(response.data).length > 0) {
+          setContent(response.data);
+        }
+      } catch (error) {
+        console.error('Error loading principal content:', error);
+      }
+    };
+    loadContent();
+  }, []);
+
+  const features = content.features.length > 0 ? content.features : [
     {
       icon: Users,
       title: 'Manage Your Observer Team',
