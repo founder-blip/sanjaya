@@ -1154,6 +1154,12 @@ class BackendTester:
             self.test_inquiry_submission,
             self.test_inquiry_validation,
             self.test_admin_inquiries_view,
+            # Parent Portal Phase 1 Tests
+            self.test_parent_authentication,
+            self.test_parent_dashboard_api,
+            self.test_parent_dashboard_data_integrity,
+            self.test_parent_child_details_api,
+            # Chat functionality tests
             self.test_chat_endpoint_basic,
             self.test_chat_context_persistence,
             self.test_chat_new_session,
