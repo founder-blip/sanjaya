@@ -277,25 +277,43 @@ const AdminDashboard = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label>Primary CTA Button Text</Label>
-                    <Input
-                      value={heroContent.cta_primary}
-                      onChange={(e) => setHeroContent({...heroContent, cta_primary: e.target.value})}
-                      placeholder="Start Free Trial"
-                      className="mt-2"
-                    />
-                  </div>
+                <div className="pt-4 border-t">
+                  <h3 className="font-bold text-lg text-gray-900 mb-4">Call-to-Action Buttons</h3>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                      <Label className="font-semibold text-orange-700">Primary CTA</Label>
+                      <Input
+                        value={heroContent.cta_primary}
+                        onChange={(e) => setHeroContent({...heroContent, cta_primary: e.target.value})}
+                        placeholder="Book a Free Consultation"
+                        className="mt-2 mb-3"
+                      />
+                      <Label className="text-sm text-gray-600">Link URL</Label>
+                      <Input
+                        value={heroContent.cta_primary_link || '/get-started'}
+                        onChange={(e) => setHeroContent({...heroContent, cta_primary_link: e.target.value})}
+                        placeholder="/get-started"
+                        className="mt-1"
+                      />
+                    </div>
 
-                  <div>
-                    <Label>Secondary CTA Button Text</Label>
-                    <Input
-                      value={heroContent.cta_secondary}
-                      onChange={(e) => setHeroContent({...heroContent, cta_secondary: e.target.value})}
-                      placeholder="Watch How It Works"
-                      className="mt-2"
-                    />
+                    <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                      <Label className="font-semibold text-blue-700">Secondary CTA</Label>
+                      <Input
+                        value={heroContent.cta_secondary}
+                        onChange={(e) => setHeroContent({...heroContent, cta_secondary: e.target.value})}
+                        placeholder="Learn How It Works"
+                        className="mt-2 mb-3"
+                      />
+                      <Label className="text-sm text-gray-600">Link URL</Label>
+                      <Input
+                        value={heroContent.cta_secondary_link || '/how-it-works'}
+                        onChange={(e) => setHeroContent({...heroContent, cta_secondary_link: e.target.value})}
+                        placeholder="/how-it-works"
+                        className="mt-1"
+                      />
+                    </div>
                   </div>
                 </div>
 
