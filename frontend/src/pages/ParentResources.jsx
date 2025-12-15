@@ -108,8 +108,15 @@ const ParentResources = () => {
 
           {/* Activities Tab */}
           {activeTab === 'activities' && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {activities.map((activity) => (
+            <>
+              {activities.length === 0 ? (
+                <div className="text-center py-12">
+                  <Target className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-500 text-lg">No activities available yet</p>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {activities.map((activity) => (
                 <Card
                   key={activity.id}
                   className="hover:shadow-lg transition-shadow cursor-pointer"
@@ -146,8 +153,15 @@ const ParentResources = () => {
 
           {/* Articles Tab */}
           {activeTab === 'articles' && (
-            <div className="space-y-4">
-              {articles.map((article) => (
+            <>
+              {articles.length === 0 ? (
+                <div className="text-center py-12">
+                  <Book className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-500 text-lg">No articles available yet</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {articles.map((article) => (
                 <Card key={article.id} className="hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
                     <div className="flex justify-between items-start">
