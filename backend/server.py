@@ -218,13 +218,123 @@ async def submit_inquiry(inquiry: InquirySubmission):
         
         await db.inquiries.insert_one(inquiry_doc)
         
+        # Send email notifications
+        # 1. Admin notification
+        admin_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+                <h2 style="color: #f97316; border-bottom: 2px solid #f97316; padding-bottom: 10px;">
+                    🎉 New Inquiry Received!
+                </h2>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #4f46e5; margin-top: 0;">Parent Information</h3>
+                    <p><strong>Name:</strong> {inquiry.parent_name}</p>
+                    <p><strong>Email:</strong> <a href="mailto:{inquiry.email}">{inquiry.email}</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:{inquiry.phone}">{inquiry.phone}</a></p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #8b5cf6; margin-top: 0;">Child Information</h3>
+                    <p><strong>Name:</strong> {inquiry.child_name}</p>
+                    <p><strong>Age:</strong> {inquiry.child_age} years</p>
+                    <p><strong>School:</strong> {inquiry.school_name or 'Not provided'}</p>
+                </div>
+                
+                {f'''<div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #059669; margin-top: 0;">Parent's Message</h3>
+                    <p style="background: #f3f4f6; padding: 15px; border-radius: 5px; border-left: 4px solid #f97316;">
+                        {inquiry.message}
+                    </p>
+                </div>''' if inquiry.message else ''}
+                
+                <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0;"><strong>📅 Submitted:</strong> {datetime.now(timezone.utc).strftime('%B %d, %Y at %I:%M %p UTC')}</p>
+                    <p style="margin: 10px 0 0 0;"><strong>🆔 Inquiry ID:</strong> {inquiry_doc['id']}</p>
+                </div>
+                
+                <p style="color: #666; font-size: 14px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    Please respond to this inquiry within 24 hours for best parent experience.
+                </p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # 2. Parent confirmation email
+        parent_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+                <h2 style="color: #f97316; border-bottom: 2px solid #f97316; padding-bottom: 10px;">
+                    Thank You for Your Interest in Sanjaya!
+                </h2>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <p>Dear {inquiry.parent_name},</p>
+                    
+                    <p>Thank you for reaching out to us about <strong>{inquiry.child_name}</strong>. We're excited about the opportunity to support your child's emotional growth journey.</p>
+                    
+                    <p><strong>What happens next?</strong></p>
+                    <ol style="color: #666;">
+                        <li>Our team will review your inquiry within 24 hours</li>
+                        <li>We'll contact you at <strong>{inquiry.email}</strong> or <strong>{inquiry.phone}</strong></li>
+                        <li>We'll schedule a call to discuss how Sanjaya can best support {inquiry.child_name}</li>
+                    </ol>
+                </div>
+                
+                <div style="background: #dbeafe; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0;"><strong>Your Inquiry Details:</strong></p>
+                    <p style="margin: 10px 0 0 0;">Child: {inquiry.child_name}, Age {inquiry.child_age}</p>
+                    {f"<p style='margin: 5px 0 0 0;'>School: {inquiry.school_name}</p>" if inquiry.school_name else ""}
+                    <p style="margin: 5px 0 0 0;">Inquiry ID: {inquiry_doc['id']}</p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <p><strong>In the meantime, learn more about Sanjaya:</strong></p>
+                    <ul style="color: #666;">
+                        <li><a href="https://sanjaya-support.preview.emergentagent.com/about" style="color: #f97316;">Why Sanjaya Exists</a></li>
+                        <li><a href="https://sanjaya-support.preview.emergentagent.com/how-it-works" style="color: #f97316;">How It Works</a></li>
+                        <li><a href="https://sanjaya-support.preview.emergentagent.com/faq" style="color: #f97316;">Frequently Asked Questions</a></li>
+                    </ul>
+                </div>
+                
+                <p style="color: #666; font-size: 14px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    If you have any immediate questions, feel free to reply to this email or call us.
+                </p>
+                
+                <p style="color: #666; font-size: 14px;">
+                    Warm regards,<br>
+                    <strong>The Sanjaya Team</strong>
+                </p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Send emails asynchronously (non-blocking)
+        asyncio.create_task(send_email_async(
+            ADMIN_EMAIL,
+            f"🎉 New Inquiry: {inquiry.parent_name} for {inquiry.child_name}",
+            admin_html
+        ))
+        
+        asyncio.create_task(send_email_async(
+            inquiry.email,
+            "Thank You for Your Interest in Sanjaya",
+            parent_html
+        ))
+        
+        logger.info(f"Inquiry submitted and emails queued for {inquiry.email}")
+        
         return {
             "success": True,
             "message": "Inquiry submitted successfully",
             "inquiry_id": inquiry_doc["id"]
         }
     except Exception as e:
-        logging.error(f"Error submitting inquiry: {str(e)}")
+        logger.error(f"Error submitting inquiry: {str(e)}")
         raise HTTPException(status_code=500, detail="Error submitting inquiry")
 
 @api_router.post("/chat", response_model=ChatResponse)
