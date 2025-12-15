@@ -6,6 +6,7 @@ from typing import List
 from models import Message, Conversation, Activity, ResourceArticle, Badge, ChildBadge, ChildStreak
 from parent_routes import verify_parent_token
 import logging
+import uuid
 from datetime import datetime, timezone
 
 router = APIRouter()
@@ -241,5 +242,3 @@ async def get_child_rewards(
     except Exception as e:
         logger.error(f"Error fetching rewards: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to load rewards")
-
-import uuid
