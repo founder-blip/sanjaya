@@ -227,6 +227,7 @@ const AdminDashboard = () => {
             <option value="principal">🏫 For Principals Page</option>
             <option value="get-started">🚀 Get Started Page</option>
             <option value="inquiries">📧 Form Inquiries</option>
+            <option value="guardians">👨‍👩‍👧 Guardian Management</option>
           </select>
         </div>
 
