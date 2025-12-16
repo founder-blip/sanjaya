@@ -143,6 +143,45 @@ const Home = () => {
                     <div>From Parents</div>
                   </div>
                 </div>
+
+              
+              {/* Portal Access Links */}
+              <div className="mt-8 p-5 bg-white/95 backdrop-blur rounded-xl shadow-xl border-2 border-orange-200">
+                <p className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                  <span className="text-xl">🔐</span> Access Your Portal
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <Button 
+                    onClick={() => window.location.href = '/parent/login'}
+                    size="sm"
+                    className="bg-blue-500 hover:bg-blue-600 text-white"
+                  >
+                    👨‍👩‍👧 Parent Login
+                  </Button>
+                  <Button 
+                    onClick={() => window.location.href = '/observer/login'}
+                    size="sm"
+                    className="bg-purple-500 hover:bg-purple-600 text-white"
+                  >
+                    🔍 Observer Login
+                  </Button>
+                  <Button 
+                    onClick={() => window.location.href = '/principal/login'}
+                    size="sm"
+                    className="bg-indigo-500 hover:bg-indigo-600 text-white"
+                  >
+                    🏫 Principal Login
+                  </Button>
+                  <Button 
+                    onClick={() => window.location.href = '/admin/login'}
+                    size="sm"
+                    className="bg-gray-600 hover:bg-gray-700 text-white"
+                  >
+                    ⚙️ Admin Login
+                  </Button>
+                </div>
+              </div>
+
               </div>
             </div>
 
