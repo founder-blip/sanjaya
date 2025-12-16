@@ -4,7 +4,8 @@ AI Report Generation Routes - Generate insights from session logs
 from fastapi import APIRouter, HTTPException
 from datetime import datetime, timezone, timedelta
 import logging
-from emergentintegrations import OpenAIClient
+import uuid
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 router = APIRouter()
 db = None
