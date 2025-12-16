@@ -562,11 +562,20 @@ const Home = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-12 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all">
+              <Button 
+                size="lg" 
+                onClick={scrollToGetStarted}
+                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-12 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
+              >
                 Start Free Trial
                 <ArrowRight className="ml-2" />
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-12 py-7 text-xl rounded-full shadow-lg">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={() => window.location.href = '/contact'}
+                className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-12 py-7 text-xl rounded-full shadow-lg"
+              >
                 <Phone className="mr-2" />
                 Schedule a Call
               </Button>
