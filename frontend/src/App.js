@@ -64,6 +64,7 @@ function App() {
           <Route path="/observer/dashboard" element={<ObserverDashboard />} />
           <Route path="/observer/mood-entry/:childId" element={<ObserverMoodEntry />} />
           <Route path="/observer/goal-create/:childId" element={<ObserverGoalCreate />} />
+          <Route path="/observer/ai-report/:childId" element={<ObserverAIReport />} />
           
           {/* Principal Routes */}
           <Route path="/principal/login" element={<PrincipalLogin />} />
