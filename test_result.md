@@ -858,14 +858,15 @@ metadata:
 
 test_plan:
   current_focus:
-    - "PRIORITY 1 FIXES COMPLETED ✅: All 3 critical issues resolved and verified"
-    - "✅ Issue 1: CTA buttons (Start Free Trial, Schedule a Call) - TESTED & WORKING - navigate to /get-started and /contact correctly"
-    - "✅ Issue 2: About page content - TESTED & WORKING - all sections display properly with dynamic content from API"
-    - "✅ Issue 3: AI Report Generation - TESTED & WORKING - complete Observer portal workflow functional"
-    - "All Priority 1 fixes have been successfully implemented and tested. Ready for production."
-  stuck_tasks: []
+    - "Home Page Redesign Testing - CRITICAL ISSUES FOUND"
+    - "❌ Hero Section: Remove unwanted badge text 'Every Child Deserves To Be Heard And Valued'"
+    - "❌ Hero Section: Fix CTA button text to 'Start Free Trial' and 'Watch How It Works'"
+    - "❌ Hero Section: Fix CTA button navigation to /get-started and /process"
+    - "⚠️ Complete testing of What We Offer expandable cards, How Sanjaya Works horizontal flow, Safety & Privacy tabs"
+  stuck_tasks: 
+    - "Home Page Redesign Testing"
   test_all: false
-  test_priority: "priority_1_fixes_completed"
+  test_priority: "critical_home_redesign_fixes"
 
 agent_communication:
     - agent: "testing"
