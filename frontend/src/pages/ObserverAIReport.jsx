@@ -70,7 +70,7 @@ const ObserverAIReport = () => {
     try {
       const token = localStorage.getItem('observer_token');
       const response = await axios.post(
-        `${BACKEND_URL}/api/ai/observer/generate-report/${childId}?token=${token}&days=${days}`
+        `${BACKEND_URL}/api/observer/generate-report/${childId}?token=${token}&days=${days}`
       );
       
       if (response.data.success) {
