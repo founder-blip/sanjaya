@@ -85,18 +85,11 @@ const Navigation = () => {
               Home
             </Link>
             <Link
-              to="/about"
+              to="/process"
               className="block text-gray-700 hover:text-indigo-600 transition-colors font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
-              About
-            </Link>
-            <Link
-              to="/how-it-works"
-              className="block text-gray-700 hover:text-indigo-600 transition-colors font-medium"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              How It Works
+              Process
             </Link>
             <Link
               to="/faq"
