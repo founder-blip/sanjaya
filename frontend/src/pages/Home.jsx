@@ -564,7 +564,7 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Button 
                 size="lg" 
-                onClick={scrollToGetStarted}
+                onClick={() => window.location.href = '/get-started'}
                 className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-12 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
               >
                 Start Free Trial
