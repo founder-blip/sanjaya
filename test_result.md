@@ -682,6 +682,18 @@ frontend:
           agent: "testing"
           comment: "✅ Home page fully functional. Hero section with title 'Sanjaya – The Observer' and tagline displayed correctly. All 4 playful emoji icons (🎨🎪🎭🎈) visible. Trust badges (100+ Parents, Endorsed by Principals, 100% Private & Secure) present. CTA buttons 'Get Started for Your Child' and 'Learn More' working. Impact stats (100+, 500+, 50+, 95%) displayed correctly."
 
+  - task: "Home Page Redesign Testing"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/Home.jsx"
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL ISSUES FOUND in Home Page Redesign: (1) Hero Section contains unwanted badge text 'Every Child Deserves To Be Heard And Valued' above main heading - this should NOT exist per requirements, (2) CTA buttons have wrong text - found 'Book a Free Consultation' and 'Learn How It Works' instead of required 'Start Free Trial' and 'Watch How It Works', (3) CTA button navigation incorrect - buttons don't navigate to /get-started and /process as required. ✅ PASSED: Founder Section layout correct with proper vertical order. ⚠️ PARTIAL: What is Sanjaya Section has dark gradient background but glow effects need verification. The Hero section has major issues that need immediate fixing before the redesign can be considered ready for production."
+
   - task: "Founder Section"
     implemented: true
     working: true
