@@ -451,18 +451,18 @@ const Home = () => {
             
             <div className="grid grid-cols-6 gap-4">
               {[
-                { step: 1, title: 'Sign Up', icon: '📝', color: 'orange' },
-                { step: 2, title: 'Get Matched', icon: '👥', color: 'blue' },
-                { step: 3, title: 'Daily Check-In', icon: '📞', color: 'purple' },
-                { step: 4, title: 'Patterns Noted', icon: '🧠', color: 'pink' },
-                { step: 5, title: 'Reports Ready', icon: '📊', color: 'green' },
-                { step: 6, title: 'Child Thrives', icon: '🌟', color: 'teal' }
+                { step: 1, title: 'Sign Up', icon: '📝', circleBg: 'bg-orange-500', cardBg: 'bg-orange-50' },
+                { step: 2, title: 'Get Matched', icon: '👥', circleBg: 'bg-blue-500', cardBg: 'bg-blue-50' },
+                { step: 3, title: 'Daily Check-In', icon: '📞', circleBg: 'bg-purple-500', cardBg: 'bg-purple-50' },
+                { step: 4, title: 'Patterns Noted', icon: '🧠', circleBg: 'bg-pink-500', cardBg: 'bg-pink-50' },
+                { step: 5, title: 'Reports Ready', icon: '📊', circleBg: 'bg-green-500', cardBg: 'bg-green-50' },
+                { step: 6, title: 'Child Thrives', icon: '🌟', circleBg: 'bg-teal-500', cardBg: 'bg-teal-50' }
               ].map((item) => (
                 <div key={item.step} className="flex flex-col items-center">
-                  <div className={`w-12 h-12 bg-${item.color}-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10 mb-4`}>
+                  <div className={`w-12 h-12 ${item.circleBg} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10 mb-4`}>
                     {item.step}
                   </div>
-                  <div className={`bg-${item.color}-50 rounded-2xl p-4 text-center w-full`}>
+                  <div className={`${item.cardBg} rounded-2xl p-4 text-center w-full`}>
                     <span className="text-3xl mb-2 block">{item.icon}</span>
                     <h4 className="font-bold text-gray-900 text-sm">{item.title}</h4>
                   </div>
