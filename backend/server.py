@@ -164,9 +164,7 @@ async def get_public_contact_info():
 
 @api_router.get("/content/about")
 async def get_public_about_content():
-    content = await db.about_content.find_one()
-    if content:
-        content['_id'] = str(content['_id'])
+    content = await db.about_content.find_one({}, {"_id": 0})
     return content or {}
 
 @api_router.get("/content/faq")
