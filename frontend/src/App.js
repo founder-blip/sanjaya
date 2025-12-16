@@ -24,6 +24,7 @@ import ObserverLogin from './pages/ObserverLogin';
 import ObserverDashboard from './pages/ObserverDashboard';
 import ObserverMoodEntry from './pages/ObserverMoodEntry';
 import ObserverGoalCreate from './pages/ObserverGoalCreate';
+import ObserverAIReport from './pages/ObserverAIReport';
 import PrincipalLogin from './pages/PrincipalLogin';
 import PrincipalDashboard from './pages/PrincipalDashboard';
 import PrincipalStudents from './pages/PrincipalStudents';
