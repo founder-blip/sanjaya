@@ -28,6 +28,9 @@ import PrincipalLogin from './pages/PrincipalLogin';
 import PrincipalDashboard from './pages/PrincipalDashboard';
 import PrincipalStudents from './pages/PrincipalStudents';
 import PrincipalAnalytics from './pages/PrincipalAnalytics';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -66,6 +69,11 @@ function App() {
           <Route path="/principal/dashboard" element={<PrincipalDashboard />} />
           <Route path="/principal/students" element={<PrincipalStudents />} />
           <Route path="/principal/analytics" element={<PrincipalAnalytics />} />
+          
+          {/* Footer Pages */}
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
