@@ -18,6 +18,7 @@ from phase2_routes import router as phase2_router
 from phase3_routes import router as phase3_router
 from observer_routes import router as observer_router
 from principal_routes import router as principal_router
+from ai_report_routes import router as ai_report_router
 
 
 ROOT_DIR = Path(__file__).parent
@@ -442,6 +443,10 @@ observer_routes.set_database(db)
 import principal_routes
 principal_routes.set_database(db)
 
+# Set database for AI report routes
+import ai_report_routes
+ai_report_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
@@ -450,6 +455,7 @@ app.include_router(phase2_router, prefix="/api")
 app.include_router(phase3_router, prefix="/api")
 app.include_router(observer_router, prefix="/api")
 app.include_router(principal_router, prefix="/api")
+app.include_router(ai_report_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,

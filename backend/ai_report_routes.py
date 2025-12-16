@@ -11,7 +11,7 @@ db = None
 logger = logging.getLogger(__name__)
 
 # Emergent LLM Key for OpenAI
-EMERGENT_API_KEY = "emergent_9f34a56b2e1c7d8f3a4e9b2c5d8e1f4a"
+EMERGENT_API_KEY = "sk-emergent-5A47c973eA392266a9"
 
 def set_database(database):
     """Set the database instance from main server"""
