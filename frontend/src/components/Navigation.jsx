@@ -32,15 +32,35 @@ const Navigation = () => {
             <Link to="/faq" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
               FAQ
             </Link>
-            <Link to="/observer" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">
-              For Observers
+            
+            {/* Portals Dropdown */}
+            <div className="relative group">
+              <button className="text-gray-700 hover:text-indigo-600 transition-colors font-medium flex items-center gap-1">
+                Portals
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                <Link to="/parent/login" className="block px-4 py-3 hover:bg-indigo-50 text-gray-700 hover:text-indigo-600 transition-colors border-b">
+                  👨‍👩‍👧 Parent Portal
+                </Link>
+                <Link to="/observer/login" className="block px-4 py-3 hover:bg-purple-50 text-gray-700 hover:text-purple-600 transition-colors border-b">
+                  🔍 Observer Portal
+                </Link>
+                <Link to="/principal/login" className="block px-4 py-3 hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors border-b">
+                  🏫 Principal Portal
+                </Link>
+                <Link to="/admin/login" className="block px-4 py-3 hover:bg-gray-50 text-gray-700 hover:text-gray-600 transition-colors rounded-b-lg">
+                  ⚙️ Admin Portal
+                </Link>
+              </div>
+            </div>
+            
+            <Link to="/contact" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
+              Contact
             </Link>
-            <Link to="/principal" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              For Principals
-            </Link>
-            <Link to="/parent/login" className="text-gray-700 hover:text-green-600 transition-colors font-medium">
-              Parent Portal
-            </Link>
+            
             <Link to="/get-started">
               <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white rounded-full">
                 Get Started
