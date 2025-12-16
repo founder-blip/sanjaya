@@ -22,8 +22,12 @@ import ParentGroupSessions from './pages/ParentGroupSessions';
 import ParentCoGuardians from './pages/ParentCoGuardians';
 import ObserverLogin from './pages/ObserverLogin';
 import ObserverDashboard from './pages/ObserverDashboard';
+import ObserverMoodEntry from './pages/ObserverMoodEntry';
+import ObserverGoalCreate from './pages/ObserverGoalCreate';
 import PrincipalLogin from './pages/PrincipalLogin';
 import PrincipalDashboard from './pages/PrincipalDashboard';
+import PrincipalStudents from './pages/PrincipalStudents';
+import PrincipalAnalytics from './pages/PrincipalAnalytics';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -54,10 +58,14 @@ function App() {
           {/* Observer Routes */}
           <Route path="/observer/login" element={<ObserverLogin />} />
           <Route path="/observer/dashboard" element={<ObserverDashboard />} />
+          <Route path="/observer/mood-entry/:childId" element={<ObserverMoodEntry />} />
+          <Route path="/observer/goal-create/:childId" element={<ObserverGoalCreate />} />
           
           {/* Principal Routes */}
           <Route path="/principal/login" element={<PrincipalLogin />} />
           <Route path="/principal/dashboard" element={<PrincipalDashboard />} />
+          <Route path="/principal/students" element={<PrincipalStudents />} />
+          <Route path="/principal/analytics" element={<PrincipalAnalytics />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
