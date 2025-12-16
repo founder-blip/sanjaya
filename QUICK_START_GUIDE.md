@@ -4,7 +4,7 @@
 
 ### 1️⃣ Access Enhanced Admin Dashboard
 
-**URL:** https://youth-support-3.preview.emergentagent.com/admin/dashboard
+**URL:** https://growth-buddy-22.preview.emergentagent.com/admin/dashboard
 
 **Login:**
 - Username: `admin`
@@ -88,7 +88,7 @@ It will:
    ```
 
 4. **Test:**
-   - Go to https://youth-support-3.preview.emergentagent.com/get-started
+   - Go to https://growth-buddy-22.preview.emergentagent.com/get-started
    - Submit a form
    - Check your email!
 
