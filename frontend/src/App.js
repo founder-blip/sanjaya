@@ -39,8 +39,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/process" element={<Process />} />
+          <Route path="/about" element={<Process />} />
+          <Route path="/how-it-works" element={<Process />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/get-started" element={<GetStarted />} />
           <Route path="/observer" element={<ObserverLanding />} />
