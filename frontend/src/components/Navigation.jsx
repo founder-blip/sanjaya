@@ -23,11 +23,8 @@ const Navigation = () => {
             <Link to="/" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
               Home
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
-              About
-            </Link>
-            <Link to="/how-it-works" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
-              How It Works
+            <Link to="/process" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
+              Process
             </Link>
             <Link to="/faq" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
               FAQ
