@@ -54,7 +54,7 @@ const ObserverAIReport = () => {
     try {
       const token = localStorage.getItem('observer_token');
       const response = await axios.get(
-        `${BACKEND_URL}/api/ai/observer/reports/${childId}?token=${token}`
+        `${BACKEND_URL}/api/observer/reports/${childId}?token=${token}`
       );
       setPastReports(response.data.reports || []);
     } catch (error) {
