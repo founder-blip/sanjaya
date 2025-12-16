@@ -130,19 +130,17 @@ Make the report professional, empathetic, and actionable. Focus on the child's s
 
         # Generate report using OpenAI via Emergent Integrations
         try:
-            client = OpenAIClient(api_key=EMERGENT_API_KEY)
+            session_id = str(uuid.uuid4())
+            system_message = "You are an expert child psychologist and emotional support specialist. Generate comprehensive, empathetic, and actionable reports for children's emotional development."
             
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "You are an expert child psychologist and emotional support specialist. Generate comprehensive, empathetic, and actionable reports for children's emotional development."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                max_tokens=2000
-            )
+            chat = LlmChat(
+                api_key=EMERGENT_API_KEY,
+                session_id=session_id,
+                system_message=system_message
+            ).with_model("openai", "gpt-4o-mini")
             
-            report_content = response.choices[0].message.content
+            user_msg = UserMessage(text=prompt)
+            report_content = await chat.send_message(user_msg)
             
             # Save report to database
             report = {
