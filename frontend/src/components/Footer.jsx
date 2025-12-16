@@ -27,12 +27,27 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/observer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Link to="/about" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/how-it-works" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  How It Works
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to="/for-observers" className="text-gray-400 hover:text-blue-400 transition-colors">
                   For Observers
                 </Link>
               </li>
               <li>
-                <Link to="/principal" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Link to="/for-principals" className="text-gray-400 hover:text-blue-400 transition-colors">
                   For Principals
                 </Link>
               </li>
@@ -43,24 +58,19 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#privacy" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Link to="/privacy" className="text-gray-400 hover:text-blue-400 transition-colors">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#terms" className="text-gray-400 hover:text-blue-400 transition-colors">
+                <Link to="/terms" className="text-gray-400 hover:text-blue-400 transition-colors">
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#data" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Data Protection
-                </a>
-              </li>
-              <li>
-                <a href="#cookies" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Cookie Policy
-                </a>
+                <Link to="/contact" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -85,13 +95,13 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-          <p>© 2025 Sanjaya – The Observer. Crafted with care for every child.</p>
+          <p>© {new Date().getFullYear()} Sanjaya. Empowering children across India with emotional support.</p>
           <div className="mt-4 flex justify-center gap-4 text-sm">
-            <a href="#privacy" className="hover:text-blue-400 transition-colors">Privacy</a>
+            <Link to="/privacy" className="hover:text-blue-400 transition-colors">Privacy</Link>
             <span>•</span>
-            <a href="#terms" className="hover:text-blue-400 transition-colors">Terms</a>
+            <Link to="/terms" className="hover:text-blue-400 transition-colors">Terms</Link>
             <span>•</span>
-            <a href="#data" className="hover:text-blue-400 transition-colors">Data Protection</a>
+            <Link to="/contact" className="hover:text-blue-400 transition-colors">Contact</Link>
           </div>
         </div>
       </div>
