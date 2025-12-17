@@ -439,8 +439,19 @@ async def generate_parent_report(
         active_goals = [g for g in goals if g.get('status') == 'active']
         completed_goals = [g for g in goals if g.get('status') == 'completed']
         
-        # Create comprehensive prompt
-        prompt = f"""Generate a warm, professional parent report for {child['name']}.
+        # Create context-aware prompt based on report type
+        report_context = {
+            "daily": "Focus on today's session highlights and immediate observations. Keep it brief and actionable.",
+            "weekly": "Summarize the week's patterns and provide a balanced view of progress and areas for attention.",
+            "fortnightly": "Analyze two weeks of observations to identify emerging trends and consistent patterns.",
+            "monthly": "Provide comprehensive analysis of the month's journey with detailed trend insights.",
+            "custom": f"Analyze the past {actual_days} days of observations."
+        }
+        
+        prompt = f"""Generate a {report_label} for {child['name']}.
+
+**REPORT TYPE:** {report_label}
+**CONTEXT:** {report_context.get(report_type, report_context['custom'])}
 
 **CHILD PROFILE:**
 - Name: {child['name']}
@@ -448,48 +459,48 @@ async def generate_parent_report(
 - Grade: {child['grade']}
 - School: {child.get('school', 'Not specified')}
 
-**ANALYSIS PERIOD:** Last {days} days
+**ANALYSIS PERIOD:** Last {actual_days} day(s)
 
 **SESSION STATISTICS:**
 - Total Sessions: {len(session_logs)}
-- Mood Distribution: {', '.join([f"{k}: {v}" for k, v in mood_counts.items()])}
+- Mood Distribution: {', '.join([f"{k}: {v}" for k, v in mood_counts.items()]) if mood_counts else 'No data'}
 
 **TOP BEHAVIORAL PATTERNS OBSERVED:**
-{chr(10).join([f"- {tag}: observed {count} times" for tag, count in top_tags])}
+{chr(10).join([f"- {tag}: observed {count} times" for tag, count in top_tags]) if top_tags else '- No patterns identified yet'}
 
-**RECENT SESSION HIGHLIGHTS:**
-{chr(10).join(session_summaries[:8])}
+**SESSION HIGHLIGHTS:**
+{chr(10).join(session_summaries[:8]) if session_summaries else '- No sessions recorded in this period'}
 
 **GOALS STATUS:**
 - Active Goals: {len(active_goals)}
 - Completed Goals: {len(completed_goals)}
-- Active Goal Details: {', '.join([f"{g['title']} ({g['progress']}%)" for g in active_goals[:5]])}
+- Active Goal Details: {', '.join([f"{g['title']} ({g['progress']}%)" for g in active_goals[:5]]) if active_goals else 'None'}
 
-**POSITIVE OBSERVATIONS FROM SESSIONS:**
-{chr(10).join([f"- {log.get('positive_observations', '')[:100]}" for log in session_logs[:5] if log.get('positive_observations')])}
+**POSITIVE OBSERVATIONS:**
+{chr(10).join([f"- {log.get('positive_observations', '')[:100]}" for log in session_logs[:5] if log.get('positive_observations')]) or '- No specific positive observations recorded'}
 
 **CONCERNS NOTED:**
-{chr(10).join([f"- {log.get('concerns_noted', '')[:100]}" for log in session_logs[:5] if log.get('concerns_noted')])}
+{chr(10).join([f"- {log.get('concerns_noted', '')[:100]}" for log in session_logs[:5] if log.get('concerns_noted')]) or '- No concerns noted'}
 
-Generate a parent-friendly report with these sections:
+{"Generate a brief daily update report with:" if report_type == "daily" else "Generate a comprehensive parent report with:"}
 
-1. **Warm Opening** (2-3 sentences greeting parents and summarizing the period)
+{"1. **Today's Highlights** (Key moments from today's session)" if report_type == "daily" else "1. **Warm Opening** (2-3 sentences greeting parents and summarizing the period)"}
 
-2. **Your Child's Journey** (Overview of emotional wellness and growth observed)
+{"2. **Mood & Engagement** (How the child was feeling and participating)" if report_type == "daily" else "2. **Your Child's Journey** (Overview of emotional wellness and growth observed)"}
 
-3. **Behavioral Insights** (Key patterns and what they mean, written for parents to understand)
+{"3. **Key Observations** (What stood out today)" if report_type == "daily" else "3. **Behavioral Insights** (Key patterns and what they mean)"}
 
-4. **Celebration Points** (3-4 specific positive developments to celebrate)
+{"4. **Tomorrow's Focus** (What to watch for or encourage)" if report_type == "daily" else "4. **Celebration Points** (3-4 specific positive developments)"}
 
-5. **Growth Opportunities** (2-3 areas where continued support would help, framed positively)
+{'' if report_type == "daily" else '''5. **Growth Opportunities** (2-3 areas where continued support would help)
 
 6. **Recommended Activities** (3-4 specific activities parents can do at home)
 
 7. **Communication Tips** (How to talk with your child about their feelings)
 
-8. **Looking Ahead** (Brief note on focus for next period)
+8. **Looking Ahead** (Brief note on focus for next period)'''}
 
-Write in a warm, supportive tone. Avoid clinical language. Make parents feel like partners in their child's journey. Be specific with examples where possible."""
+Write in a warm, supportive tone. {"Keep it concise for a daily update." if report_type == "daily" else "Be specific with examples where possible."} Make parents feel like partners in their child's journey."""
 
         chat = LlmChat(
             api_key=EMERGENT_API_KEY,
