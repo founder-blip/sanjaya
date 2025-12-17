@@ -199,23 +199,16 @@ const Home = () => {
                 {heroContent.description}
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8">
+              <div className="mb-6 md:mb-8">
                 <Button 
                   size="lg" 
-                  onClick={() => window.location.href = heroContent.cta_primary_link || '/get-started'}
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 md:px-10 py-5 md:py-7 text-base md:text-xl rounded-full shadow-xl transform hover:scale-105 transition-all cursor-pointer"
+                  onClick={() => window.location.href = '/get-started'}
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 md:px-12 py-5 md:py-7 text-base md:text-xl rounded-full shadow-xl transform hover:scale-105 transition-all cursor-pointer"
                 >
-                  {heroContent.cta_primary}
+                  Start Your Free Trial
                   <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                 </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  onClick={() => window.location.href = heroContent.cta_secondary_link || '/process'}
-                  className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-6 md:px-10 py-5 md:py-7 text-base md:text-xl rounded-full shadow-lg cursor-pointer"
-                >
-                  {heroContent.cta_secondary}
-                </Button>
+                <p className="text-gray-500 text-sm mt-3">No credit card required • 7-day free trial</p>
               </div>
 
               <div className="flex items-center gap-4 md:gap-8 flex-wrap">
