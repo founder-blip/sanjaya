@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { LogOut, User, Calendar, TrendingUp, Smile, Target, Sparkles } from 'lucide-react';
+import { LogOut, User, Calendar, TrendingUp, Smile, Target, Sparkles, Brain, FileText } from 'lucide-react';
 import Navigation from '../components/Navigation';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
