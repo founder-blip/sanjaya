@@ -318,10 +318,11 @@ const Home = () => {
           </div>
 
           {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-3 gap-6 mb-10">
-            {/* Left - Description Cards */}
-            <div className="lg:col-span-2 space-y-4">
-              {whatIsSanjaya.description && whatIsSanjaya.description.map((desc, index) => (
+          <div className="grid lg:grid-cols-5 gap-6">
+            {/* Left - Key Points */}
+            <div className="lg:col-span-3 space-y-4">
+              {/* Only show first 2 description items */}
+              {whatIsSanjaya.description && whatIsSanjaya.description.slice(0, 2).map((desc, index) => (
                 <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 flex items-start gap-4">
                   <div className="w-10 h-10 bg-yellow-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Eye className="w-5 h-5 text-yellow-400" />
@@ -330,29 +331,29 @@ const Home = () => {
                 </div>
               ))}
               
-              {/* What it is / isn't */}
-              <div className="grid sm:grid-cols-2 gap-4 mt-4">
-                <div className="flex items-center gap-3 bg-red-500/15 rounded-xl p-4 border border-red-400/20">
-                  <span className="text-red-400 text-xl">✕</span>
-                  <p className="text-sm text-red-200">Not counseling, therapy, or teaching</p>
+              {/* What it is / isn't - inline */}
+              <div className="flex flex-wrap gap-3 pt-2">
+                <div className="inline-flex items-center gap-2 bg-red-500/15 rounded-full px-4 py-2 border border-red-400/20">
+                  <span className="text-red-400">✕</span>
+                  <span className="text-sm text-red-200">Not therapy or counseling</span>
                 </div>
-                <div className="flex items-center gap-3 bg-green-500/15 rounded-xl p-4 border border-green-400/20">
-                  <span className="text-green-400 text-xl">✓</span>
-                  <p className="text-sm text-green-200">Patient listening for self-clarity</p>
+                <div className="inline-flex items-center gap-2 bg-green-500/15 rounded-full px-4 py-2 border border-green-400/20">
+                  <span className="text-green-400">✓</span>
+                  <span className="text-sm text-green-200">Patient listening for clarity</span>
                 </div>
               </div>
             </div>
 
             {/* Right - Highlight Box */}
-            <div className="bg-gradient-to-br from-yellow-400/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 flex flex-col justify-center">
+            <div className="lg:col-span-2 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 flex flex-col justify-center">
               <div className="text-center">
-                <Sparkles className="w-10 h-10 text-yellow-400 mx-auto mb-4" />
-                <p className="text-lg font-semibold text-yellow-100 leading-relaxed">
+                <Sparkles className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+                <p className="text-base font-semibold text-yellow-100 leading-relaxed">
                   {whatIsSanjaya.highlight_text}
                 </p>
                 <div className="mt-4 pt-4 border-t border-yellow-400/20">
-                  <p className="text-sm text-purple-200">
-                    5 minutes daily • Trained observers • Principal supervised
+                  <p className="text-xs text-purple-200">
+                    5 min daily • Trained observers • Principal supervised
                   </p>
                 </div>
               </div>
