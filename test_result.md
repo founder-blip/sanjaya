@@ -850,6 +850,18 @@ frontend:
           agent: "testing"
           comment: "✅ Dynamic home page content working perfectly. Home page now fetches content from backend APIs on load using useEffect. Hero section, founder section, what-is-sanjaya section, and contact info all dynamically loaded. Fallback to default content if API calls fail. Content updates from admin dashboard immediately reflect on homepage after refresh."
 
+  - task: "Home & Process Page Redesign with Consolidated CTAs"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Home.jsx, /app/frontend/src/pages/Process.jsx"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ Home & Process page redesign testing completed successfully! All 5 test cases passed: (1) Home Hero Section - 'Start Your Free Trial' CTA with helper text navigates correctly to /get-started, (2) What We Offer Section - 'Daily Emotional Check-Ins' card expands to show features with NO 'Get Started' button inside (correct), (3) Final CTA Section - Orange gradient with 'Give Your Child the Gift of Being Heard' title, exactly ONE CTA button, contact info with icons only, (4) Process Page - Dark purple hero with 'Why Sanjaya Exists', 6-step 'Sanjaya Journey' timeline, single orange CTA navigates to /get-started, (5) Navigation - All links working correctly, Process navigates to /process not /about. Consolidated CTAs and proper functionality verified. Ready for production."
+
 metadata:
   created_by: "testing_agent"
   version: "1.1"
