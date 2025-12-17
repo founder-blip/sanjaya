@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { Shield, CheckCircle, Users, Phone, Lock, Heart, ArrowRight, Mail, MessageCircle, Star, Eye, Calendar, Award, ChevronDown, ChevronUp, FileText, TrendingUp } from 'lucide-react';
+import { Shield, CheckCircle, Users, Phone, Lock, Heart, ArrowRight, Mail, MessageCircle, Star, Eye, Calendar, Award, ChevronDown, ChevronUp, FileText, TrendingUp, Sparkles } from 'lucide-react';
 import ChatWidget from '../components/ChatWidget';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
