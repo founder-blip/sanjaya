@@ -409,15 +409,6 @@ const Home = () => {
                           </li>
                         ))}
                       </ul>
-                      <Button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.location.href = '/get-started';
-                        }}
-                        className={`mt-6 bg-gradient-to-r ${colors.gradient} text-white rounded-full`}
-                      >
-                        Get Started <ArrowRight className="ml-2 w-4 h-4" />
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>
