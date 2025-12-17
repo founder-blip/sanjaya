@@ -445,6 +445,10 @@ principal_routes.set_database(db)
 import ai_report_routes
 ai_report_routes.set_database(db)
 
+# Set database for AI session routes
+import ai_session_routes
+ai_session_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
@@ -454,6 +458,7 @@ app.include_router(phase3_router, prefix="/api")
 app.include_router(observer_router, prefix="/api")
 app.include_router(principal_router, prefix="/api")
 app.include_router(ai_report_router, prefix="/api")
+app.include_router(ai_session_routes.router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
