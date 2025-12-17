@@ -173,17 +173,31 @@ const ObserverDashboard = () => {
                     </Button>
                   </div>
                   
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/observer/ai-report/${child.id}`);
-                    }}
-                    size="sm"
-                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white"
-                  >
-                    <Sparkles className="w-4 h-4 mr-2" />
-                    Generate AI Report
-                  </Button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/observer/sessions/${child.id}`);
+                      }}
+                      size="sm"
+                      className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white"
+                    >
+                      <Brain className="w-4 h-4 mr-2" />
+                      AI Sessions
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/observer/ai-report/${child.id}`);
+                      }}
+                      size="sm"
+                      variant="outline"
+                      className="w-full border-purple-300 text-purple-600 hover:bg-purple-50"
+                    >
+                      <FileText className="w-4 h-4 mr-2" />
+                      Reports
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
