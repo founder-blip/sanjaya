@@ -212,8 +212,7 @@ const Home = () => {
       </section>
 
       {/* Founder Section */}
-      <section className="py-20 px-4 bg-white relative">
-        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-50"></div>
+      <section className="py-20 px-4 bg-gradient-to-b from-white to-orange-50/30 relative">
         <div className="max-w-6xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-16">
             Meet the <span className="text-gradient-warm">Heart</span> Behind Sanjaya
