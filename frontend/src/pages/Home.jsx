@@ -541,72 +541,58 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Ready to Get Started?
-            </h2>
-            
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-12">
-              Join hundreds of families who trust Sanjaya to support their children's emotional growth
-            </p>
+      {/* Final CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-orange-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Give Your Child the Gift of Being Heard
+          </h2>
+          <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+            Join hundreds of families who trust Sanjaya to support their children's emotional growth journey.
+          </p>
+          
+          <Button 
+            size="lg" 
+            onClick={() => window.location.href = '/get-started'}
+            className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
+          >
+            Start Your Free Trial
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
+          <p className="text-orange-200 mt-4 text-sm">
+            No credit card required • Cancel anytime • 7-day free trial
+          </p>
+        </div>
+      </section>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button 
-                size="lg" 
-                onClick={() => window.location.href = '/get-started'}
-                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-12 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
-              >
-                Start Free Trial
-                <ArrowRight className="ml-2" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={() => window.location.href = '/contact'}
-                className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-12 py-7 text-xl rounded-full shadow-lg"
-              >
-                <Phone className="mr-2" />
-                Schedule a Call
-              </Button>
-            </div>
-          </div>
-
+      {/* Contact Info Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Have Questions? Reach Out</h3>
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="border-2 border-orange-200 rounded-3xl bg-white shadow-lg hover:shadow-xl transition-all">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mail className="w-8 h-8 text-orange-600" />
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2 text-xl">Email Us</h4>
-                <p className="text-gray-600 mb-2">{contactInfo.email}</p>
-                <p className="text-gray-500 text-sm">Response within 24 hours</p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Mail className="w-6 h-6 text-orange-600" />
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
+              <p className="text-gray-600 text-sm">{contactInfo.email}</p>
+            </div>
 
-            <Card className="border-2 border-blue-200 rounded-3xl bg-white shadow-lg hover:shadow-xl transition-all">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Phone className="w-8 h-8 text-blue-600" />
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2 text-xl">Call Us</h4>
-                <p className="text-gray-600 mb-2">{contactInfo.phone}</p>
-                <p className="text-gray-500 text-sm">Mon-Fri, 9 AM - 6 PM IST</p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Phone className="w-6 h-6 text-blue-600" />
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
+              <p className="text-gray-600 text-sm">{contactInfo.phone}</p>
+            </div>
 
-            <Card className="border-2 border-green-200 rounded-3xl bg-white shadow-lg hover:shadow-xl transition-all">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MessageCircle className="w-8 h-8 text-green-600" />
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2 text-xl">Live Chat</h4>
-                <p className="text-gray-600 mb-2">Instant support</p>
-                <p className="text-gray-500 text-sm">Click the chat icon</p>
-              </CardContent>
-            </Card>
+            <div className="text-center p-6">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <MessageCircle className="w-6 h-6 text-green-600" />
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-1">Live Chat</h4>
+              <p className="text-gray-600 text-sm">Click the chat icon below</p>
+            </div>
           </div>
         </div>
       </section>
