@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { Shield, CheckCircle, Users, Phone, Lock, Heart, ArrowRight, Mail, MessageCircle, Star, Eye, Calendar, Award, ChevronDown, ChevronUp, FileText, TrendingUp, Sparkles } from 'lucide-react';
+import { Shield, CheckCircle, Users, Phone, Lock, Heart, ArrowRight, Mail, MessageCircle, Star, Eye, Calendar, Award, ChevronDown, FileText, TrendingUp, Sparkles, Play } from 'lucide-react';
 import ChatWidget from '../components/ChatWidget';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
@@ -14,19 +14,16 @@ const Home = () => {
   const [expandedOffer, setExpandedOffer] = useState(null);
   const [activePrivacyTab, setActivePrivacyTab] = useState('safety');
   
-  // Content states
   const [heroContent, setHeroContent] = useState({
     main_tagline: 'Nurturing Your Child\'s Emotional Voice',
     sub_headline: 'Daily Emotional Support Through Caring Conversations',
-    description: 'Sanjaya connects your child with trained observers for gentle 5-minute daily check-ins, helping them express feelings and build emotional confidence.',
-    cta_primary: 'Start Free Trial',
-    cta_secondary: 'Watch How It Works'
+    description: 'Sanjaya connects your child with trained observers for gentle 5-minute daily check-ins, helping them express feelings and build emotional confidence.'
   });
   
   const [founderContent, setFounderContent] = useState({
     name: 'Smt. Punam Jaiswal',
-    title: 'Founder and Former Principal',
-    description: 'With years of experience in education and child psychology, Punam Ma\'am, as a former principal, brings an unique blend of empathy and expertise to every interaction. Her gentle approach and profound understanding of children\'s needs make her the ideal guide for your child\'s inner growth journey.',
+    title: 'Founder & Former Principal',
+    description: 'With years of experience in education and child psychology, Punam Ma\'am brings a unique blend of empathy and expertise to every interaction.',
     quote: 'Every child has a story to tell. My role is simply to listen, understand, and help parents see the beautiful complexity of their child\'s world.',
     image_url: '/images/punam-jaiswal.jpg'
   });
@@ -34,113 +31,52 @@ const Home = () => {
   const [whatIsSanjaya, setWhatIsSanjaya] = useState({
     heading: 'What is Sanjaya – The Observer?',
     description: [
-      'Sanjaya is a specialized, non-judgmental listening support system.',
+      'A specialized, non-judgmental listening support system.',
       'A confidential companion to help your child process their inner world.'
     ],
-    highlight_text: 'Sanjaya – The Observer is India\'s first structured daily observation program supervised by Legendary Principals.'
+    highlight_text: 'India\'s first structured daily observation program supervised by Legendary Principals.'
   });
   
   const [contactInfo, setContactInfo] = useState({
     email: 'support@sanjaya.com',
-    phone: '+91 98765 43210',
-    address: 'India'
+    phone: '+91 98765 43210'
   });
 
-  // Offers data
   const offers = [
-    {
-      id: 'check-ins',
-      title: 'Daily Emotional Check-Ins',
-      shortDesc: 'Short, gentle 5-minute phone conversations every day',
-      icon: Phone,
-      color: 'orange',
-      features: [
-        'Consistent daily routine builds trust',
-        'No pressure to share anything specific',
-        'Age-appropriate conversations',
-        'Trained observers who truly listen',
-        'Flexible timing based on your schedule'
-      ]
-    },
-    {
-      id: 'patterns',
-      title: 'Emotional Pattern Recognition',
-      shortDesc: 'Our trained observers notice emotional trends and patterns',
-      icon: Heart,
-      color: 'blue',
-      features: [
-        'AI-assisted insights for accuracy',
-        'Human review & validation always',
-        'Long-term trend tracking',
-        'Early detection of emotional shifts',
-        'Personalized attention to each child'
-      ]
-    },
-    {
-      id: 'reports',
-      title: 'Personalized Parent Reports',
-      shortDesc: 'Receive weekly summaries with actionable insights',
-      icon: Award,
-      color: 'green',
-      features: [
-        'Easy-to-understand summaries',
-        'Principal guidance included',
-        'Secure & confidential delivery',
-        'Actionable recommendations',
-        'Track progress over time'
-      ]
-    },
-    {
-      id: 'scheduling',
-      title: 'Flexible Scheduling',
-      shortDesc: 'Automated scheduling adapts to your child\'s routine',
-      icon: Calendar,
-      color: 'purple',
-      features: [
-        'Smart call scheduling system',
-        'Weekend support available',
-        'Adjust timing anytime',
-        'Reschedule with ease',
-        'Holiday flexibility'
-      ]
-    }
+    { id: 'check-ins', title: 'Daily Check-Ins', shortDesc: 'Gentle 5-minute conversations every day', icon: Phone, color: 'orange',
+      features: ['Consistent daily routine', 'No pressure to share', 'Age-appropriate conversations', 'Trained observers'] },
+    { id: 'patterns', title: 'Pattern Recognition', shortDesc: 'We notice emotional trends & patterns', icon: Heart, color: 'rose',
+      features: ['AI-assisted insights', 'Human validation always', 'Long-term tracking', 'Early detection'] },
+    { id: 'reports', title: 'Parent Reports', shortDesc: 'Weekly summaries with actionable insights', icon: Award, color: 'violet',
+      features: ['Easy-to-understand', 'Principal guidance', 'Secure delivery', 'Progress tracking'] },
+    { id: 'scheduling', title: 'Flexible Scheduling', shortDesc: 'Adapts to your child\'s routine', icon: Calendar, color: 'emerald',
+      features: ['Smart scheduling', 'Weekend support', 'Easy rescheduling', 'Holiday flexibility'] }
   ];
 
-  // Privacy & Safety tabs data
   const privacyTabs = {
-    safety: {
-      title: 'Child Safety',
-      icon: Shield,
+    safety: { title: 'Child Safety', icon: Shield,
       items: [
-        { title: 'Trained & Supervised Observers', desc: 'All observers undergo rigorous training and are supervised by experienced principals.' },
-        { title: 'Session Recording', desc: 'All sessions are recorded per regulations for quality assurance and safety.' },
-        { title: 'Background Verified Staff', desc: 'Every team member passes thorough background verification checks.' },
-        { title: 'Emergency Protocols', desc: 'Clear protocols in place if any concerning patterns are detected.' }
-      ]
-    },
-    privacy: {
-      title: 'Data Privacy',
-      icon: Lock,
+        { title: 'Trained Observers', desc: 'Rigorous training & principal supervision' },
+        { title: 'Session Recording', desc: 'All sessions recorded for quality assurance' },
+        { title: 'Background Verified', desc: 'Thorough background checks for all staff' },
+        { title: 'Emergency Protocols', desc: 'Clear protocols for any concerns' }
+      ]},
+    privacy: { title: 'Data Privacy', icon: Lock,
       items: [
-        { title: 'End-to-End Encryption', desc: 'All data is encrypted in transit and at rest.' },
-        { title: 'You Control Your Data', desc: 'Access, download, or delete your data anytime you want.' },
-        { title: 'No Data Selling', desc: 'We never sell or share your child\'s information with third parties.' },
-        { title: 'GDPR Compliant', desc: 'Following international data protection standards.' }
-      ]
-    },
-    consent: {
-      title: 'Parent Consent',
-      icon: FileText,
+        { title: 'Encrypted Data', desc: 'End-to-end encryption for all data' },
+        { title: 'Your Control', desc: 'Access, download, or delete anytime' },
+        { title: 'No Data Selling', desc: 'We never sell your information' },
+        { title: 'GDPR Compliant', desc: 'International data protection standards' }
+      ]},
+    consent: { title: 'Parent Consent', icon: FileText,
       items: [
-        { title: 'Explicit Permission Required', desc: 'Nothing happens without your written consent.' },
-        { title: 'Withdraw Anytime', desc: 'Cancel your enrollment whenever you want, no questions asked.' },
-        { title: 'Transparent Process', desc: 'Know exactly what happens in each session.' },
-        { title: 'Regular Updates', desc: 'Stay informed about your child\'s journey.' }
-      ]
-    }
+        { title: 'Explicit Permission', desc: 'Nothing happens without your consent' },
+        { title: 'Withdraw Anytime', desc: 'Cancel enrollment whenever you want' },
+        { title: 'Transparent Process', desc: 'Know exactly what happens' },
+        { title: 'Regular Updates', desc: 'Stay informed about progress' }
+      ]}
   };
   
-  // Load content from backend on mount
   useEffect(() => {
     const loadContent = async () => {
       try {
@@ -150,263 +86,260 @@ const Home = () => {
           axios.get(`${BACKEND_URL}/api/content/what-is-sanjaya`).catch(() => ({ data: null })),
           axios.get(`${BACKEND_URL}/api/content/contact`).catch(() => ({ data: null }))
         ]);
-        
-        if (heroRes.data && Object.keys(heroRes.data).length > 0) {
-          setHeroContent(prev => ({ ...prev, ...heroRes.data }));
-        }
-        if (founderRes.data && Object.keys(founderRes.data).length > 0) {
-          setFounderContent(prev => ({ ...prev, ...founderRes.data }));
-        }
-        if (sanjayaRes.data && Object.keys(sanjayaRes.data).length > 0) {
-          setWhatIsSanjaya(prev => ({ ...prev, ...sanjayaRes.data }));
-        }
-        if (contactRes.data && Object.keys(contactRes.data).length > 0) {
-          setContactInfo(prev => ({ ...prev, ...contactRes.data }));
-        }
-      } catch (error) {
-        console.error('Error loading content:', error);
-      }
+        if (heroRes.data && Object.keys(heroRes.data).length > 0) setHeroContent(prev => ({ ...prev, ...heroRes.data }));
+        if (founderRes.data && Object.keys(founderRes.data).length > 0) setFounderContent(prev => ({ ...prev, ...founderRes.data }));
+        if (sanjayaRes.data && Object.keys(sanjayaRes.data).length > 0) setWhatIsSanjaya(prev => ({ ...prev, ...sanjayaRes.data }));
+        if (contactRes.data && Object.keys(contactRes.data).length > 0) setContactInfo(prev => ({ ...prev, ...contactRes.data }));
+      } catch (error) { console.error('Error loading content:', error); }
     };
-    
     loadContent();
   }, []);
 
-  const colorClasses = {
-    orange: { bg: 'bg-orange-100', text: 'text-orange-600', border: 'border-orange-200', gradient: 'from-orange-500 to-orange-600' },
-    blue: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200', gradient: 'from-blue-500 to-blue-600' },
-    green: { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-200', gradient: 'from-green-500 to-green-600' },
-    purple: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-200', gradient: 'from-purple-500 to-purple-600' }
+  const colorMap = {
+    orange: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600', iconBg: 'bg-orange-100' },
+    rose: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-600', iconBg: 'bg-rose-100' },
+    violet: { bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-600', iconBg: 'bg-violet-100' },
+    emerald: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600', iconBg: 'bg-emerald-100' }
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-hidden">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
-                {heroContent.main_tagline}
+      {/* Hero Section - Premium Child-Centric Design */}
+      <section className="relative pt-24 md:pt-28 pb-16 md:pb-24 px-4 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"></div>
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-40 animate-float"></div>
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-float" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-40 left-1/4 w-20 h-20 bg-gradient-to-br from-violet-300 to-purple-300 blob opacity-60 animate-float" style={{animationDelay: '0.5s'}}></div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 shadow-sm border border-orange-100">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span className="text-sm font-medium text-gray-700 font-friendly">Trusted by 500+ families across India</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-[1.1] tracking-tight">
+                <span className="text-gradient-warm">Nurturing</span> Your Child's
+                <br />
+                <span className="relative">
+                  Emotional Voice
+                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
+                    <path d="M2 10C50 4 100 2 150 4C200 6 250 8 298 3" stroke="#f97316" strokeWidth="4" strokeLinecap="round"/>
+                  </svg>
+                </span>
               </h1>
               
-              <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-3 md:mb-4 font-medium">
+              <p className="text-xl md:text-2xl text-gray-600 mb-4 font-friendly font-medium">
                 {heroContent.sub_headline}
               </p>
               
-              <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8 leading-relaxed">
+              <p className="text-lg text-gray-500 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {heroContent.description}
               </p>
               
-              <div className="mb-6 md:mb-8">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
                 <Button 
                   size="lg" 
                   onClick={() => window.location.href = '/get-started'}
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 md:px-12 py-5 md:py-7 text-base md:text-xl rounded-full shadow-xl transform hover:scale-105 transition-all cursor-pointer"
+                  className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-6 text-lg rounded-2xl shadow-lg shadow-orange-200 hover:shadow-xl hover:shadow-orange-300 transition-all duration-300 font-semibold"
                 >
-                  Start Your Free Trial
-                  <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
+                  Start Free Trial
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-                <p className="text-gray-500 text-sm mt-3">No credit card required • 7-day free trial</p>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => window.location.href = '/process'}
+                  className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6 text-lg rounded-2xl font-semibold"
+                >
+                  <Play className="mr-2 w-5 h-5" />
+                  See How It Works
+                </Button>
               </div>
-
-              <div className="flex items-center gap-4 md:gap-8 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <div className="flex -space-x-2">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-sm font-bold">A</div>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white flex items-center justify-center text-white text-sm font-bold">B</div>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white text-sm font-bold">C</div>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    <div className="font-bold text-gray-900">500+ Children</div>
-                    <div>Supported Daily</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+              
+              <div className="flex items-center gap-6 justify-center lg:justify-start">
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-3">
+                    {['🧒', '👧', '👦'].map((emoji, i) => (
+                      <div key={i} className="w-10 h-10 rounded-full bg-white shadow-md border-2 border-white flex items-center justify-center text-xl">{emoji}</div>
                     ))}
                   </div>
-                  <div className="text-sm text-gray-600">
-                    <div className="font-bold text-gray-900">4.9/5 Rating</div>
-                    <div>From Parents</div>
+                  <div className="text-left">
+                    <div className="font-bold text-gray-900">500+</div>
+                    <div className="text-xs text-gray-500">Happy Kids</div>
+                  </div>
+                </div>
+                <div className="h-10 w-px bg-gray-200"></div>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-gray-900">4.9</div>
+                    <div className="text-xs text-gray-500">Parent Rating</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-gradient-to-br from-orange-200 to-orange-300 rounded-3xl p-8 flex items-center justify-center">
-                  <span className="text-6xl">💭</span>
-                </div>
-                <div className="bg-gradient-to-br from-blue-200 to-blue-300 rounded-3xl p-8 flex items-center justify-center">
-                  <span className="text-6xl">🎯</span>
-                </div>
-                <div className="bg-gradient-to-br from-purple-200 to-purple-300 rounded-3xl p-8 flex items-center justify-center">
-                  <span className="text-6xl">🌱</span>
-                </div>
-                <div className="bg-gradient-to-br from-pink-200 to-pink-300 rounded-3xl p-8 flex items-center justify-center">
-                  <span className="text-6xl">✨</span>
-                </div>
+            {/* Right - Illustration Grid */}
+            <div className="relative hidden lg:block">
+              <div className="grid grid-cols-2 gap-5">
+                {[
+                  { emoji: '💭', color: 'from-orange-100 to-amber-100', label: 'Express' },
+                  { emoji: '🎯', color: 'from-blue-100 to-cyan-100', label: 'Focus' },
+                  { emoji: '🌱', color: 'from-emerald-100 to-green-100', label: 'Grow' },
+                  { emoji: '✨', color: 'from-violet-100 to-purple-100', label: 'Shine' }
+                ].map((item, i) => (
+                  <div key={i} className={`bg-gradient-to-br ${item.color} rounded-3xl p-8 flex flex-col items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default`}>
+                    <span className="text-5xl animate-float" style={{animationDelay: `${i * 0.2}s`}}>{item.emoji}</span>
+                    <span className="text-sm font-semibold text-gray-600 font-friendly">{item.label}</span>
+                  </div>
+                ))}
               </div>
               
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-yellow-300 to-yellow-400 rounded-full opacity-70 animate-pulse"></div>
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-pink-300 to-pink-400 rounded-full opacity-60 animate-pulse delay-75"></div>
+              {/* Floating elements */}
+              <div className="absolute -top-8 -right-8 w-20 h-20 bg-gradient-to-br from-yellow-300 to-amber-400 blob opacity-80 animate-float shadow-lg"></div>
+              <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-gradient-to-br from-rose-300 to-pink-400 blob-alt opacity-70 animate-float shadow-lg" style={{animationDelay: '1.5s'}}></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Meet Our Founder Section - Redesigned */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">Meet Our Founder</h2>
+      {/* Founder Section */}
+      <section className="py-20 px-4 bg-white relative">
+        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-50"></div>
+        <div className="max-w-6xl mx-auto relative z-10">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-16">
+            Meet the <span className="text-gradient-warm">Heart</span> Behind Sanjaya
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Founder Image with Name Below */}
             <div className="flex flex-col items-center">
-              <div className="w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-200 mb-6">
-                <img 
-                  src={founderContent.image_url} 
-                  alt={founderContent.name} 
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative">
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-100">
+                  <img src={founderContent.image_url} alt={founderContent.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-br from-orange-400 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Heart className="w-10 h-10 text-white" />
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 text-center">{founderContent.name}</h3>
-              <p className="text-orange-600 font-semibold text-lg text-center">{founderContent.title}</p>
+              <div className="mt-8 text-center">
+                <h3 className="text-2xl font-bold text-gray-900">{founderContent.name}</h3>
+                <p className="text-orange-600 font-semibold font-friendly">{founderContent.title}</p>
+              </div>
             </div>
 
-            {/* Quote and Description */}
             <div>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                {founderContent.description}
-              </p>
-              
-              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-l-4 border-orange-500 p-6 rounded-r-2xl">
-                <div className="flex items-start gap-3">
-                  <span className="text-4xl text-orange-500">"</span>
-                  <div>
-                    <p className="text-gray-800 italic text-lg leading-relaxed mb-2">
-                      {founderContent.quote}
-                    </p>
-                    <p className="text-gray-700 font-semibold">— {founderContent.name}</p>
-                  </div>
-                </div>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">{founderContent.description}</p>
+              <div className="bg-gradient-to-br from-orange-50 to-amber-50 border-l-4 border-orange-400 p-6 rounded-r-2xl">
+                <p className="text-gray-700 italic text-lg leading-relaxed mb-2">"{founderContent.quote}"</p>
+                <p className="text-gray-600 font-semibold">— {founderContent.name}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What is Sanjaya - Clean & Beautiful Design */}
-      <section className="py-16 px-4 bg-gradient-to-br from-indigo-900 via-purple-800 to-indigo-900 text-white relative overflow-hidden">
-        {/* Subtle background accent */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl"></div>
-
-        <div className="max-w-6xl mx-auto relative z-10">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-5xl font-bold mb-3">
+      {/* What is Sanjaya - Refined */}
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.03\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+        
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-5 py-2 mb-6">
+              <Eye className="w-5 h-5 text-amber-400" />
+              <span className="text-amber-300 font-medium font-friendly">The Observer Program</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
               {whatIsSanjaya.heading}
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-400 mx-auto rounded-full"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-amber-400 to-orange-400 mx-auto rounded-full"></div>
           </div>
 
-          {/* Main Content Grid */}
           <div className="grid lg:grid-cols-5 gap-6">
-            {/* Left - Key Points */}
             <div className="lg:col-span-3 space-y-4">
-              {/* Only show first 2 description items */}
-              {whatIsSanjaya.description && whatIsSanjaya.description.slice(0, 2).map((desc, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 flex items-start gap-4">
-                  <div className="w-10 h-10 bg-yellow-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Eye className="w-5 h-5 text-yellow-400" />
+              {whatIsSanjaya.description?.slice(0, 2).map((desc, i) => (
+                <div key={i} className="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10 flex items-start gap-4 hover:bg-white/10 transition-colors">
+                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-5 h-5 text-amber-400" />
                   </div>
-                  <p className="text-lg text-purple-100 leading-relaxed">{desc}</p>
+                  <p className="text-lg text-slate-200 leading-relaxed">{desc}</p>
                 </div>
               ))}
-              
-              {/* What it is / isn't - inline */}
               <div className="flex flex-wrap gap-3 pt-2">
-                <div className="inline-flex items-center gap-2 bg-red-500/15 rounded-full px-4 py-2 border border-red-400/20">
-                  <span className="text-red-400">✕</span>
-                  <span className="text-sm text-red-200">Not therapy or counseling</span>
-                </div>
-                <div className="inline-flex items-center gap-2 bg-green-500/15 rounded-full px-4 py-2 border border-green-400/20">
-                  <span className="text-green-400">✓</span>
-                  <span className="text-sm text-green-200">Patient listening for clarity</span>
-                </div>
+                <span className="inline-flex items-center gap-2 bg-rose-500/20 text-rose-300 rounded-full px-4 py-2 text-sm border border-rose-500/30">
+                  <span>✕</span> Not therapy or counseling
+                </span>
+                <span className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 rounded-full px-4 py-2 text-sm border border-emerald-500/30">
+                  <span>✓</span> Patient listening for clarity
+                </span>
               </div>
             </div>
 
-            {/* Right - Highlight Box */}
-            <div className="lg:col-span-2 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 flex flex-col justify-center">
-              <div className="text-center">
-                <Sparkles className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
-                <p className="text-base font-semibold text-yellow-100 leading-relaxed">
-                  {whatIsSanjaya.highlight_text}
-                </p>
-                <div className="mt-4 pt-4 border-t border-yellow-400/20">
-                  <p className="text-xs text-purple-200">
-                    5 min daily • Trained observers • Principal supervised
-                  </p>
-                </div>
+            <div className="lg:col-span-2 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-3xl p-6 border border-amber-500/30 flex flex-col justify-center">
+              <Sparkles className="w-10 h-10 text-amber-400 mx-auto mb-4" />
+              <p className="text-lg font-semibold text-amber-100 text-center leading-relaxed">
+                {whatIsSanjaya.highlight_text}
+              </p>
+              <div className="flex justify-center gap-4 mt-6 pt-4 border-t border-amber-500/30 text-sm text-slate-400">
+                <span>5 min daily</span>
+                <span>•</span>
+                <span>Trained observers</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What We Offer - Expandable Cards */}
-      <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
+      {/* What We Offer - Cards */}
+      <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-center">
-            What We Offer
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center mb-12">
-            Comprehensive emotional support designed for children aged 5-18. Click to learn more.
-          </p>
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
+              What We <span className="text-gradient">Offer</span>
+            </h2>
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto font-friendly">
+              Comprehensive emotional support designed for children aged 5-18
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-5">
             {offers.map((offer) => {
               const Icon = offer.icon;
-              const colors = colorClasses[offer.color];
+              const colors = colorMap[offer.color];
               const isExpanded = expandedOffer === offer.id;
-              
               return (
                 <Card 
                   key={offer.id}
                   onClick={() => setExpandedOffer(isExpanded ? null : offer.id)}
-                  className={`cursor-pointer transition-all duration-300 border-2 ${colors.border} rounded-2xl hover:shadow-2xl ${isExpanded ? 'shadow-2xl ring-2 ring-offset-2 ring-' + offer.color + '-400' : 'shadow-lg'}`}
+                  className={`cursor-pointer transition-all duration-300 border-2 ${colors.border} rounded-3xl hover:shadow-xl ${isExpanded ? 'shadow-xl ring-2 ring-offset-2 ring-orange-200' : 'shadow-md'}`}
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-4">
-                        <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                        <div className={`w-14 h-14 ${colors.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
                           <Icon className={`w-7 h-7 ${colors.text}`} />
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-gray-900 mb-1">{offer.title}</h3>
-                          <p className="text-gray-600">{offer.shortDesc}</p>
+                          <p className="text-gray-500 font-friendly">{offer.shortDesc}</p>
                         </div>
                       </div>
-                      <div className={`p-2 rounded-full ${colors.bg} transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
-                        <ChevronDown className={`w-5 h-5 ${colors.text}`} />
-                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                     </div>
                     
-                    {/* Expanded Content */}
-                    <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-96 mt-6 pt-6 border-t border-gray-200' : 'max-h-0'}`}>
-                      <ul className="space-y-3">
+                    <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-60 mt-5 pt-5 border-t border-gray-100' : 'max-h-0'}`}>
+                      <ul className="space-y-2">
                         {offer.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <CheckCircle className={`w-5 h-5 ${colors.text} flex-shrink-0 mt-0.5`} />
-                            <span className="text-gray-700">{feature}</span>
+                          <li key={idx} className="flex items-center gap-3">
+                            <CheckCircle className={`w-5 h-5 ${colors.text} flex-shrink-0`} />
+                            <span className="text-gray-600">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -419,92 +352,50 @@ const Home = () => {
         </div>
       </section>
 
-      {/* How It Works - Horizontal Flow */}
-      <section className="py-20 px-4 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-center">
-            How Sanjaya Works
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center mb-16">
-            From enrollment to insights, here's the complete journey
-          </p>
-
-          {/* Horizontal Flow - Desktop */}
-          <div className="hidden lg:block relative">
-            {/* Connecting line */}
-            <div className="absolute top-16 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-purple-400 to-green-400"></div>
-            
-            <div className="grid grid-cols-6 gap-4">
-              {[
-                { step: 1, title: 'Sign Up', icon: '📝', circleBg: 'bg-orange-500', cardBg: 'bg-orange-50' },
-                { step: 2, title: 'Get Matched', icon: '👥', circleBg: 'bg-blue-500', cardBg: 'bg-blue-50' },
-                { step: 3, title: 'Daily Check-In', icon: '📞', circleBg: 'bg-purple-500', cardBg: 'bg-purple-50' },
-                { step: 4, title: 'Patterns Noted', icon: '🧠', circleBg: 'bg-pink-500', cardBg: 'bg-pink-50' },
-                { step: 5, title: 'Reports Ready', icon: '📊', circleBg: 'bg-green-500', cardBg: 'bg-green-50' },
-                { step: 6, title: 'Child Thrives', icon: '🌟', circleBg: 'bg-teal-500', cardBg: 'bg-teal-50' }
-              ].map((item) => (
-                <div key={item.step} className="flex flex-col items-center">
-                  <div className={`w-12 h-12 ${item.circleBg} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10 mb-4`}>
-                    {item.step}
-                  </div>
-                  <div className={`${item.cardBg} rounded-2xl p-4 text-center w-full`}>
-                    <span className="text-3xl mb-2 block">{item.icon}</span>
-                    <h4 className="font-bold text-gray-900 text-sm">{item.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* How It Works - Compact */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
+              How <span className="text-gradient-warm">Sanjaya</span> Works
+            </h2>
+            <p className="text-lg text-gray-500 font-friendly">Simple steps to support your child</p>
           </div>
 
-          {/* Vertical Flow - Mobile/Tablet */}
-          <div className="lg:hidden space-y-6">
+          <div className="flex justify-center items-center gap-4 flex-wrap mb-8">
             {[
-              { step: 1, title: 'Sign Up & Enroll', desc: 'Create your account and provide consent', icon: '📝', color: 'bg-orange-100 border-orange-200' },
-              { step: 2, title: 'Get Matched', desc: 'Child paired with trained observer', icon: '👥', color: 'bg-blue-100 border-blue-200' },
-              { step: 3, title: 'Daily Check-In', desc: '5-minute conversations daily', icon: '📞', color: 'bg-purple-100 border-purple-200' },
-              { step: 4, title: 'Patterns Identified', desc: 'AI assists in recognizing trends', icon: '🧠', color: 'bg-pink-100 border-pink-200' },
-              { step: 5, title: 'Reports Generated', desc: 'Principals prepare summaries', icon: '📊', color: 'bg-green-100 border-green-200' },
-              { step: 6, title: 'Child Thrives', desc: 'Increased confidence & awareness', icon: '🌟', color: 'bg-teal-100 border-teal-200' }
-            ].map((item, idx) => (
-              <div key={item.step} className="flex items-center gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 bg-gradient-to-br from-orange-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg`}>
-                    {item.step}
+              { num: 1, title: 'Sign Up', emoji: '📝', color: 'bg-orange-500' },
+              { num: 2, title: 'Get Matched', emoji: '🤝', color: 'bg-blue-500' },
+              { num: 3, title: 'Daily Calls', emoji: '📞', color: 'bg-violet-500' },
+              { num: 4, title: 'AI Analysis', emoji: '🧠', color: 'bg-pink-500' },
+              { num: 5, title: 'Get Reports', emoji: '📊', color: 'bg-emerald-500' },
+              { num: 6, title: 'Child Thrives', emoji: '🌟', color: 'bg-amber-500' }
+            ].map((step, idx) => (
+              <React.Fragment key={step.num}>
+                <div className="flex flex-col items-center gap-2">
+                  <div className={`w-14 h-14 ${step.color} rounded-2xl flex items-center justify-center text-white shadow-lg`}>
+                    <span className="text-2xl">{step.emoji}</span>
                   </div>
-                  {idx < 5 && <div className="w-0.5 h-8 bg-gray-300 my-2"></div>}
+                  <span className="text-sm font-semibold text-gray-700">{step.title}</span>
                 </div>
-                <div className={`flex-1 ${item.color} border-2 rounded-xl p-4`}>
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{item.icon}</span>
-                    <div>
-                      <h4 className="font-bold text-gray-900">{item.title}</h4>
-                      <p className="text-gray-600 text-sm">{item.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                {idx < 5 && <ArrowRight className="w-5 h-5 text-gray-300 hidden sm:block" />}
+              </React.Fragment>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Safety & Privacy - Tabbed Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-green-50 to-blue-50">
+      {/* Safety & Privacy */}
+      <section className="py-20 px-4 bg-gradient-to-br from-emerald-50 to-teal-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
-              <Shield className="w-10 h-10 text-white" />
+            <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+              <Shield className="w-8 h-8 text-white" />
             </div>
-            
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Safety & Privacy
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Your child's safety and your family's privacy are our top priorities
-            </p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Safety & Privacy</h2>
+            <p className="text-lg text-gray-500 font-friendly">Your child's safety is our top priority</p>
           </div>
 
-          {/* Tabs */}
           <div className="flex justify-center gap-2 mb-8 flex-wrap">
             {Object.entries(privacyTabs).map(([key, tab]) => {
               const TabIcon = tab.icon;
@@ -512,101 +403,87 @@ const Home = () => {
                 <button
                   key={key}
                   onClick={() => setActivePrivacyTab(key)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all ${
-                    activePrivacyTab === key
-                      ? 'bg-green-600 text-white shadow-lg'
-                      : 'bg-white text-gray-700 hover:bg-green-100'
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all ${
+                    activePrivacyTab === key ? 'bg-emerald-600 text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-emerald-100'
                   }`}
                 >
-                  <TabIcon className="w-5 h-5" />
+                  <TabIcon className="w-4 h-4" />
                   {tab.title}
                 </button>
               );
             })}
           </div>
 
-          {/* Tab Content */}
-          <div className="bg-white rounded-3xl shadow-xl p-8">
-            <div className="grid md:grid-cols-2 gap-6">
-              {privacyTabs[activePrivacyTab].items.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-green-50 transition-colors">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-1">{item.title}</h4>
-                    <p className="text-gray-600">{item.desc}</p>
+          <Card className="bg-white rounded-3xl shadow-lg border-0">
+            <CardContent className="p-8">
+              <div className="grid md:grid-cols-2 gap-5">
+                {privacyTabs[activePrivacyTab].items.map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 hover:bg-emerald-50 transition-colors">
+                    <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-1">{item.title}</h4>
+                      <p className="text-gray-500 text-sm">{item.desc}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-orange-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+      {/* Final CTA */}
+      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\" fill-rule=\"evenodd\"%3E%3Cpath d=\"M0 20h40v20H0z\"/%3E%3C/g%3E%3C/svg%3E')]"></div>
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
             Give Your Child the Gift of Being Heard
           </h2>
-          <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-            Join hundreds of families who trust Sanjaya to support their children's emotional growth journey.
+          <p className="text-xl text-orange-100 mb-8 font-friendly">
+            Join 500+ families who trust Sanjaya
           </p>
-          
           <Button 
             size="lg" 
             onClick={() => window.location.href = '/get-started'}
-            className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
+            className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-2xl shadow-2xl hover:shadow-3xl transition-all font-bold"
           >
             Start Your Free Trial
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
-          <p className="text-orange-200 mt-4 text-sm">
-            No credit card required • Cancel anytime • 7-day free trial
-          </p>
+          <p className="text-orange-200 mt-4 text-sm">No credit card • Cancel anytime • 7-day free trial</p>
         </div>
       </section>
 
-      {/* Contact Info Section */}
-      <section className="py-16 px-4 bg-gray-50">
+      {/* Contact Info */}
+      <section className="py-14 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Have Questions? Reach Out</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center p-6">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Mail className="w-6 h-6 text-orange-600" />
+          <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Have Questions?</h3>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { icon: Mail, title: 'Email', value: contactInfo.email, color: 'orange' },
+              { icon: Phone, title: 'Phone', value: contactInfo.phone, color: 'blue' },
+              { icon: MessageCircle, title: 'Live Chat', value: 'Click the icon', color: 'emerald' }
+            ].map((item, idx) => (
+              <div key={idx} className="text-center p-5 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                <div className={`w-12 h-12 bg-${item.color}-100 rounded-xl flex items-center justify-center mx-auto mb-3`}>
+                  <item.icon className={`w-6 h-6 text-${item.color}-600`} />
+                </div>
+                <h4 className="font-semibold text-gray-900">{item.title}</h4>
+                <p className="text-gray-500 text-sm">{item.value}</p>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
-              <p className="text-gray-600 text-sm">{contactInfo.email}</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Phone className="w-6 h-6 text-blue-600" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
-              <p className="text-gray-600 text-sm">{contactInfo.phone}</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <MessageCircle className="w-6 h-6 text-green-600" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-1">Live Chat</h4>
-              <p className="text-gray-600 text-sm">Click the chat icon below</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       <Footer />
       
-      {/* Floating Chat Button */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-full shadow-2xl flex items-center justify-center transform hover:scale-110 transition-all z-50 animate-bounce"
+          className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 transition-all z-50"
         >
-          <MessageCircle className="w-8 h-8" />
+          <MessageCircle className="w-7 h-7" />
         </button>
       )}
       
