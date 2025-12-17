@@ -139,65 +139,66 @@ const Process = () => {
         </div>
       </section>
 
-      {/* The 6-Step Journey */}
-      <section className="py-20 px-4 bg-gray-50">
+      {/* The 6-Step Journey - Compact Grid */}
+      <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               The Sanjaya Journey
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600">
               A simple, 6-step process designed around your child's comfort
             </p>
           </div>
 
-          <div className="relative">
-            {/* Vertical line for desktop */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 via-purple-400 to-indigo-400 transform -translate-x-1/2"></div>
-
-            <div className="space-y-8 md:space-y-0">
-              {steps.map((step, index) => {
-                const Icon = step.icon;
-                const isEven = index % 2 === 0;
-                
-                return (
-                  <div key={step.number} className={`md:flex items-center ${isEven ? '' : 'md:flex-row-reverse'}`}>
-                    {/* Content Card */}
-                    <div className={`md:w-5/12 ${isEven ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                      <Card className="bg-white border-2 border-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-all">
-                        <CardContent className="p-6">
-                          <div className={`flex items-center gap-3 mb-3 ${isEven ? 'md:flex-row-reverse' : ''}`}>
-                            <div className={`w-10 h-10 ${step.color} rounded-xl flex items-center justify-center`}>
-                              <Icon className="w-5 h-5 text-white" />
-                            </div>
-                            <h3 className="text-xl font-bold text-gray-900">{step.title}</h3>
-                          </div>
-                          <p className="text-gray-600 mb-4">{step.description}</p>
-                          <ul className={`space-y-2 ${isEven ? 'md:text-right' : ''}`}>
-                            {step.details.map((detail, idx) => (
-                              <li key={idx} className={`flex items-center gap-2 text-sm text-gray-500 ${isEven ? 'md:flex-row-reverse' : ''}`}>
-                                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                                <span>{detail}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    </div>
-
-                    {/* Center Number */}
-                    <div className="hidden md:flex md:w-2/12 justify-center">
-                      <div className={`w-14 h-14 ${step.color} rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg z-10`}>
-                        {step.number}
+          {/* Compact 3-column Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {steps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <Card key={step.number} className="bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-all group">
+                  <CardContent className="p-5">
+                    <div className="flex items-start gap-4">
+                      {/* Number & Icon */}
+                      <div className="flex-shrink-0">
+                        <div className={`w-12 h-12 ${step.color} rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform`}>
+                          <span className="text-white font-bold text-lg">{step.number}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Icon className="w-4 h-4 text-gray-400" />
+                          <h3 className="font-bold text-gray-900 truncate">{step.title}</h3>
+                        </div>
+                        <p className="text-sm text-gray-600 leading-relaxed mb-3">{step.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {step.details.slice(0, 2).map((detail, idx) => (
+                            <span key={idx} className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                              <CheckCircle className="w-3 h-3 text-green-500" />
+                              {detail}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
 
-                    {/* Spacer */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                  </div>
-                );
-              })}
-            </div>
+          {/* Visual Flow Indicator */}
+          <div className="flex justify-center items-center gap-2 mt-8">
+            {[1, 2, 3, 4, 5, 6].map((num, idx) => (
+              <React.Fragment key={num}>
+                <div className={`w-8 h-8 ${steps[idx].color} rounded-full flex items-center justify-center text-white text-sm font-bold`}>
+                  {num}
+                </div>
+                {idx < 5 && <ArrowRight className="w-4 h-4 text-gray-400" />}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </section>
