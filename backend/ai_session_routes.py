@@ -374,6 +374,17 @@ async def generate_parent_report(
     
     # Get actual days based on report type
     actual_days = report_days_map.get(report_type, days) if report_type != "custom" else days
+    
+    # Report type labels for display
+    report_type_labels = {
+        "daily": "Daily Report",
+        "weekly": "Weekly Report", 
+        "fortnightly": "Fortnightly Report",
+        "monthly": "Monthly Report",
+        "custom": f"Custom Report ({actual_days} days)"
+    }
+    report_label = report_type_labels.get(report_type, f"{actual_days}-Day Report")
+    
     try:
         user = verify_observer_token(token)
         observer_id = user['id']
@@ -386,7 +397,7 @@ async def generate_parent_report(
         if not child:
             raise HTTPException(status_code=404, detail="Child not found or access denied")
         
-        cutoff_date = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+        cutoff_date = (datetime.now(timezone.utc) - timedelta(days=actual_days)).isoformat()
         
         # Gather all data
         session_logs = await db.session_logs.find(
