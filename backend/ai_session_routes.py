@@ -349,8 +349,31 @@ async def get_behavioral_trends(child_id: str, token: str, days: int = 30):
 # ==================== PARENT REPORT GENERATION ====================
 
 @router.post("/observer/generate-parent-report/{child_id}")
-async def generate_parent_report(child_id: str, token: str, days: int = 30):
-    """Generate comprehensive AI report for parents based on session logs"""
+async def generate_parent_report(
+    child_id: str, 
+    token: str, 
+    report_type: str = "weekly",  # daily, weekly, fortnightly, monthly, custom
+    days: int = 7
+):
+    """Generate AI report for parents based on session logs
+    
+    Report Types:
+    - daily: Last 1 day
+    - weekly: Last 7 days
+    - fortnightly: Last 14 days
+    - monthly: Last 30 days
+    - custom: Specify days parameter
+    """
+    # Map report types to days
+    report_days_map = {
+        "daily": 1,
+        "weekly": 7,
+        "fortnightly": 14,
+        "monthly": 30
+    }
+    
+    # Get actual days based on report type
+    actual_days = report_days_map.get(report_type, days) if report_type != "custom" else days
     try:
         user = verify_observer_token(token)
         observer_id = user['id']
