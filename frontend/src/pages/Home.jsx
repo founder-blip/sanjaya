@@ -302,62 +302,62 @@ const Home = () => {
         </div>
       </section>
 
-      {/* What is Sanjaya - Eye-catching Redesign */}
-      <section className="py-20 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 text-white relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-pulse delay-300"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
-        </div>
+      {/* What is Sanjaya - Clean & Beautiful Design */}
+      <section className="py-16 px-4 bg-gradient-to-br from-indigo-900 via-purple-800 to-indigo-900 text-white relative overflow-hidden">
+        {/* Subtle background accent */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl"></div>
 
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-8">
-              <Eye className="w-6 h-6 text-yellow-400" />
-              <span className="text-yellow-400 font-semibold">Discover</span>
-            </div>
-            
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-yellow-200 to-orange-200 bg-clip-text text-transparent">
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-5xl font-bold mb-3">
               {whatIsSanjaya.heading}
             </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-400 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {whatIsSanjaya.description && whatIsSanjaya.description.map((desc, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/15 transition-all">
-                <p className="text-xl font-medium text-white leading-relaxed">
-                  {desc}
-                </p>
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-3 gap-6 mb-10">
+            {/* Left - Description Cards */}
+            <div className="lg:col-span-2 space-y-4">
+              {whatIsSanjaya.description && whatIsSanjaya.description.map((desc, index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 flex items-start gap-4">
+                  <div className="w-10 h-10 bg-yellow-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Eye className="w-5 h-5 text-yellow-400" />
+                  </div>
+                  <p className="text-lg text-purple-100 leading-relaxed">{desc}</p>
+                </div>
+              ))}
+              
+              {/* What it is / isn't */}
+              <div className="grid sm:grid-cols-2 gap-4 mt-4">
+                <div className="flex items-center gap-3 bg-red-500/15 rounded-xl p-4 border border-red-400/20">
+                  <span className="text-red-400 text-xl">✕</span>
+                  <p className="text-sm text-red-200">Not counseling, therapy, or teaching</p>
+                </div>
+                <div className="flex items-center gap-3 bg-green-500/15 rounded-xl p-4 border border-green-400/20">
+                  <span className="text-green-400 text-xl">✓</span>
+                  <p className="text-sm text-green-200">Patient listening for self-clarity</p>
+                </div>
               </div>
-            ))}
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <div className="flex items-center gap-4 bg-red-500/20 backdrop-blur-sm rounded-xl p-6 border border-red-400/30">
-              <span className="text-red-400 text-3xl">✕</span>
-              <p className="text-lg font-medium text-white">
-                Not counseling, therapy, or teaching.
-              </p>
             </div>
-            
-            <div className="flex items-center gap-4 bg-green-500/20 backdrop-blur-sm rounded-xl p-6 border border-green-400/30">
-              <span className="text-green-400 text-3xl">✓</span>
-              <p className="text-lg font-medium text-white">
-                We listen patiently and your child finds their own clarity.
-              </p>
+
+            {/* Right - Highlight Box */}
+            <div className="bg-gradient-to-br from-yellow-400/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30 flex flex-col justify-center">
+              <div className="text-center">
+                <Sparkles className="w-10 h-10 text-yellow-400 mx-auto mb-4" />
+                <p className="text-lg font-semibold text-yellow-100 leading-relaxed">
+                  {whatIsSanjaya.highlight_text}
+                </p>
+                <div className="mt-4 pt-4 border-t border-yellow-400/20">
+                  <p className="text-sm text-purple-200">
+                    5 minutes daily • Trained observers • Principal supervised
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className="bg-gradient-to-r from-yellow-400/20 to-orange-400/20 backdrop-blur-sm rounded-3xl p-8 border border-yellow-400/30 text-center">
-            <p className="text-2xl md:text-3xl font-bold text-yellow-200">
-              {whatIsSanjaya.highlight_text}
-            </p>
-          </div>
-
-          <p className="text-xl text-purple-200 text-center mt-8">
-            Every child is paired with a trained ethical observer who listens to them for 5 minutes a day and simply documents what they heard.
-          </p>
         </div>
       </section>
 
