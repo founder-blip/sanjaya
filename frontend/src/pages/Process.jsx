@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '../components/ui/card';
-import { Heart, Users, Shield, Smile, Phone, FileText, TrendingUp, CheckCircle, ArrowRight } from 'lucide-react';
+import { Heart, Users, Shield, Smile, Phone, FileText, TrendingUp, CheckCircle, ArrowRight, Eye, Sparkles, Target, Clock, Lock } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
@@ -8,46 +8,35 @@ import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const iconMap = {
-  'Heart': Heart,
-  'Shield': Shield,
-  'Users': Users,
-  'Smile': Smile
-};
-
 const Process = () => {
   const [aboutContent, setAboutContent] = useState({
-    hero_title: 'Why Sanjaya Exists',
-    hero_subtitle: 'Every child deserves to be heard. Every parent deserves to understand their child better.',
-    hero_description: 'We created Sanjaya to give children a safe space to express themselves and help parents nurture their emotional growth.',
-    core_values: [],
-    intent_for_children: '',
-    intent_for_parents: '',
-    intent_for_families: '',
-    what_we_are_not: [],
-    disclaimer_text: ''
-  });
-
-  const [howContent, setHowContent] = useState({
-    hero_title: 'How Sanjaya Works',
-    hero_description: 'A simple, gentle process designed around your child\'s comfort and your peace of mind.',
-    cta_title: 'Ready to Get Started?',
-    cta_description: 'Give your child the gift of being heard.'
+    hero_title: 'Our Process',
+    hero_subtitle: 'A gentle, structured approach to understanding your child better.',
+    hero_description: 'Sanjaya provides daily emotional check-ins with trained observers, helping children express themselves while giving parents meaningful insights.',
+    core_values: [
+      { title: 'Care First', description: 'Every interaction is rooted in genuine care for your child\'s wellbeing.', icon: 'Heart', color: 'blue' },
+      { title: 'Trust & Safety', description: 'Building a safe space where children feel comfortable to share.', icon: 'Shield', color: 'green' },
+      { title: 'Family Partnership', description: 'Working together with parents to support children\'s growth.', icon: 'Users', color: 'purple' },
+      { title: 'Joyful Connection', description: 'Making every conversation a positive experience.', icon: 'Smile', color: 'orange' }
+    ],
+    intent_for_children: 'A safe, non-judgmental space to express their thoughts and feelings freely.',
+    intent_for_parents: 'Meaningful insights into your child\'s emotional world without invading their privacy.',
+    intent_for_families: 'Stronger bonds through better understanding and communication.',
+    what_we_are_not: [
+      'Not therapy or clinical treatment',
+      'Not counseling or psychological intervention',
+      'Not a replacement for professional mental health care',
+      'Not academic tutoring or coaching'
+    ],
+    disclaimer_text: 'Sanjaya is an emotional support and observation program, not a medical service. For clinical concerns, please consult a licensed professional.'
   });
 
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const [aboutRes, howRes] = await Promise.all([
-          axios.get(`${BACKEND_URL}/api/content/about`).catch(() => ({ data: null })),
-          axios.get(`${BACKEND_URL}/api/content/how-it-works-page`).catch(() => ({ data: null }))
-        ]);
-        
+        const aboutRes = await axios.get(`${BACKEND_URL}/api/content/about`).catch(() => ({ data: null }));
         if (aboutRes.data && Object.keys(aboutRes.data).length > 0) {
-          setAboutContent(aboutRes.data);
-        }
-        if (howRes.data && Object.keys(howRes.data).length > 0) {
-          setHowContent(howRes.data);
+          setAboutContent(prev => ({ ...prev, ...aboutRes.data }));
         }
       } catch (error) {
         console.error('Error loading content:', error);
@@ -56,55 +45,186 @@ const Process = () => {
     loadContent();
   }, []);
 
+  const iconMap = {
+    'Heart': Heart,
+    'Shield': Shield,
+    'Users': Users,
+    'Smile': Smile
+  };
+
+  const colorClasses = {
+    'blue': { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200', light: 'bg-blue-50' },
+    'green': { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-200', light: 'bg-green-50' },
+    'purple': { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-200', light: 'bg-purple-50' },
+    'orange': { bg: 'bg-orange-100', text: 'text-orange-600', border: 'border-orange-200', light: 'bg-orange-50' }
+  };
+
+  const steps = [
+    {
+      number: 1,
+      title: 'Parent Enrolls Child',
+      description: 'You provide consent and basic details about your child. Your consent is mandatory and can be withdrawn anytime.',
+      icon: CheckCircle,
+      color: 'bg-blue-500',
+      details: ['Complete online registration', 'Review and sign consent form', 'Share child\'s schedule preferences']
+    },
+    {
+      number: 2,
+      title: 'Child Gets Matched',
+      description: 'A trained observer is assigned to your child based on age, interests, and availability.',
+      icon: Users,
+      color: 'bg-green-500',
+      details: ['Carefully matched observer', 'All observers background-verified', 'Supervised by experienced principals']
+    },
+    {
+      number: 3,
+      title: 'Daily 5-Minute Check-In',
+      description: 'The observer calls your child for a gentle conversation. Children share whatever they\'re comfortable with.',
+      icon: Phone,
+      color: 'bg-purple-500',
+      details: ['No pressure to share', 'Child-led conversations', 'Consistent daily routine']
+    },
+    {
+      number: 4,
+      title: 'Patterns Are Documented',
+      description: 'The observer notes emotional patterns over time - not specific words, but overall mood trends.',
+      icon: Eye,
+      color: 'bg-orange-500',
+      details: ['Mood tracking', 'Behavioral patterns noted', 'Progress documented']
+    },
+    {
+      number: 5,
+      title: 'AI Assists Analysis',
+      description: 'AI helps identify trends from structured data. It never talks to children. Humans always review.',
+      icon: TrendingUp,
+      color: 'bg-pink-500',
+      details: ['Pattern recognition', 'Trend analysis', 'Human oversight always']
+    },
+    {
+      number: 6,
+      title: 'Parents Receive Insights',
+      description: 'You receive thoughtful summaries about your child\'s emotional patterns with actionable guidance.',
+      icon: FileText,
+      color: 'bg-indigo-500',
+      details: ['Weekly summaries', 'Principal guidance included', 'Actionable recommendations']
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
       
-      {/* Hero Section - Why We Exist */}
-      <section className="pt-32 pb-16 px-4 bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+      {/* Hero Section */}
+      <section className="pt-28 pb-16 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-pulse delay-300"></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 mb-6">
+            <Sparkles className="w-5 h-5 text-yellow-400" />
+            <span className="text-yellow-200 font-medium">How We Support Your Child</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-yellow-200 to-orange-200 bg-clip-text text-transparent">
             {aboutContent.hero_title}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-4">
+          <p className="text-xl md:text-2xl text-purple-100 leading-relaxed mb-4">
             {aboutContent.hero_subtitle}
           </p>
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-lg text-purple-200 leading-relaxed max-w-2xl mx-auto">
             {aboutContent.hero_description}
           </p>
         </div>
       </section>
 
-      {/* Core Values Section */}
-      <section className="py-16 px-4 bg-white">
+      {/* The 6-Step Journey */}
+      <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              The Sanjaya Journey
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              A simple, 6-step process designed around your child's comfort
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Vertical line for desktop */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 via-purple-400 to-indigo-400 transform -translate-x-1/2"></div>
+
+            <div className="space-y-8 md:space-y-0">
+              {steps.map((step, index) => {
+                const Icon = step.icon;
+                const isEven = index % 2 === 0;
+                
+                return (
+                  <div key={step.number} className={`md:flex items-center ${isEven ? '' : 'md:flex-row-reverse'}`}>
+                    {/* Content Card */}
+                    <div className={`md:w-5/12 ${isEven ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+                      <Card className="bg-white border-2 border-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                        <CardContent className="p-6">
+                          <div className={`flex items-center gap-3 mb-3 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                            <div className={`w-10 h-10 ${step.color} rounded-xl flex items-center justify-center`}>
+                              <Icon className="w-5 h-5 text-white" />
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900">{step.title}</h3>
+                          </div>
+                          <p className="text-gray-600 mb-4">{step.description}</p>
+                          <ul className={`space-y-2 ${isEven ? 'md:text-right' : ''}`}>
+                            {step.details.map((detail, idx) => (
+                              <li key={idx} className={`flex items-center gap-2 text-sm text-gray-500 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                                <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                                <span>{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Center Number */}
+                    <div className="hidden md:flex md:w-2/12 justify-center">
+                      <div className={`w-14 h-14 ${step.color} rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg z-10`}>
+                        {step.number}
+                      </div>
+                    </div>
+
+                    {/* Spacer */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
             What We Stand For
           </h2>
+          <p className="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            Our core values guide every interaction with your child
+          </p>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {aboutContent.core_values && aboutContent.core_values.map((value, index) => {
               const IconComponent = iconMap[value.icon] || Heart;
-              const colorMap = {
-                'blue': 'border-blue-100 bg-blue-50/50',
-                'green': 'border-green-100 bg-green-50/50',
-                'purple': 'border-purple-100 bg-purple-50/50',
-                'orange': 'border-orange-100 bg-orange-50/50'
-              };
-              const iconColorMap = {
-                'blue': 'bg-blue-100 text-blue-600',
-                'green': 'bg-green-100 text-green-600',
-                'purple': 'bg-purple-100 text-purple-600',
-                'orange': 'bg-orange-100 text-orange-600'
-              };
+              const colors = colorClasses[value.color] || colorClasses['blue'];
+              
               return (
-                <Card key={index} className={`border-2 ${colorMap[value.color]} rounded-3xl`}>
-                  <CardContent className="p-8">
-                    <div className={`w-16 h-16 ${iconColorMap[value.color]} rounded-full flex items-center justify-center mb-6`}>
-                      <IconComponent className="w-8 h-8" />
+                <Card key={index} className={`border-2 ${colors.border} rounded-2xl hover:shadow-lg transition-all`}>
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-14 h-14 ${colors.bg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                      <IconComponent className={`w-7 h-7 ${colors.text}`} />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{value.title}</h3>
-                    <p className="text-gray-700 text-lg leading-relaxed">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{value.title}</h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">
                       {value.description}
                     </p>
                   </CardContent>
@@ -115,250 +235,102 @@ const Process = () => {
         </div>
       </section>
 
-      {/* Our Intent Section */}
-      <section className="py-16 px-4 bg-blue-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">
+      {/* Our Intent */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Our Intent
           </h2>
           
-          <Card className="bg-white border-2 border-blue-100 rounded-3xl">
-            <CardContent className="p-8">
-              <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-                <p>
-                  <strong className="text-gray-900">For Children:</strong> {aboutContent.intent_for_children}
-                </p>
-                <p>
-                  <strong className="text-gray-900">For Parents:</strong> {aboutContent.intent_for_parents}
-                </p>
-                <p>
-                  <strong className="text-gray-900">For Families:</strong> {aboutContent.intent_for_families}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {howContent.hero_title}
-            </h2>
-            <p className="text-xl text-gray-600">
-              {howContent.hero_description}
-            </p>
-          </div>
-
-          <div className="space-y-8">
-            {/* Step 1 */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-3xl font-bold text-blue-600">1</span>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="bg-white border-2 border-blue-200 rounded-2xl">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <Smile className="w-6 h-6 text-blue-600" />
                 </div>
-              </div>
-              <Card className="flex-1 bg-blue-50 border-2 border-blue-100 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <CheckCircle className="w-6 h-6 text-blue-600" />
-                    <h3 className="text-xl font-bold text-gray-900">Parent Enrolls Child</h3>
-                  </div>
-                  <p className="text-gray-700">
-                    You provide consent and basic details about your child. Your consent is mandatory and can be withdrawn anytime.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">For Children</h3>
+                <p className="text-gray-600">{aboutContent.intent_for_children}</p>
+              </CardContent>
+            </Card>
 
-            <div className="flex justify-center">
-              <ArrowRight className="w-6 h-6 text-gray-400 transform rotate-90" />
-            </div>
-
-            {/* Step 2 */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-                  <span className="text-3xl font-bold text-green-600">2</span>
+            <Card className="bg-white border-2 border-green-200 rounded-2xl">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                  <Heart className="w-6 h-6 text-green-600" />
                 </div>
-              </div>
-              <Card className="flex-1 bg-green-50 border-2 border-green-100 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Users className="w-6 h-6 text-green-600" />
-                    <h3 className="text-xl font-bold text-gray-900">Child Gets Matched with Observer</h3>
-                  </div>
-                  <p className="text-gray-700">
-                    A trained observer is assigned to your child. All observers are supervised by experienced principals.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">For Parents</h3>
+                <p className="text-gray-600">{aboutContent.intent_for_parents}</p>
+              </CardContent>
+            </Card>
 
-            <div className="flex justify-center">
-              <ArrowRight className="w-6 h-6 text-gray-400 transform rotate-90" />
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center">
-                  <span className="text-3xl font-bold text-purple-600">3</span>
+            <Card className="bg-white border-2 border-purple-200 rounded-2xl">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-6 h-6 text-purple-600" />
                 </div>
-              </div>
-              <Card className="flex-1 bg-purple-50 border-2 border-purple-100 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Phone className="w-6 h-6 text-purple-600" />
-                    <h3 className="text-xl font-bold text-gray-900">Daily 5-Minute Check-In</h3>
-                  </div>
-                  <p className="text-gray-700 mb-3">
-                    The observer calls your child for a gentle, 5-minute conversation. Children share whatever they're comfortable with.
-                  </p>
-                  <ul className="space-y-1 text-sm text-gray-600">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-purple-600" />
-                      <span>No pressure to share anything specific</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-purple-600" />
-                      <span>Observer listens without judgment</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="flex justify-center">
-              <ArrowRight className="w-6 h-6 text-gray-400 transform rotate-90" />
-            </div>
-
-            {/* Step 4 */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center">
-                  <span className="text-3xl font-bold text-orange-600">4</span>
-                </div>
-              </div>
-              <Card className="flex-1 bg-orange-50 border-2 border-orange-100 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Heart className="w-6 h-6 text-orange-600" />
-                    <h3 className="text-xl font-bold text-gray-900">Observer Notes Patterns</h3>
-                  </div>
-                  <p className="text-gray-700">
-                    The observer notices emotional patterns over time. Not specific words, but overall mood and wellbeing trends.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="flex justify-center">
-              <ArrowRight className="w-6 h-6 text-gray-400 transform rotate-90" />
-            </div>
-
-            {/* Step 5 */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center">
-                  <span className="text-3xl font-bold text-pink-600">5</span>
-                </div>
-              </div>
-              <Card className="flex-1 bg-pink-50 border-2 border-pink-100 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <TrendingUp className="w-6 h-6 text-pink-600" />
-                    <h3 className="text-xl font-bold text-gray-900">AI Assists with Pattern Recognition</h3>
-                  </div>
-                  <p className="text-gray-700">
-                    AI helps identify trends from structured data. It never talks to children or makes decisions. Humans remain in control.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="flex justify-center">
-              <ArrowRight className="w-6 h-6 text-gray-400 transform rotate-90" />
-            </div>
-
-            {/* Step 6 */}
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center">
-                  <span className="text-3xl font-bold text-indigo-600">6</span>
-                </div>
-              </div>
-              <Card className="flex-1 bg-indigo-50 border-2 border-indigo-100 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <FileText className="w-6 h-6 text-indigo-600" />
-                    <h3 className="text-xl font-bold text-gray-900">Parents Receive Insights</h3>
-                  </div>
-                  <p className="text-gray-700 mb-3">
-                    You receive thoughtful summaries about your child's emotional patterns. No raw transcripts, just helpful insights.
-                  </p>
-                  <ul className="space-y-1 text-sm text-gray-600">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-indigo-600" />
-                      <span>Easy-to-read summaries with guidance from principals</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">For Families</h3>
+                <p className="text-gray-600">{aboutContent.intent_for_families}</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* What We're Not Section */}
-      <section className="py-16 px-4 bg-gray-50">
+      {/* What We're Not + Disclaimer */}
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">
-            What Sanjaya Is Not
+            Important Clarifications
           </h2>
           
-          <Card className="bg-white border-2 border-gray-200 rounded-3xl">
+          <Card className="bg-gray-50 border-2 border-gray-200 rounded-2xl mb-8">
             <CardContent className="p-8">
-              <ul className="space-y-4 text-lg text-gray-700">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <Shield className="w-6 h-6 text-gray-600" />
+                What Sanjaya Is Not
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4">
                 {aboutContent.what_we_are_not && aboutContent.what_we_are_not.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="text-red-600 text-xl flex-shrink-0">❌</span>
-                    <span>{item}</span>
-                  </li>
+                  <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-xl">
+                    <span className="text-red-500 text-lg">✕</span>
+                    <span className="text-gray-700">{item}</span>
+                  </div>
                 ))}
-              </ul>
-
-              {aboutContent.disclaimer_text && (
-                <div className="mt-8 p-6 bg-blue-50 rounded-2xl">
-                  <p className="text-gray-800 font-medium text-center">
-                    {aboutContent.disclaimer_text}
-                  </p>
-                </div>
-              )}
+              </div>
             </CardContent>
           </Card>
+
+          {aboutContent.disclaimer_text && (
+            <div className="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 text-center">
+              <Lock className="w-8 h-8 text-blue-600 mx-auto mb-3" />
+              <p className="text-gray-700 font-medium">
+                {aboutContent.disclaimer_text}
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-indigo-600">
+      {/* Single CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-orange-600">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            {howContent.cta_title}
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Support Your Child's Emotional Growth?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            {howContent.cta_description}
+          <p className="text-xl text-orange-100 mb-8">
+            Join hundreds of families who trust Sanjaya to help their children express themselves freely.
           </p>
           <Button 
             size="lg" 
             onClick={() => window.location.href = '/get-started'}
-            className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg rounded-full shadow-lg"
+            className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
           >
-            Get Started Today
+            Start Your Free Trial
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
+          <p className="text-orange-200 mt-4 text-sm">
+            No credit card required • Cancel anytime • 7-day free trial
+          </p>
         </div>
       </section>
 
