@@ -132,7 +132,7 @@ const PrincipalDashboard = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Quick Actions */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Button
             onClick={() => navigate('/principal/students')}
             className="h-16 bg-white hover:bg-gray-50 text-gray-900 border-2"
@@ -153,6 +153,13 @@ const PrincipalDashboard = () => {
           >
             <BarChart3 className="w-5 h-5 mr-2" />
             Analytics
+          </Button>
+          <Button
+            onClick={() => navigate('/principal/events')}
+            className="h-16 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+          >
+            <PartyPopper className="w-5 h-5 mr-2" />
+            Events & Wishes
           </Button>
         </div>
 

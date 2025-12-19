@@ -119,6 +119,17 @@ const ObserverDashboard = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Quick Actions */}
+        <div className="mb-6">
+          <Button
+            onClick={() => navigate('/observer/events')}
+            className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+          >
+            <PartyPopper className="w-5 h-5 mr-2" />
+            Events & Celebrations
+          </Button>
+        </div>
+
         <h2 className="text-2xl font-bold mb-4">My Assigned Children</h2>
         
         {children.length === 0 ? (
