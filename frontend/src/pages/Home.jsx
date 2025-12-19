@@ -418,8 +418,13 @@ const Home = () => {
       </section>
 
       {/* Safety & Privacy */}
-      <section className="py-20 px-4 bg-gradient-to-br from-emerald-50 to-teal-50">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-20 px-4 bg-gradient-to-br from-emerald-50 to-teal-50 relative overflow-hidden">
+        {/* Floating blobs */}
+        <div className="absolute top-16 left-16 w-32 h-32 bg-gradient-to-br from-emerald-200 to-teal-200 blob opacity-40 animate-float-slow"></div>
+        <div className="absolute bottom-16 right-16 w-40 h-40 bg-gradient-to-br from-cyan-200 to-blue-200 blob-alt opacity-30 animate-drift delay-500"></div>
+        <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-gradient-to-br from-green-200 to-emerald-200 blob-organic opacity-50 animate-bob delay-1000"></div>
+        
+        <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-12">
             <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg">
               <Shield className="w-8 h-8 text-white" />
