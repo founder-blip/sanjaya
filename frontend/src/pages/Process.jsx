@@ -215,8 +215,13 @@ const Process = () => {
       </section>
 
       {/* Core Values */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4 bg-white relative overflow-hidden">
+        {/* Floating blobs */}
+        <div className="absolute top-20 left-10 w-24 h-24 bg-gradient-to-br from-blue-200 to-cyan-200 blob opacity-40 animate-float-slow"></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-purple-200 to-pink-200 blob-alt opacity-30 animate-drift delay-700"></div>
+        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-gradient-to-br from-orange-200 to-amber-200 blob-organic opacity-50 animate-bob delay-300"></div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
             What We Stand For
           </h2>
