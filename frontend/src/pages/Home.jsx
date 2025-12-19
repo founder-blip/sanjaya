@@ -219,7 +219,12 @@ const Home = () => {
       </section>
 
       {/* Founder Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white to-orange-50/30 relative">
+      <section className="py-20 px-4 bg-gradient-to-b from-white to-orange-50/30 relative overflow-hidden">
+        {/* Floating decorations */}
+        <div className="absolute top-10 left-10 w-24 h-24 bg-gradient-to-br from-orange-200 to-amber-200 blob opacity-40 animate-float-slow"></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-rose-200 to-pink-200 blob-alt opacity-30 animate-drift delay-500"></div>
+        <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-gradient-to-br from-violet-200 to-purple-200 blob-organic opacity-40 animate-float-gentle delay-1000"></div>
+        
         <div className="max-w-6xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-900 mb-16">
             Meet the <span className="text-gradient-warm">Heart</span> Behind Sanjaya
