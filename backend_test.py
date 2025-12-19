@@ -1137,7 +1137,7 @@ class BackendTester:
             self.log_result("Parent Child Details", False, f"Request error: {str(e)}")
             return False
 
-    # ===== EVENTS & CELEBRATIONS TESTS =====
+    # ===== EARNINGS & SUPPORT TESTS =====
     
     def test_observer_login(self):
         """Test observer login with demo credentials"""
@@ -1226,6 +1226,369 @@ class BackendTester:
         except Exception as e:
             self.log_result("Principal Login", False, f"Request error: {str(e)}")
             return False, None
+
+    def test_observer_earnings_api(self):
+        """Test observer earnings summary API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Observer Earnings API", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/earnings/summary?token={token}",
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['role', 'rates', 'statistics', 'earnings']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Observer Earnings API", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Check role
+                if data['role'] != 'observer':
+                    self.log_result("Observer Earnings API", False, f"Expected role 'observer', got '{data['role']}'")
+                    return False
+                
+                # Check rates structure
+                rates = data['rates']
+                expected_rate_fields = ['per_session', 'bonus_weekly_5plus']
+                for field in expected_rate_fields:
+                    if field not in rates:
+                        self.log_result("Observer Earnings API", False, f"Missing rate field '{field}'")
+                        return False
+                
+                # Verify expected rates
+                if rates['per_session'] != 150:
+                    self.log_result("Observer Earnings API", False, f"Expected per_session rate 150, got {rates['per_session']}")
+                    return False
+                
+                if rates['bonus_weekly_5plus'] != 200:
+                    self.log_result("Observer Earnings API", False, f"Expected bonus_weekly_5plus rate 200, got {rates['bonus_weekly_5plus']}")
+                    return False
+                
+                # Check statistics structure
+                statistics = data['statistics']
+                expected_stat_fields = ['total_sessions', 'sessions_this_month', 'sessions_this_week']
+                for field in expected_stat_fields:
+                    if field not in statistics:
+                        self.log_result("Observer Earnings API", False, f"Missing statistics field '{field}'")
+                        return False
+                
+                # Check earnings structure
+                earnings = data['earnings']
+                expected_earning_fields = ['base_earnings', 'weekly_bonus', 'total_this_month', 'pending_amount']
+                for field in expected_earning_fields:
+                    if field not in earnings:
+                        self.log_result("Observer Earnings API", False, f"Missing earnings field '{field}'")
+                        return False
+                
+                self.log_result("Observer Earnings API", True, 
+                    f"Observer earnings API working correctly. "
+                    f"Sessions: {statistics['total_sessions']}, "
+                    f"This month: {statistics['sessions_this_month']}, "
+                    f"Earnings: ₹{earnings['total_this_month']}")
+                return True
+                
+            else:
+                self.log_result("Observer Earnings API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Observer Earnings API", False, f"Request error: {str(e)}")
+            return False
+
+    def test_principal_earnings_api(self):
+        """Test principal earnings summary API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_principal_login()
+            if not login_success or not token:
+                self.log_result("Principal Earnings API", False, "Failed to login as principal")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/earnings/summary?token={token}",
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['role', 'rates', 'statistics', 'earnings']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Principal Earnings API", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Check role
+                if data['role'] != 'principal':
+                    self.log_result("Principal Earnings API", False, f"Expected role 'principal', got '{data['role']}'")
+                    return False
+                
+                # Check rates structure
+                rates = data['rates']
+                expected_rate_fields = ['per_student_enrolled', 'program_management']
+                for field in expected_rate_fields:
+                    if field not in rates:
+                        self.log_result("Principal Earnings API", False, f"Missing rate field '{field}'")
+                        return False
+                
+                # Verify expected rates
+                if rates['per_student_enrolled'] != 50:
+                    self.log_result("Principal Earnings API", False, f"Expected per_student_enrolled rate 50, got {rates['per_student_enrolled']}")
+                    return False
+                
+                if rates['program_management'] != 2000:
+                    self.log_result("Principal Earnings API", False, f"Expected program_management rate 2000, got {rates['program_management']}")
+                    return False
+                
+                # Check statistics structure
+                statistics = data['statistics']
+                expected_stat_fields = ['active_students']
+                for field in expected_stat_fields:
+                    if field not in statistics:
+                        self.log_result("Principal Earnings API", False, f"Missing statistics field '{field}'")
+                        return False
+                
+                # Check earnings structure
+                earnings = data['earnings']
+                expected_earning_fields = ['student_earnings', 'management_fee', 'total_this_month']
+                for field in expected_earning_fields:
+                    if field not in earnings:
+                        self.log_result("Principal Earnings API", False, f"Missing earnings field '{field}'")
+                        return False
+                
+                # Verify expected active students (should be 2 as per review request)
+                if statistics['active_students'] != 2:
+                    self.log_result("Principal Earnings API", False, f"Expected 2 active students, got {statistics['active_students']}")
+                    return False
+                
+                self.log_result("Principal Earnings API", True, 
+                    f"Principal earnings API working correctly. "
+                    f"Active students: {statistics['active_students']}, "
+                    f"Student earnings: ₹{earnings['student_earnings']}, "
+                    f"Management fee: ₹{earnings['management_fee']}, "
+                    f"Total: ₹{earnings['total_this_month']}")
+                return True
+                
+            else:
+                self.log_result("Principal Earnings API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Principal Earnings API", False, f"Request error: {str(e)}")
+            return False
+
+    def test_support_categories_api(self):
+        """Test support ticket categories API"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Support Categories API", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/support/categories?token={token}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                if 'categories' not in data:
+                    self.log_result("Support Categories API", False, "Missing 'categories' field in response")
+                    return False
+                
+                categories = data['categories']
+                if not isinstance(categories, list):
+                    self.log_result("Support Categories API", False, f"Expected categories to be a list, got {type(categories)}")
+                    return False
+                
+                # Should return 6 categories as per review request
+                if len(categories) != 6:
+                    self.log_result("Support Categories API", False, f"Expected 6 categories, got {len(categories)}")
+                    return False
+                
+                # Check category structure
+                expected_category_ids = ['payment', 'technical', 'session', 'child', 'account', 'other']
+                found_category_ids = [cat.get('id') for cat in categories]
+                
+                for expected_id in expected_category_ids:
+                    if expected_id not in found_category_ids:
+                        self.log_result("Support Categories API", False, f"Missing expected category '{expected_id}'")
+                        return False
+                
+                # Check first category structure
+                first_category = categories[0]
+                required_fields = ['id', 'name', 'icon']
+                for field in required_fields:
+                    if field not in first_category:
+                        self.log_result("Support Categories API", False, f"Category missing required field '{field}'")
+                        return False
+                
+                self.log_result("Support Categories API", True, f"Support categories API working correctly, returned {len(categories)} categories")
+                return True
+                
+            else:
+                self.log_result("Support Categories API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Support Categories API", False, f"Request error: {str(e)}")
+            return False
+
+    def test_support_ticket_creation(self):
+        """Test support ticket creation API"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Support Ticket Creation", False, "Failed to login as observer")
+                return False
+            
+            # Create a test ticket
+            ticket_data = {
+                "token": token,
+                "category": "technical",
+                "subject": "Test Support Ticket - API Testing",
+                "description": "This is a test ticket created during API testing to verify the support ticket creation functionality is working correctly.",
+                "priority": "medium"
+            }
+            
+            response = requests.post(
+                f"{API_BASE}/support/ticket",
+                json=ticket_data,
+                headers={"Content-Type": "application/json"},
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['success', 'ticket', 'message']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Support Ticket Creation", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Check success status
+                if not data.get('success'):
+                    self.log_result("Support Ticket Creation", False, f"Success field is False: {data}")
+                    return False
+                
+                # Check ticket data
+                ticket = data['ticket']
+                ticket_required_fields = ['id', 'ticket_number', 'status']
+                for field in ticket_required_fields:
+                    if field not in ticket:
+                        self.log_result("Support Ticket Creation", False, f"Ticket missing required field '{field}'")
+                        return False
+                
+                # Check ticket status
+                if ticket['status'] != 'open':
+                    self.log_result("Support Ticket Creation", False, f"Expected ticket status 'open', got '{ticket['status']}'")
+                    return False
+                
+                # Store ticket ID for next test
+                self.test_ticket_id = ticket['id']
+                
+                self.log_result("Support Ticket Creation", True, 
+                    f"Support ticket created successfully. "
+                    f"ID: {ticket['id']}, Number: {ticket['ticket_number']}")
+                return True
+                
+            else:
+                self.log_result("Support Ticket Creation", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Support Ticket Creation", False, f"Request error: {str(e)}")
+            return False
+
+    def test_support_tickets_retrieval(self):
+        """Test support tickets retrieval API"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Support Tickets Retrieval", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/support/tickets?token={token}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['tickets', 'total', 'status_counts']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Support Tickets Retrieval", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                tickets = data['tickets']
+                if not isinstance(tickets, list):
+                    self.log_result("Support Tickets Retrieval", False, f"Expected tickets to be a list, got {type(tickets)}")
+                    return False
+                
+                total = data['total']
+                status_counts = data['status_counts']
+                
+                # Check if we have the ticket we just created
+                if hasattr(self, 'test_ticket_id') and self.test_ticket_id:
+                    found_ticket = False
+                    for ticket in tickets:
+                        if ticket.get('id') == self.test_ticket_id:
+                            found_ticket = True
+                            
+                            # Check ticket structure
+                            required_ticket_fields = ['id', 'ticket_number', 'category', 'subject', 'status', 'priority', 'created_at']
+                            for field in required_ticket_fields:
+                                if field not in ticket:
+                                    self.log_result("Support Tickets Retrieval", False, f"Ticket missing required field '{field}'")
+                                    return False
+                            break
+                    
+                    if not found_ticket:
+                        self.log_result("Support Tickets Retrieval", False, f"Created ticket {self.test_ticket_id} not found in retrieval")
+                        return False
+                
+                # Check status counts structure
+                expected_status_fields = ['open', 'in_progress', 'resolved', 'closed']
+                for field in expected_status_fields:
+                    if field not in status_counts:
+                        self.log_result("Support Tickets Retrieval", False, f"Missing status count field '{field}'")
+                        return False
+                
+                self.log_result("Support Tickets Retrieval", True, 
+                    f"Support tickets retrieval working correctly. "
+                    f"Total: {total}, Open: {status_counts['open']}, "
+                    f"In Progress: {status_counts['in_progress']}")
+                return True
+                
+            else:
+                self.log_result("Support Tickets Retrieval", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Support Tickets Retrieval", False, f"Request error: {str(e)}")
+            return False
+
+    # ===== EVENTS & CELEBRATIONS TESTS =====
     
     def test_events_national_api(self):
         """Test GET /api/events/national endpoint"""
