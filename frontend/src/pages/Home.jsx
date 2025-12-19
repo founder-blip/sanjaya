@@ -380,8 +380,13 @@ const Home = () => {
       </section>
 
       {/* How It Works - Compact */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4 bg-white relative overflow-hidden">
+        {/* Floating decorations */}
+        <div className="absolute top-10 right-20 w-24 h-24 bg-gradient-to-br from-blue-200 to-cyan-200 blob opacity-40 animate-float-gentle"></div>
+        <div className="absolute bottom-10 left-20 w-32 h-32 bg-gradient-to-br from-emerald-200 to-green-200 blob-alt opacity-30 animate-float-slow delay-700"></div>
+        <div className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-br from-amber-200 to-yellow-200 blob-organic opacity-50 animate-bob delay-300"></div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
               How <span className="text-gradient-warm">Sanjaya</span> Works
