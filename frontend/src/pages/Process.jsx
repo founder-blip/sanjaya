@@ -146,8 +146,13 @@ const Process = () => {
       </section>
 
       {/* The 6-Step Journey - Compact Grid */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-16 px-4 bg-gray-50 relative overflow-hidden">
+        {/* Floating decorations */}
+        <div className="absolute top-10 right-10 w-28 h-28 bg-gradient-to-br from-blue-200 to-indigo-200 blob opacity-40 animate-float-slow"></div>
+        <div className="absolute bottom-10 left-10 w-36 h-36 bg-gradient-to-br from-purple-200 to-violet-200 blob-alt opacity-30 animate-drift delay-500"></div>
+        <div className="absolute top-1/3 left-1/4 w-16 h-16 bg-gradient-to-br from-pink-200 to-rose-200 blob-organic opacity-50 animate-bob delay-300"></div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               The Sanjaya Journey
