@@ -1137,6 +1137,413 @@ class BackendTester:
             self.log_result("Parent Child Details", False, f"Request error: {str(e)}")
             return False
 
+    # ===== EVENTS & CELEBRATIONS TESTS =====
+    
+    def test_observer_login(self):
+        """Test observer login with demo credentials"""
+        try:
+            response = requests.post(
+                f"{API_BASE}/observer/login?email=observer@sanjaya.com&password=observer123",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['access_token', 'token_type', 'observer']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Observer Login", False, f"Missing required field '{field}' in response", data)
+                        return False, None
+                
+                # Check token type
+                if data['token_type'] != 'bearer':
+                    self.log_result("Observer Login", False, f"Expected token_type 'bearer', got '{data['token_type']}'")
+                    return False, None
+                
+                # Check observer data
+                observer = data['observer']
+                if observer.get('email') != 'observer@sanjaya.com':
+                    self.log_result("Observer Login", False, f"Expected email 'observer@sanjaya.com', got '{observer.get('email')}'")
+                    return False, None
+                
+                if observer.get('role') != 'observer':
+                    self.log_result("Observer Login", False, f"Expected role 'observer', got '{observer.get('role')}'")
+                    return False, None
+                
+                self.log_result("Observer Login", True, f"Observer login successful for {observer.get('name', 'Observer')}")
+                return True, data['access_token']
+                
+            else:
+                self.log_result("Observer Login", False, f"HTTP {response.status_code}: {response.text}")
+                return False, None
+                
+        except Exception as e:
+            self.log_result("Observer Login", False, f"Request error: {str(e)}")
+            return False, None
+    
+    def test_principal_login(self):
+        """Test principal login with demo credentials"""
+        try:
+            response = requests.post(
+                f"{API_BASE}/principal/login?email=principal@greenwood.edu&password=principal123",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['access_token', 'token_type', 'principal']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Principal Login", False, f"Missing required field '{field}' in response", data)
+                        return False, None
+                
+                # Check token type
+                if data['token_type'] != 'bearer':
+                    self.log_result("Principal Login", False, f"Expected token_type 'bearer', got '{data['token_type']}'")
+                    return False, None
+                
+                # Check principal data
+                principal = data['principal']
+                if principal.get('email') != 'principal@greenwood.edu':
+                    self.log_result("Principal Login", False, f"Expected email 'principal@greenwood.edu', got '{principal.get('email')}'")
+                    return False, None
+                
+                if principal.get('role') != 'principal':
+                    self.log_result("Principal Login", False, f"Expected role 'principal', got '{principal.get('role')}'")
+                    return False, None
+                
+                self.log_result("Principal Login", True, f"Principal login successful for {principal.get('name', 'Principal')} at {principal.get('school', 'School')}")
+                return True, data['access_token']
+                
+            else:
+                self.log_result("Principal Login", False, f"HTTP {response.status_code}: {response.text}")
+                return False, None
+                
+        except Exception as e:
+            self.log_result("Principal Login", False, f"Request error: {str(e)}")
+            return False, None
+    
+    def test_events_national_api(self):
+        """Test GET /api/events/national endpoint"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Events National API", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/events/national?token={token}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                if 'events' not in data:
+                    self.log_result("Events National API", False, "Missing 'events' field in response", data)
+                    return False
+                
+                events = data['events']
+                if not isinstance(events, list):
+                    self.log_result("Events National API", False, f"Expected events to be a list, got {type(events)}")
+                    return False
+                
+                # Check if we have expected national events
+                expected_events = ['Republic Day', 'Independence Day', 'Gandhi Jayanti', 'Children\'s Day', 'Christmas', 'New Year']
+                found_events = [event.get('name') for event in events]
+                
+                missing_events = [e for e in expected_events if e not in found_events]
+                if missing_events:
+                    self.log_result("Events National API", False, f"Missing expected events: {missing_events}")
+                    return False
+                
+                # Check event structure
+                if events:
+                    first_event = events[0]
+                    required_fields = ['name', 'date', 'type', 'icon', 'default_wish']
+                    for field in required_fields:
+                        if field not in first_event:
+                            self.log_result("Events National API", False, f"Event missing required field '{field}'")
+                            return False
+                
+                self.log_result("Events National API", True, f"National events API working correctly, returned {len(events)} events")
+                return True
+                
+            else:
+                self.log_result("Events National API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Events National API", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_events_upcoming_observer(self):
+        """Test GET /api/events/upcoming for observer"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Events Upcoming Observer", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/events/upcoming?token={token}&days=60",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['upcoming_events', 'total_children', 'period_days']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Events Upcoming Observer", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                upcoming_events = data['upcoming_events']
+                if not isinstance(upcoming_events, list):
+                    self.log_result("Events Upcoming Observer", False, f"Expected upcoming_events to be a list, got {type(upcoming_events)}")
+                    return False
+                
+                total_children = data['total_children']
+                if total_children != 1:  # Observer should see 1 child
+                    self.log_result("Events Upcoming Observer", False, f"Expected observer to see 1 child, got {total_children}")
+                    return False
+                
+                # Check event structure if any events exist
+                if upcoming_events:
+                    first_event = upcoming_events[0]
+                    required_event_fields = ['id', 'type', 'name', 'date', 'days_until', 'icon']
+                    for field in required_event_fields:
+                        if field not in first_event:
+                            self.log_result("Events Upcoming Observer", False, f"Event missing required field '{field}'")
+                            return False
+                    
+                    # Check if events are sorted by days_until
+                    if len(upcoming_events) > 1:
+                        for i in range(1, len(upcoming_events)):
+                            if upcoming_events[i]['days_until'] < upcoming_events[i-1]['days_until']:
+                                self.log_result("Events Upcoming Observer", False, "Events not sorted by days_until")
+                                return False
+                
+                self.log_result("Events Upcoming Observer", True, f"Upcoming events API working for observer, found {len(upcoming_events)} events for {total_children} child")
+                return True
+                
+            else:
+                self.log_result("Events Upcoming Observer", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Events Upcoming Observer", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_events_upcoming_principal(self):
+        """Test GET /api/events/upcoming for principal"""
+        try:
+            # Get principal token first
+            login_success, token = self.test_principal_login()
+            if not login_success or not token:
+                self.log_result("Events Upcoming Principal", False, "Failed to login as principal")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/events/upcoming?token={token}&days=60",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['upcoming_events', 'total_children', 'period_days']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Events Upcoming Principal", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                upcoming_events = data['upcoming_events']
+                total_children = data['total_children']
+                
+                if total_children != 2:  # Principal should see 2 students
+                    self.log_result("Events Upcoming Principal", False, f"Expected principal to see 2 students, got {total_children}")
+                    return False
+                
+                self.log_result("Events Upcoming Principal", True, f"Upcoming events API working for principal, found {len(upcoming_events)} events for {total_children} students")
+                return True
+                
+            else:
+                self.log_result("Events Upcoming Principal", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Events Upcoming Principal", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_events_today_api(self):
+        """Test GET /api/events/today endpoint"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Events Today API", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/events/today?token={token}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['todays_events', 'date']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Events Today API", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                todays_events = data['todays_events']
+                if not isinstance(todays_events, list):
+                    self.log_result("Events Today API", False, f"Expected todays_events to be a list, got {type(todays_events)}")
+                    return False
+                
+                # Check date format
+                date_str = data['date']
+                try:
+                    datetime.fromisoformat(date_str)
+                except ValueError:
+                    self.log_result("Events Today API", False, f"Invalid date format: {date_str}")
+                    return False
+                
+                self.log_result("Events Today API", True, f"Today's events API working correctly, found {len(todays_events)} events for today")
+                return True
+                
+            else:
+                self.log_result("Events Today API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Events Today API", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_events_wish_history_api(self):
+        """Test GET /api/events/wish-history endpoint"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Events Wish History API", False, "Failed to login as observer")
+                return False
+            
+            response = requests.get(
+                f"{API_BASE}/events/wish-history?token={token}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['individual_wishes', 'batch_wishes', 'total_individual', 'total_batch']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Events Wish History API", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                individual_wishes = data['individual_wishes']
+                batch_wishes = data['batch_wishes']
+                
+                if not isinstance(individual_wishes, list):
+                    self.log_result("Events Wish History API", False, f"Expected individual_wishes to be a list, got {type(individual_wishes)}")
+                    return False
+                
+                if not isinstance(batch_wishes, list):
+                    self.log_result("Events Wish History API", False, f"Expected batch_wishes to be a list, got {type(batch_wishes)}")
+                    return False
+                
+                # Should be empty initially
+                if len(individual_wishes) == 0 and len(batch_wishes) == 0:
+                    self.log_result("Events Wish History API", True, "Wish history API working correctly, empty initially as expected")
+                else:
+                    self.log_result("Events Wish History API", True, f"Wish history API working, found {len(individual_wishes)} individual and {len(batch_wishes)} batch wishes")
+                
+                return True
+                
+            else:
+                self.log_result("Events Wish History API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Events Wish History API", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_events_wish_all_api(self):
+        """Test POST /api/events/wish-all endpoint"""
+        try:
+            # Get observer token first
+            login_success, token = self.test_observer_login()
+            if not login_success or not token:
+                self.log_result("Events Wish All API", False, "Failed to login as observer")
+                return False
+            
+            # Test sending wishes for a national event
+            payload = {
+                "event_type": "national",
+                "message": "Happy Republic Day! May our nation continue to grow stronger! 🇮🇳",
+                "event_name": "Republic Day",
+                "event_date": "2024-01-26"
+            }
+            
+            response = requests.post(
+                f"{API_BASE}/events/wish-all?token={token}",
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['success', 'batch_id', 'children_wished']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Events Wish All API", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                if not data['success']:
+                    self.log_result("Events Wish All API", False, f"Success field is False: {data}")
+                    return False
+                
+                children_wished = data['children_wished']
+                if children_wished != 1:  # Observer should have 1 child
+                    self.log_result("Events Wish All API", False, f"Expected to wish 1 child, got {children_wished}")
+                    return False
+                
+                batch_id = data['batch_id']
+                if not batch_id or len(batch_id) < 10:
+                    self.log_result("Events Wish All API", False, f"Invalid batch_id: {batch_id}")
+                    return False
+                
+                self.log_result("Events Wish All API", True, f"Wish all API working correctly, sent wishes to {children_wished} children with batch ID: {batch_id}")
+                return True
+                
+            else:
+                self.log_result("Events Wish All API", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Events Wish All API", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("=" * 60)
@@ -1163,7 +1570,16 @@ class BackendTester:
             self.test_chat_endpoint_basic,
             self.test_chat_context_persistence,
             self.test_chat_new_session,
-            self.test_chat_error_handling
+            self.test_chat_error_handling,
+            # Events & Celebrations Tests
+            self.test_observer_login,
+            self.test_principal_login,
+            self.test_events_national_api,
+            self.test_events_upcoming_observer,
+            self.test_events_upcoming_principal,
+            self.test_events_today_api,
+            self.test_events_wish_history_api,
+            self.test_events_wish_all_api
         ]
         
         passed = 0
