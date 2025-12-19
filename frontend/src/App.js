@@ -25,10 +25,12 @@ import ObserverMoodEntry from './pages/ObserverMoodEntry';
 import ObserverGoalCreate from './pages/ObserverGoalCreate';
 import ObserverAIReport from './pages/ObserverAIReport';
 import ObserverSessionLogs from './pages/ObserverSessionLogs';
+import ObserverEvents from './pages/ObserverEvents';
 import PrincipalLogin from './pages/PrincipalLogin';
 import PrincipalDashboard from './pages/PrincipalDashboard';
 import PrincipalStudents from './pages/PrincipalStudents';
 import PrincipalAnalytics from './pages/PrincipalAnalytics';
+import PrincipalEvents from './pages/PrincipalEvents';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -67,12 +69,14 @@ function App() {
           <Route path="/observer/goal-create/:childId" element={<ObserverGoalCreate />} />
           <Route path="/observer/ai-report/:childId" element={<ObserverAIReport />} />
           <Route path="/observer/sessions/:childId" element={<ObserverSessionLogs />} />
+          <Route path="/observer/events" element={<ObserverEvents />} />
           
           {/* Principal Routes */}
           <Route path="/principal/login" element={<PrincipalLogin />} />
           <Route path="/principal/dashboard" element={<PrincipalDashboard />} />
           <Route path="/principal/students" element={<PrincipalStudents />} />
           <Route path="/principal/analytics" element={<PrincipalAnalytics />} />
+          <Route path="/principal/events" element={<PrincipalEvents />} />
           
           {/* Footer Pages */}
           <Route path="/contact" element={<Contact />} />
