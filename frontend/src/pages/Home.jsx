@@ -320,8 +320,13 @@ const Home = () => {
       </section>
 
       {/* What We Offer - Cards */}
-      <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+        {/* Floating blobs */}
+        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-orange-200 to-amber-200 blob opacity-30 blur-2xl animate-drift"></div>
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-gradient-to-br from-violet-200 to-purple-200 blob-alt opacity-25 blur-2xl animate-drift delay-1000"></div>
+        <div className="absolute top-1/2 right-1/3 w-20 h-20 bg-gradient-to-br from-rose-200 to-pink-200 blob-organic opacity-40 blur-xl animate-float-slow delay-500"></div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
               What We <span className="text-gradient">Offer</span>
