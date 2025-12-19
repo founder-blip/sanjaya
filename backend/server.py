@@ -298,9 +298,9 @@ async def submit_inquiry(inquiry: InquirySubmission):
                 <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
                     <p><strong>In the meantime, learn more about Sanjaya:</strong></p>
                     <ul style="color: #666;">
-                        <li><a href="https://growth-buddy-22.preview.emergentagent.com/about" style="color: #f97316;">Why Sanjaya Exists</a></li>
-                        <li><a href="https://growth-buddy-22.preview.emergentagent.com/how-it-works" style="color: #f97316;">How It Works</a></li>
-                        <li><a href="https://growth-buddy-22.preview.emergentagent.com/faq" style="color: #f97316;">Frequently Asked Questions</a></li>
+                        <li><a href="https://sanjaya-child.preview.emergentagent.com/about" style="color: #f97316;">Why Sanjaya Exists</a></li>
+                        <li><a href="https://sanjaya-child.preview.emergentagent.com/how-it-works" style="color: #f97316;">How It Works</a></li>
+                        <li><a href="https://sanjaya-child.preview.emergentagent.com/faq" style="color: #f97316;">Frequently Asked Questions</a></li>
                     </ul>
                 </div>
                 
