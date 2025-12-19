@@ -9,7 +9,7 @@ import {
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Textarea } from '../components/ui/textarea';
-import { useToast } from '../components/ui/use-toast';
+import { useToast } from '../hooks/use-toast';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
