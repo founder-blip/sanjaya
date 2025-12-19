@@ -20,6 +20,7 @@ from observer_routes import router as observer_router
 from principal_routes import router as principal_router
 from ai_report_routes import router as ai_report_router
 from events_routes import router as events_router
+from earnings_routes import router as earnings_router
 
 
 ROOT_DIR = Path(__file__).parent
@@ -454,6 +455,10 @@ ai_session_routes.set_database(db)
 import events_routes
 events_routes.set_database(db)
 
+# Set database for earnings routes
+import earnings_routes
+earnings_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
@@ -465,6 +470,7 @@ app.include_router(principal_router, prefix="/api")
 app.include_router(ai_report_router, prefix="/api")
 app.include_router(ai_session_routes.router, prefix="/api")
 app.include_router(events_router, prefix="/api")
+app.include_router(earnings_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
