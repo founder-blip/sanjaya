@@ -265,9 +265,9 @@ const Process = () => {
           </h2>
           
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-white border-2 border-blue-200 rounded-2xl">
+            <Card className="bg-white border-2 border-blue-200 rounded-2xl hover:shadow-lg transition-all animate-float-gentle">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 animate-wiggle-slow">
                   <Smile className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">For Children</h3>
@@ -275,9 +275,9 @@ const Process = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-2 border-green-200 rounded-2xl">
+            <Card className="bg-white border-2 border-green-200 rounded-2xl hover:shadow-lg transition-all animate-float-gentle delay-200">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4 animate-wiggle-slow delay-300">
                   <Heart className="w-6 h-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">For Parents</h3>
@@ -285,9 +285,9 @@ const Process = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-2 border-purple-200 rounded-2xl">
+            <Card className="bg-white border-2 border-purple-200 rounded-2xl hover:shadow-lg transition-all animate-float-gentle delay-500">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 animate-wiggle-slow delay-700">
                   <Users className="w-6 h-6 text-purple-600" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">For Families</h3>
