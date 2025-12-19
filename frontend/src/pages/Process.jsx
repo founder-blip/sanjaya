@@ -253,8 +253,13 @@ const Process = () => {
       </section>
 
       {/* Our Intent */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-indigo-50 relative overflow-hidden">
+        {/* Floating blobs */}
+        <div className="absolute top-10 right-20 w-28 h-28 bg-gradient-to-br from-blue-200 to-indigo-200 blob opacity-40 animate-float"></div>
+        <div className="absolute bottom-10 left-20 w-36 h-36 bg-gradient-to-br from-violet-200 to-purple-200 blob-alt opacity-30 animate-drift delay-500"></div>
+        <div className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-br from-cyan-200 to-blue-200 blob-organic opacity-50 animate-bob delay-1000"></div>
+        
+        <div className="max-w-5xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Our Intent
           </h2>
