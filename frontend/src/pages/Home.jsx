@@ -233,12 +233,14 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="flex flex-col items-center">
               <div className="relative">
-                <div className="w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-100">
+                <div className="w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl ring-8 ring-orange-100 animate-float-gentle">
                   <img src={founderContent.image_url} alt={founderContent.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-br from-orange-400 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg">
-                  <Heart className="w-10 h-10 text-white" />
+                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-br from-orange-400 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg animate-wiggle-slow">
+                  <Heart className="w-10 h-10 text-white animate-pulse" />
                 </div>
+                <div className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-br from-yellow-300 to-amber-400 blob opacity-80 animate-float delay-300"></div>
+                <div className="absolute bottom-10 -left-10 w-8 h-8 bg-gradient-to-br from-pink-300 to-rose-400 blob-alt opacity-70 animate-bob delay-700"></div>
               </div>
               <div className="mt-8 text-center">
                 <h3 className="text-2xl font-bold text-gray-900">{founderContent.name}</h3>
