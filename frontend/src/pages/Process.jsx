@@ -204,10 +204,10 @@ const Process = () => {
           <div className="flex justify-center items-center gap-2 mt-8">
             {[1, 2, 3, 4, 5, 6].map((num, idx) => (
               <React.Fragment key={num}>
-                <div className={`w-8 h-8 ${steps[idx].color} rounded-full flex items-center justify-center text-white text-sm font-bold`}>
+                <div className={`w-8 h-8 ${steps[idx].color} rounded-full flex items-center justify-center text-white text-sm font-bold animate-float-gentle`} style={{animationDelay: `${idx * 0.1}s`}}>
                   {num}
                 </div>
-                {idx < 5 && <ArrowRight className="w-4 h-4 text-gray-400" />}
+                {idx < 5 && <ArrowRight className="w-4 h-4 text-gray-400 animate-pulse" />}
               </React.Fragment>
             ))}
           </div>
