@@ -472,6 +472,13 @@ const Home = () => {
       {/* Final CTA */}
       <section className="py-20 px-4 bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-white/5"></div>
+        
+        {/* Floating blobs */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 blob animate-drift"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/10 blob-alt animate-drift delay-700"></div>
+        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-white/15 blob-organic animate-float-rotate delay-300"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-16 h-16 bg-white/10 blob-soft animate-bob delay-1000"></div>
+        <div className="absolute top-1/4 left-1/3 w-10 h-10 bg-white/20 blob animate-float delay-500"></div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
             Give Your Child the Gift of Being Heard
