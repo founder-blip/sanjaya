@@ -110,9 +110,14 @@ const Home = () => {
       <section className="relative pt-24 md:pt-28 pb-16 md:pb-24 px-4 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-40 animate-float"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full blur-3xl opacity-30 animate-float" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-40 left-1/4 w-20 h-20 bg-gradient-to-br from-violet-300 to-purple-300 blob opacity-60 animate-float" style={{animationDelay: '0.5s'}}></div>
+        
+        {/* Floating Blobs */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-yellow-200 to-orange-200 blob-morph blur-3xl opacity-40 animate-drift"></div>
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-br from-rose-200 to-pink-200 blob-morph blur-3xl opacity-30 animate-drift delay-1000"></div>
+        <div className="absolute top-40 left-1/4 w-20 h-20 bg-gradient-to-br from-violet-300 to-purple-300 blob animate-float-rotate delay-500"></div>
+        <div className="absolute top-60 right-1/4 w-16 h-16 bg-gradient-to-br from-amber-300 to-yellow-300 blob-alt animate-float-gentle delay-300"></div>
+        <div className="absolute bottom-32 right-20 w-12 h-12 bg-gradient-to-br from-pink-300 to-rose-300 blob-organic animate-wiggle-slow delay-700"></div>
+        <div className="absolute top-32 left-20 w-14 h-14 bg-gradient-to-br from-cyan-200 to-blue-200 blob-soft animate-bob delay-200"></div>
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
