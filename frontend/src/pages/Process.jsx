@@ -116,10 +116,16 @@ const Process = () => {
       
       {/* Hero Section */}
       <section className="pt-28 pb-16 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl animate-pulse delay-300"></div>
-        </div>
+        {/* Animated floating blobs */}
+        <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/20 blob-morph blur-3xl animate-pulse-glow"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-500/20 blob-morph blur-3xl animate-pulse-glow delay-1000"></div>
+        <div className="absolute top-40 right-1/4 w-32 h-32 bg-cyan-500/15 blob blur-2xl animate-drift delay-500"></div>
+        <div className="absolute bottom-32 left-1/4 w-24 h-24 bg-amber-500/15 blob-alt blur-2xl animate-drift delay-700"></div>
+        
+        {/* Small floating accents */}
+        <div className="absolute top-32 right-20 w-8 h-8 bg-yellow-400/50 blob animate-float"></div>
+        <div className="absolute bottom-40 left-20 w-6 h-6 bg-purple-400/60 blob-organic animate-bob delay-300"></div>
+        <div className="absolute top-1/2 left-16 w-10 h-10 bg-pink-400/40 blob-soft animate-float-rotate delay-500"></div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 mb-6">
