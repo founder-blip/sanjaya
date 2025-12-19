@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { LogOut, Users, TrendingUp, Calendar, BarChart3, PartyPopper } from 'lucide-react';
+import { LogOut, Users, TrendingUp, Calendar, BarChart3, PartyPopper, Wallet, HelpCircle } from 'lucide-react';
 import Navigation from '../components/Navigation';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -132,20 +132,20 @@ const PrincipalDashboard = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           <Button
             onClick={() => navigate('/principal/students')}
             className="h-16 bg-white hover:bg-gray-50 text-gray-900 border-2"
           >
             <Users className="w-5 h-5 mr-2" />
-            View All Students
+            Students
           </Button>
           <Button
             onClick={() => navigate('/principal/observers')}
             className="h-16 bg-white hover:bg-gray-50 text-gray-900 border-2"
           >
             <Users className="w-5 h-5 mr-2" />
-            View All Observers
+            Observers
           </Button>
           <Button
             onClick={() => navigate('/principal/analytics')}
@@ -159,7 +159,21 @@ const PrincipalDashboard = () => {
             className="h-16 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
           >
             <PartyPopper className="w-5 h-5 mr-2" />
-            Events & Wishes
+            Events
+          </Button>
+          <Button
+            onClick={() => navigate('/principal/earnings')}
+            className="h-16 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+          >
+            <Wallet className="w-5 h-5 mr-2" />
+            Earnings
+          </Button>
+          <Button
+            onClick={() => navigate('/principal/support')}
+            className="h-16 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white"
+          >
+            <HelpCircle className="w-5 h-5 mr-2" />
+            Support
           </Button>
         </div>
 
