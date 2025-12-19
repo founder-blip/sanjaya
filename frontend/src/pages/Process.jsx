@@ -334,8 +334,15 @@ const Process = () => {
       </section>
 
       {/* Single CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 to-orange-600">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="py-20 px-4 bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 relative overflow-hidden">
+        {/* Floating blobs */}
+        <div className="absolute top-8 left-8 w-28 h-28 bg-white/10 blob animate-drift"></div>
+        <div className="absolute bottom-8 right-8 w-36 h-36 bg-white/10 blob-alt animate-drift delay-700"></div>
+        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-white/15 blob-organic animate-float-rotate delay-300"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-16 h-16 bg-white/10 blob-soft animate-bob delay-1000"></div>
+        <div className="absolute top-1/4 left-1/3 w-10 h-10 bg-white/20 blob animate-float delay-500"></div>
+        
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Ready to Support Your Child's Emotional Growth?
           </h2>
@@ -345,7 +352,7 @@ const Process = () => {
           <Button 
             size="lg" 
             onClick={() => window.location.href = '/get-started'}
-            className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
+            className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-7 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all animate-float-gentle"
           >
             Start Your Free Trial
             <ArrowRight className="ml-2 w-5 h-5" />
