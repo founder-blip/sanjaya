@@ -1934,9 +1934,15 @@ class BackendTester:
             self.test_chat_context_persistence,
             self.test_chat_new_session,
             self.test_chat_error_handling,
-            # Events & Celebrations Tests
+            # Earnings & Support Tests
             self.test_observer_login,
             self.test_principal_login,
+            self.test_observer_earnings_api,
+            self.test_principal_earnings_api,
+            self.test_support_categories_api,
+            self.test_support_ticket_creation,
+            self.test_support_tickets_retrieval,
+            # Events & Celebrations Tests
             self.test_events_national_api,
             self.test_events_upcoming_observer,
             self.test_events_upcoming_principal,
