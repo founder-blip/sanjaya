@@ -404,13 +404,13 @@ const Home = () => {
               { num: 6, title: 'Child Thrives', emoji: '🌟', color: 'bg-amber-500' }
             ].map((step, idx) => (
               <React.Fragment key={step.num}>
-                <div className="flex flex-col items-center gap-2">
-                  <div className={`w-14 h-14 ${step.color} rounded-2xl flex items-center justify-center text-white shadow-lg`}>
+                <div className="flex flex-col items-center gap-2 animate-float-gentle" style={{animationDelay: `${idx * 0.15}s`}}>
+                  <div className={`w-14 h-14 ${step.color} rounded-2xl flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform`}>
                     <span className="text-2xl">{step.emoji}</span>
                   </div>
                   <span className="text-sm font-semibold text-gray-700">{step.title}</span>
                 </div>
-                {idx < 5 && <ArrowRight className="w-5 h-5 text-gray-300 hidden sm:block" />}
+                {idx < 5 && <ArrowRight className="w-5 h-5 text-gray-300 hidden sm:block animate-pulse" />}
               </React.Fragment>
             ))}
           </div>
