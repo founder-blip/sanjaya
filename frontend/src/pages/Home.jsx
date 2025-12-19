@@ -196,21 +196,23 @@ const Home = () => {
             <div className="relative hidden lg:block">
               <div className="grid grid-cols-2 gap-5">
                 {[
-                  { emoji: '💭', color: 'from-orange-100 to-amber-100', label: 'Express' },
-                  { emoji: '🎯', color: 'from-blue-100 to-cyan-100', label: 'Focus' },
-                  { emoji: '🌱', color: 'from-emerald-100 to-green-100', label: 'Grow' },
-                  { emoji: '✨', color: 'from-violet-100 to-purple-100', label: 'Shine' }
+                  { emoji: '💭', color: 'from-orange-100 to-amber-100', label: 'Express', anim: 'animate-float' },
+                  { emoji: '🎯', color: 'from-blue-100 to-cyan-100', label: 'Focus', anim: 'animate-float-gentle' },
+                  { emoji: '🌱', color: 'from-emerald-100 to-green-100', label: 'Grow', anim: 'animate-float-slow' },
+                  { emoji: '✨', color: 'from-violet-100 to-purple-100', label: 'Shine', anim: 'animate-wiggle-slow' }
                 ].map((item, i) => (
-                  <div key={i} className={`bg-gradient-to-br ${item.color} rounded-3xl p-8 flex flex-col items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default`}>
-                    <span className="text-5xl animate-float" style={{animationDelay: `${i * 0.2}s`}}>{item.emoji}</span>
+                  <div key={i} className={`bg-gradient-to-br ${item.color} rounded-3xl p-8 flex flex-col items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-default animate-float-gentle`} style={{animationDelay: `${i * 0.3}s`}}>
+                    <span className={`text-5xl ${item.anim}`} style={{animationDelay: `${i * 0.2}s`}}>{item.emoji}</span>
                     <span className="text-sm font-semibold text-gray-600 font-friendly">{item.label}</span>
                   </div>
                 ))}
               </div>
               
-              {/* Floating elements */}
-              <div className="absolute -top-8 -right-8 w-20 h-20 bg-gradient-to-br from-yellow-300 to-amber-400 blob opacity-80 animate-float shadow-lg"></div>
-              <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-gradient-to-br from-rose-300 to-pink-400 blob-alt opacity-70 animate-float shadow-lg" style={{animationDelay: '1.5s'}}></div>
+              {/* Floating blob elements */}
+              <div className="absolute -top-8 -right-8 w-20 h-20 bg-gradient-to-br from-yellow-300 to-amber-400 blob-morph opacity-80 animate-drift shadow-lg"></div>
+              <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-gradient-to-br from-rose-300 to-pink-400 blob-morph opacity-70 animate-drift delay-1500 shadow-lg"></div>
+              <div className="absolute top-1/2 -right-12 w-10 h-10 bg-gradient-to-br from-cyan-300 to-blue-400 blob-organic opacity-60 animate-float-rotate delay-700"></div>
+              <div className="absolute -top-4 left-1/3 w-8 h-8 bg-gradient-to-br from-emerald-300 to-green-400 blob-soft opacity-70 animate-bob delay-500"></div>
             </div>
           </div>
         </div>
