@@ -1494,8 +1494,9 @@ class BackendTester:
                 self.log_result("Events Wish All API", False, "Failed to login as observer")
                 return False
             
-            # Test sending wishes for a national event
-            payload = {
+            # Test sending wishes for a national event - parameters as query params
+            params = {
+                "token": token,
                 "event_type": "national",
                 "message": "Happy Republic Day! May our nation continue to grow stronger! 🇮🇳",
                 "event_name": "Republic Day",
@@ -1503,9 +1504,8 @@ class BackendTester:
             }
             
             response = requests.post(
-                f"{API_BASE}/events/wish-all?token={token}",
-                json=payload,
-                headers={"Content-Type": "application/json"},
+                f"{API_BASE}/events/wish-all",
+                params=params,
                 timeout=10
             )
             
