@@ -1456,8 +1456,8 @@ class BackendTester:
                 self.log_result("Support Ticket Creation", False, "Failed to login as observer")
                 return False
             
-            # Create a test ticket
-            ticket_data = {
+            # Create a test ticket using query parameters as expected by the API
+            params = {
                 "token": token,
                 "category": "technical",
                 "subject": "Test Support Ticket - API Testing",
@@ -1467,8 +1467,7 @@ class BackendTester:
             
             response = requests.post(
                 f"{API_BASE}/support/ticket",
-                json=ticket_data,
-                headers={"Content-Type": "application/json"},
+                params=params,
                 timeout=15
             )
             
