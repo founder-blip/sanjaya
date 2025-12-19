@@ -261,8 +261,16 @@ const Home = () => {
 
       {/* What is Sanjaya - Refined */}
       <section className="py-20 px-4 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl"></div>
+        {/* Animated background blobs */}
+        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 blob-morph blur-3xl animate-pulse-glow"></div>
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-amber-500/15 blob-morph blur-3xl animate-pulse-glow delay-1000"></div>
+        <div className="absolute top-1/3 left-1/4 w-40 h-40 bg-cyan-500/10 blob blur-3xl animate-drift delay-500"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-32 h-32 bg-rose-500/10 blob-alt blur-2xl animate-drift delay-1500"></div>
+        
+        {/* Floating accent shapes */}
+        <div className="absolute top-32 left-20 w-6 h-6 bg-amber-400/60 blob animate-float"></div>
+        <div className="absolute bottom-40 right-32 w-8 h-8 bg-purple-400/50 blob-organic animate-float-rotate delay-300"></div>
+        <div className="absolute top-1/2 right-16 w-5 h-5 bg-cyan-400/50 blob-soft animate-bob delay-700"></div>
         
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-12">
