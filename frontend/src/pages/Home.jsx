@@ -426,7 +426,7 @@ const Home = () => {
         
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-12">
-            <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+            <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg animate-float-gentle">
               <Shield className="w-8 h-8 text-white" />
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Safety & Privacy</h2>
