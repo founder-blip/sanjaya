@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { LogOut, Users, TrendingUp, Calendar, BarChart3, PartyPopper, Wallet, HelpCircle, UserPlus, Activity, MessageSquare, Play, FileText, IndianRupee } from 'lucide-react';
-import Navigation from '../components/Navigation';
+import PrincipalNav from '../components/PrincipalNav';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
