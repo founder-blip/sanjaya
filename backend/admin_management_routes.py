@@ -675,9 +675,12 @@ async def get_ai_settings(current_user: dict = Depends(verify_admin_token)):
                 "created_at": datetime.now(timezone.utc).isoformat()
             }
             await db.ai_settings.insert_one(settings)
+            # Remove _id that was added by insert
+            settings.pop('_id', None)
         
         return {"settings": settings}
     except Exception as e:
+        logger.error(f"Error loading AI settings: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to load AI settings")
 
 @router.put("/admin/ai/settings")
