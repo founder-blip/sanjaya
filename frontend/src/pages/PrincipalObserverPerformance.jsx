@@ -93,12 +93,9 @@ const PrincipalObserverPerformance = () => {
     <div className="min-h-screen bg-gray-50">
       <PrincipalNav />
       
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-6">
-          <Button variant="outline" onClick={() => navigate('/principal/dashboard')}>
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back
-          </Button>
-          <div className="flex-1">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
             <h1 className="text-2xl font-bold text-gray-900">Observer Performance</h1>
             <p className="text-gray-600">Monitor and track observer engagement metrics</p>
           </div>
