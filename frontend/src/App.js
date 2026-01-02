@@ -56,6 +56,7 @@ function App() {
           <Route path="/principal" element={<PrincipalLanding />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/communications" element={<AdminCommunications />} />
           <Route path="/parent/login" element={<ParentLogin />} />
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
           <Route path="/parent/messages" element={<ParentMessages />} />
