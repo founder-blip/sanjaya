@@ -98,6 +98,9 @@ function App() {
           <Route path="/principal/student-assignment" element={<PrincipalStudentAssignment />} />
           <Route path="/principal/observer-performance" element={<PrincipalObserverPerformance />} />
           <Route path="/principal/consultations" element={<PrincipalConsultations />} />
+          <Route path="/principal/recordings" element={<PrincipalRecordings />} />
+          <Route path="/principal/daily-reports" element={<PrincipalDailyReports />} />
+          <Route path="/principal/business" element={<PrincipalBusiness />} />
           
           {/* Footer Pages */}
           <Route path="/contact" element={<Contact />} />
