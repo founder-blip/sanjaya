@@ -102,7 +102,19 @@ const ObserverDashboard = () => {
                   <Calendar className="w-8 h-8 text-white" />
                   <div>
                     <p className="text-2xl font-bold">{statistics.sessions_this_week}</p>
-                    <p className="text-sm text-purple-100">Sessions This Week</p>
+                    <p className="text-sm text-purple-100">This Week</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white/10 border-white/20 backdrop-blur">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-8 h-8 text-white" />
+                  <div>
+                    <p className="text-2xl font-bold">0</p>
+                    <p className="text-sm text-purple-100">Reports</p>
                   </div>
                 </div>
               </CardContent>
@@ -112,40 +124,75 @@ const ObserverDashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Quick Actions */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Primary Actions */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <Button
+            onClick={() => navigate('/observer/today')}
+            className="h-16 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white"
+          >
+            <Play className="w-5 h-5 mr-2" />
+            Start Sessions
+          </Button>
+          <Button
+            onClick={() => navigate('/observer/reports')}
+            className="h-16 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
+          >
+            <FileText className="w-5 h-5 mr-2" />
+            My Reports
+          </Button>
+          <Button
+            onClick={() => navigate('/observer/reflections')}
+            className="h-16 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
+          >
+            <Brain className="w-5 h-5 mr-2" />
+            Self-Reflection
+          </Button>
+          <Button
+            onClick={() => navigate('/observer/escalations')}
+            className="h-16 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
+          >
+            <AlertTriangle className="w-5 h-5 mr-2" />
+            Escalations
+          </Button>
+        </div>
+        
+        {/* Secondary Actions */}
         <div className="flex flex-wrap gap-3 mb-6">
           <Button
             onClick={() => navigate('/observer/events')}
-            className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+            variant="outline"
+            className="border-orange-300 text-orange-600 hover:bg-orange-50"
           >
-            <PartyPopper className="w-5 h-5 mr-2" />
-            Events & Celebrations
+            <PartyPopper className="w-4 h-4 mr-2" />
+            Events
           </Button>
           <Button
             onClick={() => navigate('/observer/earnings')}
-            className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+            variant="outline"
+            className="border-green-300 text-green-600 hover:bg-green-50"
           >
-            <Wallet className="w-5 h-5 mr-2" />
-            My Earnings
+            <Wallet className="w-4 h-4 mr-2" />
+            Earnings
           </Button>
           <Button
             onClick={() => navigate('/observer/support')}
             variant="outline"
             className="border-indigo-300 text-indigo-600 hover:bg-indigo-50"
           >
-            <HelpCircle className="w-5 h-5 mr-2" />
-            Support Center
+            <HelpCircle className="w-4 h-4 mr-2" />
+            Support
           </Button>
         </div>
 
-        <h2 className="text-2xl font-bold mb-4">My Assigned Children</h2>
+        <h2 className="text-xl font-bold mb-4">My Assigned Children</h2>
         
         {children.length === 0 ? (
           <Card>
             <CardContent className="p-12 text-center">
               <User className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 text-lg">No children assigned yet</p>
+              <p className="text-gray-400">Ask your principal to assign children to you</p>
             </CardContent>
           </Card>
         ) : (
