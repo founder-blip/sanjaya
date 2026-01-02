@@ -1024,4 +1024,716 @@ function BillingManagement() {
       </Card>
     </div>
   );
+
+
+// Schools Management Component
+function SchoolsManagement() {
+  const { toast } = useToast();
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ name: '', address: '', city: '', contact_email: '', contact_phone: '' });
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/admin/schools`, getAuthHeaders())
+      .then(res => setSchools(res.data.schools || []))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const createSchool = async () => {
+    try {
+      const params = new URLSearchParams(formData);
+      await axios.post(`${API_URL}/api/admin/schools?${params}`, null, getAuthHeaders());
+      toast({ title: "Success!", description: "School created" });
+      setShowForm(false);
+      setFormData({ name: '', address: '', city: '', contact_email: '', contact_phone: '' });
+      const res = await axios.get(`${API_URL}/api/admin/schools`, getAuthHeaders());
+      setSchools(res.data.schools || []);
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to create school", variant: "destructive" });
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h3 className="text-lg font-semibold">Schools & Programs</h3>
+          <p className="text-sm text-gray-500">{schools.length} registered</p>
+        </div>
+        <Button onClick={() => setShowForm(true)} className="bg-blue-500 hover:bg-blue-600">
+          <Plus className="w-4 h-4 mr-2" /> Add School
+        </Button>
+      </div>
+
+      {showForm && (
+        <Card className="border-2 border-blue-200 bg-blue-50">
+          <CardHeader><CardTitle>Add New School</CardTitle></CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <Input placeholder="School Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+              <Input placeholder="City" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} />
+              <Input placeholder="Address" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+              <Input placeholder="Contact Email" value={formData.contact_email} onChange={e => setFormData({...formData, contact_email: e.target.value})} />
+              <Input placeholder="Contact Phone" value={formData.contact_phone} onChange={e => setFormData({...formData, contact_phone: e.target.value})} />
+            </div>
+            <div className="flex gap-3">
+              <Button onClick={createSchool} className="bg-green-500 hover:bg-green-600">Create</Button>
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {schools.map(school => (
+          <Card key={school.id} className="border-0 shadow-sm">
+            <CardContent className="p-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h4 className="font-semibold text-lg">{school.name}</h4>
+                  <p className="text-sm text-gray-500">{school.city}</p>
+                  <p className="text-xs text-gray-400">{school.contact_email}</p>
+                </div>
+                <span className={`px-2 py-1 rounded text-xs ${school.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100'}`}>
+                  {school.status || 'active'}
+                </span>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                <div className="bg-gray-50 p-2 rounded"><p className="text-lg font-bold">{school.student_count || 0}</p><p className="text-xs text-gray-500">Students</p></div>
+                <div className="bg-gray-50 p-2 rounded"><p className="text-lg font-bold">{school.principal_count || 0}</p><p className="text-xs text-gray-500">Principals</p></div>
+                <div className="bg-gray-50 p-2 rounded"><p className="text-lg font-bold">{school.observer_count || 0}</p><p className="text-xs text-gray-500">Observers</p></div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+        {schools.length === 0 && <p className="text-center text-gray-500 py-8 col-span-2">No schools registered yet</p>}
+      </div>
+    </div>
+  );
+}
+
+// Safety & Escalation Component
+function SafetyEscalation() {
+  const { toast } = useToast();
+  const [flags, setFlags] = useState([]);
+  const [statusCounts, setStatusCounts] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [selectedFlag, setSelectedFlag] = useState(null);
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/admin/safety/red-flags`, getAuthHeaders())
+      .then(res => { setFlags(res.data.flags || []); setStatusCounts(res.data.status_counts || {}); })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const updateFlag = async (flagId, status, escalate = false) => {
+    try {
+      await axios.put(`${API_URL}/api/admin/safety/red-flag/${flagId}?status=${status}&escalate=${escalate}`, null, getAuthHeaders());
+      toast({ title: "Updated", description: "Flag status updated" });
+      const res = await axios.get(`${API_URL}/api/admin/safety/red-flags`, getAuthHeaders());
+      setFlags(res.data.flags || []);
+      setStatusCounts(res.data.status_counts || {});
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to update", variant: "destructive" });
+    }
+  };
+
+  const getSeverityColor = (severity) => {
+    switch(severity) {
+      case 'critical': return 'bg-red-100 text-red-700 border-red-300';
+      case 'high': return 'bg-orange-100 text-orange-700 border-orange-300';
+      case 'medium': return 'bg-amber-100 text-amber-700 border-amber-300';
+      default: return 'bg-blue-100 text-blue-700 border-blue-300';
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-5 gap-4">
+        {Object.entries(statusCounts).map(([status, count]) => (
+          <Card key={status} className="border-0 shadow-sm">
+            <CardContent className="p-4 text-center">
+              <p className="text-2xl font-bold">{count}</p>
+              <p className="text-sm text-gray-500 capitalize">{status}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-0 shadow-sm">
+          <CardHeader><CardTitle className="flex items-center gap-2"><Flag className="w-5 h-5 text-red-500" /> Red Flags</CardTitle></CardHeader>
+          <CardContent className="max-h-[500px] overflow-y-auto">
+            {flags.length === 0 ? (
+              <p className="text-center text-gray-500 py-8">No red flags reported</p>
+            ) : (
+              <div className="space-y-3">
+                {flags.map(flag => (
+                  <div key={flag.id} onClick={() => setSelectedFlag(flag)} className={`p-4 rounded-lg border-2 cursor-pointer hover:shadow-md transition-all ${getSeverityColor(flag.severity)} ${selectedFlag?.id === flag.id ? 'ring-2 ring-blue-500' : ''}`}>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-medium">{flag.child_name || 'Unknown Child'}</p>
+                        <p className="text-sm">{flag.category}</p>
+                        <p className="text-xs mt-1">Observer: {flag.observer_name || 'Unknown'}</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-xs font-medium uppercase">{flag.severity}</span>
+                        <p className="text-xs mt-1">Level {flag.escalation_level || 0}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 shadow-sm">
+          <CardHeader><CardTitle>Flag Details</CardTitle></CardHeader>
+          <CardContent>
+            {selectedFlag ? (
+              <div className="space-y-4">
+                <div><p className="text-sm text-gray-500">Child</p><p className="font-medium">{selectedFlag.child_name}</p></div>
+                <div><p className="text-sm text-gray-500">Category</p><p className="font-medium">{selectedFlag.category}</p></div>
+                <div><p className="text-sm text-gray-500">Description</p><p className="text-sm bg-gray-50 p-3 rounded">{selectedFlag.description}</p></div>
+                <div><p className="text-sm text-gray-500">Severity: {selectedFlag.severity} | Escalation Level: {selectedFlag.escalation_level}</p></div>
+                <div className="border-t pt-4">
+                  <p className="text-sm font-medium mb-2">Actions</p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button size="sm" variant="outline" onClick={() => updateFlag(selectedFlag.id, 'reviewing')}>Start Review</Button>
+                    <Button size="sm" variant="outline" onClick={() => updateFlag(selectedFlag.id, 'resolved')} className="text-green-600">Resolve</Button>
+                    <Button size="sm" onClick={() => updateFlag(selectedFlag.id, 'escalated', true)} className="bg-red-500 hover:bg-red-600">Escalate</Button>
+                    <Button size="sm" variant="outline" onClick={() => updateFlag(selectedFlag.id, 'referred')}>External Referral</Button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="text-center text-gray-500 py-8">Select a flag to view details</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// Incident Management Component
+function IncidentManagement() {
+  const { toast } = useToast();
+  const [incidents, setIncidents] = useState([]);
+  const [statusCounts, setStatusCounts] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ title: '', description: '', incident_type: 'safety', severity: 'medium' });
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => { fetchIncidents(); }, []);
+
+  const fetchIncidents = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/admin/incidents`, getAuthHeaders());
+      setIncidents(res.data.incidents || []);
+      setStatusCounts(res.data.status_counts || {});
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createIncident = async () => {
+    try {
+      const params = new URLSearchParams(formData);
+      await axios.post(`${API_URL}/api/admin/incidents?${params}`, null, getAuthHeaders());
+      toast({ title: "Created", description: "Incident logged" });
+      setShowForm(false);
+      setFormData({ title: '', description: '', incident_type: 'safety', severity: 'medium' });
+      fetchIncidents();
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to create", variant: "destructive" });
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div className="grid grid-cols-4 gap-4 flex-1 mr-4">
+          {Object.entries(statusCounts).map(([status, count]) => (
+            <Card key={status} className="border-0 shadow-sm">
+              <CardContent className="p-3 text-center"><p className="text-xl font-bold">{count}</p><p className="text-xs text-gray-500 capitalize">{status}</p></CardContent>
+            </Card>
+          ))}
+        </div>
+        <Button onClick={() => setShowForm(true)} className="bg-red-500 hover:bg-red-600"><Plus className="w-4 h-4 mr-2" /> Log Incident</Button>
+      </div>
+
+      {showForm && (
+        <Card className="border-2 border-red-200 bg-red-50">
+          <CardHeader><CardTitle>Log New Incident</CardTitle></CardHeader>
+          <CardContent className="space-y-4">
+            <Input placeholder="Incident Title" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
+            <textarea className="w-full border rounded p-2" rows={3} placeholder="Description..." value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+            <div className="grid grid-cols-2 gap-4">
+              <select className="border rounded p-2" value={formData.incident_type} onChange={e => setFormData({...formData, incident_type: e.target.value})}>
+                <option value="safety">Safety</option><option value="technical">Technical</option><option value="compliance">Compliance</option><option value="behavioral">Behavioral</option>
+              </select>
+              <select className="border rounded p-2" value={formData.severity} onChange={e => setFormData({...formData, severity: e.target.value})}>
+                <option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="critical">Critical</option>
+              </select>
+            </div>
+            <div className="flex gap-3">
+              <Button onClick={createIncident} className="bg-red-500 hover:bg-red-600">Log Incident</Button>
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <Card className="border-0 shadow-sm">
+        <CardHeader><CardTitle>All Incidents</CardTitle></CardHeader>
+        <CardContent>
+          {incidents.length === 0 ? (
+            <p className="text-center text-gray-500 py-8">No incidents logged</p>
+          ) : (
+            <div className="space-y-3">
+              {incidents.map(incident => (
+                <div key={incident.id} className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="font-medium">{incident.title}</p>
+                      <p className="text-sm text-gray-500">{incident.incident_number}</p>
+                      <p className="text-xs text-gray-400">{incident.incident_type} • {incident.severity}</p>
+                    </div>
+                    <span className={`px-2 py-1 rounded text-xs ${incident.status === 'open' ? 'bg-red-100 text-red-700' : incident.status === 'resolved' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                      {incident.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// AI Guardrails Component
+function AIGuardrails() {
+  const { toast } = useToast();
+  const [guardrails, setGuardrails] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/admin/ai/guardrails`, getAuthHeaders())
+      .then(res => setGuardrails(res.data.guardrails))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const updateGuardrail = async (key, value) => {
+    try {
+      await axios.put(`${API_URL}/api/admin/ai/guardrails?${key}=${value}`, null, getAuthHeaders());
+      setGuardrails({...guardrails, [key]: value});
+      toast({ title: "Updated", description: "Guardrail setting saved" });
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to update", variant: "destructive" });
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <Card className="border-0 shadow-sm border-l-4 border-l-red-500">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><Lock className="w-5 h-5 text-red-500" /> AI Safety Guardrails</CardTitle>
+          <CardDescription>These settings ensure AI outputs comply with Sanjaya's ethical guidelines</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {[
+            { key: 'no_diagnosis', label: 'No Diagnosis', desc: 'AI will never provide medical/psychological diagnoses' },
+            { key: 'no_medical_advice', label: 'No Medical Advice', desc: 'AI will never suggest treatments or medications' },
+            { key: 'no_therapy_language', label: 'No Therapy Language', desc: 'AI avoids therapeutic terminology' },
+            { key: 'no_comparative_assessment', label: 'No Comparisons', desc: 'AI will not compare children against each other' },
+            { key: 'no_labeling', label: 'No Labeling', desc: 'AI will not label children (e.g., "problem child")' },
+            { key: 'neutral_language_only', label: 'Neutral Language', desc: 'AI uses only observational, neutral language' },
+            { key: 'observation_based_only', label: 'Observation-Based', desc: 'AI insights are based only on observations, not interpretations' },
+          ].map(item => (
+            <div key={item.key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <p className="font-medium">{item.label}</p>
+                <p className="text-sm text-gray-500">{item.desc}</p>
+              </div>
+              <button
+                onClick={() => updateGuardrail(item.key, !guardrails?.[item.key])}
+                className={`w-12 h-6 rounded-full transition-colors ${guardrails?.[item.key] ? 'bg-green-500' : 'bg-red-400'}`}
+              >
+                <span className={`block w-5 h-5 bg-white rounded-full shadow transform transition-transform ${guardrails?.[item.key] ? 'translate-x-6' : 'translate-x-0.5'}`} />
+              </button>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-sm">
+        <CardHeader><CardTitle>Blocked Terms</CardTitle></CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2">
+            {guardrails?.blocked_terms?.map((term, i) => (
+              <span key={i} className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">{term}</span>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-sm">
+        <CardHeader><CardTitle>Required Disclaimers</CardTitle></CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {guardrails?.required_disclaimers?.map((d, i) => (
+              <p key={i} className="p-3 bg-blue-50 rounded text-sm text-blue-800">"{d}"</p>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// Data Privacy Component
+function DataPrivacy() {
+  const { toast } = useToast();
+  const [settings, setSettings] = useState(null);
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => {
+    Promise.all([
+      axios.get(`${API_URL}/api/admin/privacy/settings`, getAuthHeaders()),
+      axios.get(`${API_URL}/api/admin/privacy/data-requests`, getAuthHeaders())
+    ]).then(([settingsRes, requestsRes]) => {
+      setSettings(settingsRes.data.settings);
+      setRequests(requestsRes.data.requests || []);
+    }).catch(console.error).finally(() => setLoading(false));
+  }, []);
+
+  const updateSetting = async (key, value) => {
+    try {
+      await axios.put(`${API_URL}/api/admin/privacy/settings?${key}=${value}`, null, getAuthHeaders());
+      setSettings({...settings, [key]: value});
+      toast({ title: "Updated", description: "Privacy setting saved" });
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to update", variant: "destructive" });
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <Card className="border-0 shadow-sm">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><Database className="w-5 h-5 text-purple-500" /> Data Retention Settings</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <label className="text-sm font-medium">General Data Retention</label>
+              <div className="flex items-center gap-2 mt-2">
+                <Input type="number" value={settings?.data_retention_days || 365} onChange={e => updateSetting('data_retention_days', e.target.value)} className="w-24" />
+                <span className="text-sm text-gray-500">days</span>
+              </div>
+            </div>
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <label className="text-sm font-medium">Session Log Retention</label>
+              <div className="flex items-center gap-2 mt-2">
+                <Input type="number" value={settings?.session_log_retention_days || 180} onChange={e => updateSetting('session_log_retention_days', e.target.value)} className="w-24" />
+                <span className="text-sm text-gray-500">days</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <p className="font-medium">Anonymize on Delete</p>
+              <p className="text-sm text-gray-500">Anonymize user data instead of hard deletion</p>
+            </div>
+            <button onClick={() => updateSetting('anonymize_on_delete', !settings?.anonymize_on_delete)} className={`w-12 h-6 rounded-full ${settings?.anonymize_on_delete ? 'bg-green-500' : 'bg-gray-300'}`}>
+              <span className={`block w-5 h-5 bg-white rounded-full shadow transform ${settings?.anonymize_on_delete ? 'translate-x-6' : 'translate-x-0.5'}`} />
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <p className="font-medium">GDPR Compliant</p>
+              <p className="text-sm text-gray-500">Follow GDPR data handling guidelines</p>
+            </div>
+            <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">✓ Enabled</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-sm">
+        <CardHeader><CardTitle>Data Requests</CardTitle></CardHeader>
+        <CardContent>
+          {requests.length === 0 ? (
+            <p className="text-center text-gray-500 py-8">No data requests</p>
+          ) : (
+            <div className="space-y-3">
+              {requests.map(req => (
+                <div key={req.id} className="p-4 bg-gray-50 rounded-lg flex justify-between">
+                  <div><p className="font-medium">{req.type}</p><p className="text-sm text-gray-500">{req.user_email}</p></div>
+                  <span className={`px-2 py-1 rounded text-xs ${req.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{req.status}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// Audit Logs Component
+function AuditLogs() {
+  const [logs, setLogs] = useState([]);
+  const [actionTypes, setActionTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('');
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/admin/audit/logs?days=30&limit=100`, getAuthHeaders())
+      .then(res => { setLogs(res.data.logs || []); setActionTypes(res.data.action_types || []); })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredLogs = filter ? logs.filter(l => l.action_type === filter) : logs;
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <select className="border rounded p-2" value={filter} onChange={e => setFilter(e.target.value)}>
+          <option value="">All Actions</option>
+          {actionTypes.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
+        <span className="text-sm text-gray-500">{filteredLogs.length} logs</span>
+      </div>
+
+      <Card className="border-0 shadow-sm">
+        <CardHeader><CardTitle className="flex items-center gap-2"><Eye className="w-5 h-5 text-indigo-500" /> Audit Trail</CardTitle></CardHeader>
+        <CardContent className="max-h-[600px] overflow-y-auto">
+          {filteredLogs.length === 0 ? (
+            <p className="text-center text-gray-500 py-8">No audit logs found</p>
+          ) : (
+            <div className="space-y-2">
+              {filteredLogs.map(log => (
+                <div key={log.id} className="p-3 bg-gray-50 rounded flex justify-between items-start">
+                  <div>
+                    <p className="font-medium text-sm">{log.action}</p>
+                    <p className="text-xs text-gray-500">{log.action_type} • {log.user_id}</p>
+                    {log.details && <p className="text-xs text-gray-400 mt-1">{log.details}</p>}
+                  </div>
+                  <span className="text-xs text-gray-400">{new Date(log.timestamp).toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// System Health Component
+function SystemHealth() {
+  const [health, setHealth] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  const fetchHealth = () => {
+    setLoading(true);
+    axios.get(`${API_URL}/api/admin/system/health`, getAuthHeaders())
+      .then(res => setHealth(res.data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => { fetchHealth(); }, []);
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h3 className="text-lg font-semibold">System Health</h3>
+        <Button onClick={fetchHealth} variant="outline" size="sm"><RefreshCw className="w-4 h-4 mr-2" /> Refresh</Button>
+      </div>
+
+      <div className="grid grid-cols-4 gap-4">
+        <Card className="border-0 shadow-sm">
+          <CardContent className="p-6 text-center">
+            <Activity className={`w-8 h-8 mx-auto mb-2 ${(health?.system?.cpu_percent || 0) < 80 ? 'text-green-500' : 'text-red-500'}`} />
+            <p className="text-2xl font-bold">{health?.system?.cpu_percent || 0}%</p>
+            <p className="text-sm text-gray-500">CPU Usage</p>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-sm">
+          <CardContent className="p-6 text-center">
+            <Database className={`w-8 h-8 mx-auto mb-2 ${(health?.system?.memory_percent || 0) < 80 ? 'text-green-500' : 'text-amber-500'}`} />
+            <p className="text-2xl font-bold">{health?.system?.memory_percent || 0}%</p>
+            <p className="text-sm text-gray-500">Memory</p>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-sm">
+          <CardContent className="p-6 text-center">
+            <Database className={`w-8 h-8 mx-auto mb-2 ${(health?.system?.disk_percent || 0) < 80 ? 'text-green-500' : 'text-amber-500'}`} />
+            <p className="text-2xl font-bold">{health?.system?.disk_percent || 0}%</p>
+            <p className="text-sm text-gray-500">Disk</p>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-sm">
+          <CardContent className="p-6 text-center">
+            <Activity className={`w-8 h-8 mx-auto mb-2 ${health?.database?.healthy ? 'text-green-500' : 'text-red-500'}`} />
+            <p className="text-2xl font-bold">{health?.database?.latency_ms || 0}ms</p>
+            <p className="text-sm text-gray-500">DB Latency</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="border-0 shadow-sm">
+        <CardHeader><CardTitle>Service Status</CardTitle></CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {Object.entries(health?.services || {}).map(([name, service]) => (
+              <div key={name} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                <span className="font-medium capitalize">{name}</span>
+                <span className={`flex items-center gap-1 ${service.status === 'healthy' ? 'text-green-600' : 'text-red-600'}`}>
+                  {service.status === 'healthy' ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+                  {service.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// Help & FAQs Component
+function HelpFAQs() {
+  const { toast } = useToast();
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ question: '', answer: '', category: 'general' });
+
+  const getAuthHeaders = () => ({ headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` } });
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/admin/help/faqs`, getAuthHeaders())
+      .then(res => setFaqs(res.data.faqs || []))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const createFAQ = async () => {
+    try {
+      const params = new URLSearchParams(formData);
+      await axios.post(`${API_URL}/api/admin/help/faq?${params}`, null, getAuthHeaders());
+      toast({ title: "Created", description: "FAQ added" });
+      setShowForm(false);
+      setFormData({ question: '', answer: '', category: 'general' });
+      const res = await axios.get(`${API_URL}/api/admin/help/faqs`, getAuthHeaders());
+      setFaqs(res.data.faqs || []);
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to create FAQ", variant: "destructive" });
+    }
+  };
+
+  const deleteFAQ = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/api/admin/help/faq/${id}`, getAuthHeaders());
+      setFaqs(faqs.filter(f => f.id !== id));
+      toast({ title: "Deleted", description: "FAQ removed" });
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to delete", variant: "destructive" });
+    }
+  };
+
+  if (loading) return <div className="text-center py-8">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div><h3 className="text-lg font-semibold">Help & FAQs</h3><p className="text-sm text-gray-500">Manage help documentation</p></div>
+        <Button onClick={() => setShowForm(true)} className="bg-blue-500 hover:bg-blue-600"><Plus className="w-4 h-4 mr-2" /> Add FAQ</Button>
+      </div>
+
+      {showForm && (
+        <Card className="border-2 border-blue-200 bg-blue-50">
+          <CardContent className="p-6 space-y-4">
+            <Input placeholder="Question" value={formData.question} onChange={e => setFormData({...formData, question: e.target.value})} />
+            <textarea className="w-full border rounded p-2" rows={3} placeholder="Answer" value={formData.answer} onChange={e => setFormData({...formData, answer: e.target.value})} />
+            <select className="border rounded p-2" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
+              <option value="general">General</option><option value="observer">Observer</option><option value="parent">Parent</option><option value="principal">Principal</option><option value="billing">Billing</option>
+            </select>
+            <div className="flex gap-3">
+              <Button onClick={createFAQ} className="bg-green-500 hover:bg-green-600">Save FAQ</Button>
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <Card className="border-0 shadow-sm">
+        <CardContent className="p-6">
+          {faqs.length === 0 ? (
+            <p className="text-center text-gray-500 py-8">No FAQs yet</p>
+          ) : (
+            <div className="space-y-4">
+              {faqs.map(faq => (
+                <div key={faq.id} className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <p className="font-medium">{faq.question}</p>
+                      <p className="text-sm text-gray-600 mt-1">{faq.answer}</p>
+                      <span className="text-xs text-gray-400 mt-2 inline-block">{faq.category}</span>
+                    </div>
+                    <Button variant="ghost" size="sm" onClick={() => deleteFAQ(faq.id)} className="text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
 }
