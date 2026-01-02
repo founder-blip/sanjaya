@@ -9,6 +9,7 @@ import ObserverLanding from './pages/ObserverLanding';
 import PrincipalLanding from './pages/PrincipalLanding';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminPanel from './pages/AdminPanel';
 import AdminCommunications from './pages/AdminCommunications';
 import ParentLogin from './pages/ParentLogin';
 import ParentDashboard from './pages/ParentDashboard';
@@ -56,6 +57,7 @@ function App() {
           <Route path="/principal" element={<PrincipalLanding />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/panel" element={<AdminPanel />} />
           <Route path="/admin/communications" element={<AdminCommunications />} />
           <Route path="/parent/login" element={<ParentLogin />} />
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
