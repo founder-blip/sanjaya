@@ -127,10 +127,12 @@ Build a website for **Sanjaya**, a governed listening ecosystem for children wit
 - Backend Tests: 33/33 PASSED (100%)
 - Frontend Tests: 13/13 sections verified (100%)
 
-**Principal Module Tests:**
-- Backend Tests: 13/13 PASSED (100%)
+**Principal Module Tests (Supervisor Features):**
+- Backend Tests: 17/17 PASSED (100%)
 - Frontend Tests: All pages verified (100%)
-- Test file: `/app/tests/test_principal_apis.py`
+- Test files: 
+  - `/app/tests/test_principal_apis.py`
+  - `/app/tests/test_principal_supervisor_apis.py`
 
 ---
 
