@@ -465,9 +465,14 @@ earnings_routes.set_database(db)
 import google_routes
 google_routes.set_database(db)
 
+# Set database for admin management routes
+import admin_management_routes
+admin_management_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
+app.include_router(admin_mgmt_router)
 app.include_router(parent_router, prefix="/api")
 app.include_router(phase2_router, prefix="/api")
 app.include_router(phase3_router, prefix="/api")
