@@ -33,7 +33,8 @@ def verify_admin_token(authorization: Optional[str] = Header(None)):
         return payload
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")
-    except jwt.JWTError:
+    except Exception as e:
+        logger.error(f"JWT decode error: {str(e)}")
         raise HTTPException(status_code=401, detail="Invalid token")
 
 # ==================== SYSTEM HEALTH & MONITORING ====================
