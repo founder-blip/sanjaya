@@ -131,19 +131,28 @@ const PrincipalDashboard = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Quick Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        {/* Primary Actions - Supervisor Functions */}
+        <h3 className="text-lg font-semibold text-gray-700 mb-3">Supervisor Actions</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
           <Button
-            onClick={() => navigate('/principal/student-assignment')}
-            className="h-16 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
-            data-testid="assign-students-btn"
+            onClick={() => navigate('/principal/recordings')}
+            className="h-16 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+            data-testid="recordings-btn"
           >
-            <UserPlus className="w-5 h-5 mr-2" />
-            Assign Students
+            <Play className="w-5 h-5 mr-2" />
+            Recordings
+          </Button>
+          <Button
+            onClick={() => navigate('/principal/daily-reports')}
+            className="h-16 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
+            data-testid="daily-reports-btn"
+          >
+            <FileText className="w-5 h-5 mr-2" />
+            Daily Reports
           </Button>
           <Button
             onClick={() => navigate('/principal/observer-performance')}
-            className="h-16 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white"
+            className="h-16 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white"
             data-testid="observer-performance-btn"
           >
             <Activity className="w-5 h-5 mr-2" />
@@ -158,49 +167,59 @@ const PrincipalDashboard = () => {
             Consultations
           </Button>
           <Button
-            onClick={() => navigate('/principal/students')}
-            className="h-16 bg-white hover:bg-gray-50 text-gray-900 border-2"
+            onClick={() => navigate('/principal/business')}
+            className="h-16 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
+            data-testid="business-btn"
           >
-            <Users className="w-5 h-5 mr-2" />
-            Students
+            <IndianRupee className="w-5 h-5 mr-2" />
+            Business
           </Button>
           <Button
-            onClick={() => navigate('/principal/observers')}
-            className="h-16 bg-white hover:bg-gray-50 text-gray-900 border-2"
+            onClick={() => navigate('/principal/student-assignment')}
+            className="h-16 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white"
+            data-testid="assign-students-btn"
           >
-            <Users className="w-5 h-5 mr-2" />
-            Observers
+            <UserPlus className="w-5 h-5 mr-2" />
+            Assign
           </Button>
         </div>
         
         {/* Secondary Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <h3 className="text-lg font-semibold text-gray-700 mb-3">Quick Links</h3>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+          <Button
+            onClick={() => navigate('/principal/students')}
+            className="h-12 bg-white hover:bg-gray-50 text-gray-900 border-2"
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Students
+          </Button>
           <Button
             onClick={() => navigate('/principal/analytics')}
-            className="h-14 bg-white hover:bg-gray-50 text-gray-900 border-2"
+            className="h-12 bg-white hover:bg-gray-50 text-gray-900 border-2"
           >
-            <BarChart3 className="w-5 h-5 mr-2" />
+            <BarChart3 className="w-4 h-4 mr-2" />
             Analytics
           </Button>
           <Button
             onClick={() => navigate('/principal/events')}
-            className="h-14 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+            className="h-12 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
           >
-            <PartyPopper className="w-5 h-5 mr-2" />
+            <PartyPopper className="w-4 h-4 mr-2" />
             Events
           </Button>
           <Button
             onClick={() => navigate('/principal/earnings')}
-            className="h-14 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+            className="h-12 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
           >
-            <Wallet className="w-5 h-5 mr-2" />
+            <Wallet className="w-4 h-4 mr-2" />
             Earnings
           </Button>
           <Button
             onClick={() => navigate('/principal/support')}
-            className="h-14 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white"
+            className="h-12 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white"
           >
-            <HelpCircle className="w-5 h-5 mr-2" />
+            <HelpCircle className="w-4 h-4 mr-2" />
             Support
           </Button>
         </div>
