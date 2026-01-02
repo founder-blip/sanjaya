@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="30" skipped="0" tests="33" time="1.957" timestamp="2026-01-02T05:32:55.761094+00:00" hostname="agent-env-be00a38a-70ed-401a-b558-1fdd16a2ddeb"><testcase classname="tests.test_admin_apis.TestAdminAuth" name="test_admin_login_success" time="0.297"><failure message="AssertionError: Token not in response&#10;assert 'token' in {'access_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc2NzQxODM3Nn0.KL6jVve7gVGg5YVCRpaBf2w_dhaU4R6agaFbB3-oAfk', 'token_type': 'bearer', 'username': 'admin'}">tests/test_admin_apis.py:22: in test_admin_login_success
+    assert "token" in data, "Token not in response"
+E   AssertionError: Token not in response
+E   assert 'token' in {'access_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc2NzQxODM3Nn0.KL6jVve7gVGg5YVCRpaBf2w_dhaU4R6agaFbB3-oAfk', 'token_type': 'bearer', 'username': 'admin'}</failure></testcase><testcase classname="tests.test_admin_apis.TestAdminAuth" name="test_admin_login_invalid_credentials" time="0.036" /><testcase classname="tests.test_admin_apis.TestAdminAuth" name="test_admin_login_missing_fields" time="0.041" /><testcase classname="tests.test_admin_apis.TestDashboard" name="test_get_dashboard_stats" time="0.309"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:70: in test_get_dashboard_stats
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestDashboard" name="test_dashboard_stats_unauthorized" time="0.035" /><testcase classname="tests.test_admin_apis.TestStudentEnrollment" name="test_get_students" time="0.031"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:97: in test_get_students
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestStudentEnrollment" name="test_enroll_student" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:119: in test_enroll_student
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestUserManagement" name="test_get_principals" time="0.039"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:131: in test_get_principals
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestUserManagement" name="test_get_observers" time="0.035"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:139: in test_get_observers
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestUserManagement" name="test_get_parents" time="0.030"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:147: in test_get_parents
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestUserManagement" name="test_create_principal" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:166: in test_create_principal
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestUserManagement" name="test_create_observer" time="0.042"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:185: in test_create_observer
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestSupportTickets" name="test_get_tickets" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:197: in test_get_tickets
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestSystemHealth" name="test_get_system_health" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:210: in test_get_system_health
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestSystemHealth" name="test_get_system_uptime" time="0.034"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:228: in test_get_system_uptime
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAIGuardrails" name="test_get_ai_guardrails" time="0.036"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:240: in test_get_ai_guardrails
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAIGuardrails" name="test_update_ai_guardrails" time="0.034"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:256: in test_update_ai_guardrails
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestSafetyEscalation" name="test_get_red_flags" time="0.034"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:268: in test_get_red_flags
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestIncidents" name="test_get_incidents" time="0.035"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:282: in test_get_incidents
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestIncidents" name="test_create_incident" time="0.031"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:301: in test_create_incident
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestDataPrivacy" name="test_get_privacy_settings" time="0.031"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:314: in test_get_privacy_settings
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestDataPrivacy" name="test_get_data_requests" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:326: in test_get_data_requests
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAuditLogs" name="test_get_audit_logs" time="0.034"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:338: in test_get_audit_logs
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAuditLogs" name="test_create_audit_log" time="0.035"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:356: in test_create_audit_log
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestSchools" name="test_get_schools" time="0.033"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:368: in test_get_schools
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestSchools" name="test_create_school" time="0.033"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:388: in test_create_school
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestBilling" name="test_get_subscriptions" time="0.036"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:400: in test_get_subscriptions
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestBilling" name="test_get_payments" time="0.034"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:408: in test_get_payments
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAISystem" name="test_get_ai_settings" time="0.034"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:420: in test_get_ai_settings
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAISystem" name="test_update_ai_settings" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:435: in test_update_ai_settings
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestAnalytics" name="test_get_analytics_overview" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:447: in test_get_analytics_overview
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestHelpFAQs" name="test_get_faqs" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:460: in test_get_faqs
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase><testcase classname="tests.test_admin_apis.TestHelpFAQs" name="test_create_faq" time="0.032"><failure message="AssertionError: Failed: Internal Server Error&#10;assert 520 == 200&#10; +  where 520 = &lt;Response [520]&gt;.status_code">tests/test_admin_apis.py:477: in test_create_faq
+    assert response.status_code == 200, f"Failed: {response.text}"
+E   AssertionError: Failed: Internal Server Error
+E   assert 520 == 200
+E    +  where 520 = &lt;Response [520]&gt;.status_code</failure></testcase></testsuite></testsuites>
