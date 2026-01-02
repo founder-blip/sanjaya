@@ -19,11 +19,11 @@ class TestAdminAuth:
         })
         assert response.status_code == 200, f"Login failed: {response.text}"
         data = response.json()
-        assert "token" in data, "Token not in response"
+        assert "access_token" in data, "access_token not in response"
         assert "username" in data, "Username not in response"
         assert data["username"] == "admin"
         print(f"SUCCESS: Admin login - token received")
-        return data["token"]
+        return data["access_token"]
     
     def test_admin_login_invalid_credentials(self):
         """Test admin login with invalid credentials"""
