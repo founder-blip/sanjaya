@@ -60,7 +60,7 @@ const PrincipalDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      <PrincipalNav />
       
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
