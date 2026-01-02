@@ -119,9 +119,14 @@ Build a website for **Sanjaya**, a governed listening ecosystem for children wit
 ## Test Results
 
 ### Latest Test Run (Jan 2, 2026)
-- **Backend Tests**: 33/33 PASSED (100%)
-- **Frontend Tests**: 13/13 sections verified (100%)
-- Test file: `/app/tests/test_admin_apis.py`
+**Admin Module Tests:**
+- Backend Tests: 33/33 PASSED (100%)
+- Frontend Tests: 13/13 sections verified (100%)
+
+**Principal Module Tests:**
+- Backend Tests: 13/13 PASSED (100%)
+- Frontend Tests: All pages verified (100%)
+- Test file: `/app/tests/test_principal_apis.py`
 
 ---
 
