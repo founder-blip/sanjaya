@@ -8,7 +8,7 @@ import {
   User, Baby, Calendar, Star, Filter, RefreshCw, Flag, Eye
 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
-import Navigation from '../components/Navigation';
+import PrincipalNav from '../components/PrincipalNav';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
