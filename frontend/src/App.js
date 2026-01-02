@@ -9,6 +9,7 @@ import ObserverLanding from './pages/ObserverLanding';
 import PrincipalLanding from './pages/PrincipalLanding';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminCommunications from './pages/AdminCommunications';
 import ParentLogin from './pages/ParentLogin';
 import ParentDashboard from './pages/ParentDashboard';
 import ParentMessages from './pages/ParentMessages';
