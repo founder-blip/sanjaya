@@ -86,10 +86,18 @@ function App() {
           {/* Observer Routes */}
           <Route path="/observer/login" element={<ObserverLogin />} />
           <Route path="/observer/dashboard" element={<ObserverDashboard />} />
+          <Route path="/observer/today" element={<ObserverToday />} />
+          <Route path="/observer/session/:sessionId" element={<ObserverActiveSession />} />
+          <Route path="/observer/sessions" element={<ObserverSessionsList />} />
+          <Route path="/observer/sessions/:childId" element={<ObserverSessionLogs />} />
+          <Route path="/observer/report/:childId" element={<ObserverDailyReport />} />
+          <Route path="/observer/reports" element={<ObserverReportsList />} />
+          <Route path="/observer/reflections" element={<ObserverSelfReflection />} />
+          <Route path="/observer/escalation/:childId" element={<ObserverEscalation />} />
+          <Route path="/observer/escalations" element={<ObserverEscalation />} />
           <Route path="/observer/mood-entry/:childId" element={<ObserverMoodEntry />} />
           <Route path="/observer/goal-create/:childId" element={<ObserverGoalCreate />} />
           <Route path="/observer/ai-report/:childId" element={<ObserverAIReport />} />
-          <Route path="/observer/sessions/:childId" element={<ObserverSessionLogs />} />
           <Route path="/observer/events" element={<ObserverEvents />} />
           <Route path="/observer/earnings" element={<ObserverEarnings />} />
           <Route path="/observer/support" element={<ObserverSupport />} />
