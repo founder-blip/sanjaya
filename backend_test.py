@@ -814,6 +814,555 @@ class BackendTester:
             self.log_result("Admin Inquiries View", False, f"Request error: {str(e)}")
             return False
 
+    # ===== ADMIN PANEL COMPREHENSIVE TESTS =====
+    
+    def test_admin_dashboard_stats(self):
+        """Test admin dashboard stats API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Dashboard Stats", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            response = requests.get(f"{API_BASE}/admin/dashboard/stats", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check required top-level sections
+                required_sections = ['students', 'users', 'sessions', 'support', 'inquiries', 'revenue']
+                for section in required_sections:
+                    if section not in data:
+                        self.log_result("Admin Dashboard Stats", False, f"Missing required section '{section}' in response")
+                        return False
+                
+                # Check students section
+                students = data['students']
+                required_student_fields = ['total', 'active', 'inactive']
+                for field in required_student_fields:
+                    if field not in students:
+                        self.log_result("Admin Dashboard Stats", False, f"Missing field '{field}' in students section")
+                        return False
+                
+                # Check users section
+                users = data['users']
+                required_user_fields = ['principals', 'observers', 'parents', 'total']
+                for field in required_user_fields:
+                    if field not in users:
+                        self.log_result("Admin Dashboard Stats", False, f"Missing field '{field}' in users section")
+                        return False
+                
+                # Check sessions section
+                sessions = data['sessions']
+                required_session_fields = ['total', 'today']
+                for field in required_session_fields:
+                    if field not in sessions:
+                        self.log_result("Admin Dashboard Stats", False, f"Missing field '{field}' in sessions section")
+                        return False
+                
+                # Check support section
+                support = data['support']
+                required_support_fields = ['open_tickets', 'pending_tickets']
+                for field in required_support_fields:
+                    if field not in support:
+                        self.log_result("Admin Dashboard Stats", False, f"Missing field '{field}' in support section")
+                        return False
+                
+                self.log_result("Admin Dashboard Stats", True, 
+                    f"Dashboard stats working correctly. Students: {students['total']}, "
+                    f"Users: {users['total']}, Sessions: {sessions['total']}, "
+                    f"Open tickets: {support['open_tickets']}")
+                return True
+                
+            else:
+                self.log_result("Admin Dashboard Stats", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Dashboard Stats", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_student_enrollment(self):
+        """Test admin student enrollment API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Student Enrollment", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Test enrolling a new student
+            enrollment_data = {
+                "name": "Arjun Patel",
+                "date_of_birth": "2015-03-15",
+                "grade": "3rd Grade",
+                "school": "Sunshine Elementary School",
+                "parent_email": "priya.patel@example.com",
+                "parent_name": "Priya Patel",
+                "parent_phone": "+91 9876543210",
+                "notes": "Test enrollment via admin panel"
+            }
+            
+            response = requests.post(
+                f"{API_BASE}/admin/students/enroll",
+                params=enrollment_data,
+                headers=headers,
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['success', 'student', 'parent']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Admin Student Enrollment", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Check success status
+                if not data.get('success'):
+                    self.log_result("Admin Student Enrollment", False, f"Enrollment failed: {data}")
+                    return False
+                
+                # Check student data
+                student = data['student']
+                if 'id' not in student or 'name' not in student:
+                    self.log_result("Admin Student Enrollment", False, "Missing student id or name in response")
+                    return False
+                
+                if student['name'] != enrollment_data['name']:
+                    self.log_result("Admin Student Enrollment", False, f"Student name mismatch: expected {enrollment_data['name']}, got {student['name']}")
+                    return False
+                
+                # Check parent data
+                parent = data['parent']
+                if 'id' not in parent or 'email' not in parent:
+                    self.log_result("Admin Student Enrollment", False, "Missing parent id or email in response")
+                    return False
+                
+                if parent['email'] != enrollment_data['parent_email']:
+                    self.log_result("Admin Student Enrollment", False, f"Parent email mismatch: expected {enrollment_data['parent_email']}, got {parent['email']}")
+                    return False
+                
+                self.log_result("Admin Student Enrollment", True, 
+                    f"Student enrollment successful. Student: {student['name']} (ID: {student['id']}), "
+                    f"Parent: {parent['email']} (ID: {parent['id']})")
+                
+                # Store for later tests
+                self.test_student_id = student['id']
+                self.test_parent_id = parent['id']
+                return True
+                
+            else:
+                self.log_result("Admin Student Enrollment", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Student Enrollment", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_students_list(self):
+        """Test admin students list API with enriched data"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Students List", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            response = requests.get(f"{API_BASE}/admin/students", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                if 'students' not in data or 'total' not in data:
+                    self.log_result("Admin Students List", False, f"Expected 'students' and 'total' fields, got keys: {list(data.keys())}")
+                    return False
+                
+                students = data['students']
+                total = data['total']
+                
+                if not isinstance(students, list):
+                    self.log_result("Admin Students List", False, f"Expected students to be a list, got {type(students)}")
+                    return False
+                
+                if len(students) == 0:
+                    self.log_result("Admin Students List", True, "Students list accessible but no students found (may need to enroll some first)")
+                    return True
+                
+                # Check first student structure and enriched data
+                first_student = students[0]
+                required_fields = ['id', 'name', 'status', 'school', 'created_at']
+                for field in required_fields:
+                    if field not in first_student:
+                        self.log_result("Admin Students List", False, f"Missing required field '{field}' in student data")
+                        return False
+                
+                # Check for enriched data (parents, principal, observer)
+                enriched_data_found = False
+                if 'parents' in first_student and isinstance(first_student['parents'], list):
+                    enriched_data_found = True
+                if 'principal' in first_student and first_student['principal']:
+                    enriched_data_found = True
+                if 'observer' in first_student and first_student['observer']:
+                    enriched_data_found = True
+                
+                if not enriched_data_found:
+                    self.log_result("Admin Students List", False, "No enriched data (parents, principal, observer) found in student records")
+                    return False
+                
+                self.log_result("Admin Students List", True, 
+                    f"Students list working correctly with enriched data. Found {len(students)} students (total: {total})")
+                return True
+                
+            else:
+                self.log_result("Admin Students List", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Students List", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_users_management(self):
+        """Test admin user management APIs (principals, observers, parents)"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Users Management", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            all_passed = True
+            
+            # Test principals endpoint
+            response = requests.get(f"{API_BASE}/admin/users/principals", headers=headers, timeout=15)
+            if response.status_code == 200:
+                data = response.json()
+                if 'principals' in data and 'total' in data:
+                    principals = data['principals']
+                    if isinstance(principals, list):
+                        # Check if student_count is included
+                        if len(principals) > 0 and 'student_count' in principals[0]:
+                            self.log_result("Admin Users - Principals", True, f"Principals list working with student counts. Found {len(principals)} principals")
+                        else:
+                            self.log_result("Admin Users - Principals", True, f"Principals list accessible but no data or missing student_count. Found {len(principals)} principals")
+                    else:
+                        self.log_result("Admin Users - Principals", False, f"Expected principals to be a list, got {type(principals)}")
+                        all_passed = False
+                else:
+                    self.log_result("Admin Users - Principals", False, f"Missing 'principals' or 'total' in response: {list(data.keys())}")
+                    all_passed = False
+            else:
+                self.log_result("Admin Users - Principals", False, f"HTTP {response.status_code}: {response.text}")
+                all_passed = False
+            
+            # Test observers endpoint
+            response = requests.get(f"{API_BASE}/admin/users/observers", headers=headers, timeout=15)
+            if response.status_code == 200:
+                data = response.json()
+                if 'observers' in data and 'total' in data:
+                    observers = data['observers']
+                    if isinstance(observers, list):
+                        # Check if assigned_children count is included
+                        if len(observers) > 0 and 'assigned_children' in observers[0]:
+                            self.log_result("Admin Users - Observers", True, f"Observers list working with assigned children counts. Found {len(observers)} observers")
+                        else:
+                            self.log_result("Admin Users - Observers", True, f"Observers list accessible but no data or missing assigned_children. Found {len(observers)} observers")
+                    else:
+                        self.log_result("Admin Users - Observers", False, f"Expected observers to be a list, got {type(observers)}")
+                        all_passed = False
+                else:
+                    self.log_result("Admin Users - Observers", False, f"Missing 'observers' or 'total' in response: {list(data.keys())}")
+                    all_passed = False
+            else:
+                self.log_result("Admin Users - Observers", False, f"HTTP {response.status_code}: {response.text}")
+                all_passed = False
+            
+            # Test parents endpoint
+            response = requests.get(f"{API_BASE}/admin/users/parents", headers=headers, timeout=15)
+            if response.status_code == 200:
+                data = response.json()
+                if 'parents' in data and 'total' in data:
+                    parents = data['parents']
+                    if isinstance(parents, list):
+                        # Check if children_count is included
+                        if len(parents) > 0 and 'children_count' in parents[0]:
+                            self.log_result("Admin Users - Parents", True, f"Parents list working with children counts. Found {len(parents)} parents")
+                        else:
+                            self.log_result("Admin Users - Parents", True, f"Parents list accessible but no data or missing children_count. Found {len(parents)} parents")
+                    else:
+                        self.log_result("Admin Users - Parents", False, f"Expected parents to be a list, got {type(parents)}")
+                        all_passed = False
+                else:
+                    self.log_result("Admin Users - Parents", False, f"Missing 'parents' or 'total' in response: {list(data.keys())}")
+                    all_passed = False
+            else:
+                self.log_result("Admin Users - Parents", False, f"HTTP {response.status_code}: {response.text}")
+                all_passed = False
+            
+            return all_passed
+            
+        except Exception as e:
+            self.log_result("Admin Users Management", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_support_tickets(self):
+        """Test admin support ticket management APIs"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Support Tickets", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Test getting all support tickets
+            response = requests.get(f"{API_BASE}/admin/support/tickets", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['tickets', 'total', 'status_counts']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Admin Support Tickets", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                tickets = data['tickets']
+                status_counts = data['status_counts']
+                
+                if not isinstance(tickets, list):
+                    self.log_result("Admin Support Tickets", False, f"Expected tickets to be a list, got {type(tickets)}")
+                    return False
+                
+                # Check status_counts structure
+                required_statuses = ['open', 'in_progress', 'resolved', 'closed']
+                for status in required_statuses:
+                    if status not in status_counts:
+                        self.log_result("Admin Support Tickets", False, f"Missing status '{status}' in status_counts")
+                        return False
+                
+                # If we have tickets, test updating one
+                if len(tickets) > 0:
+                    first_ticket = tickets[0]
+                    if 'id' in first_ticket:
+                        ticket_id = first_ticket['id']
+                        
+                        # Test updating ticket status
+                        update_response = requests.put(
+                            f"{API_BASE}/admin/support/tickets/{ticket_id}",
+                            params={"status": "in_progress"},
+                            headers=headers,
+                            timeout=10
+                        )
+                        
+                        if update_response.status_code == 200:
+                            update_data = update_response.json()
+                            if update_data.get('success'):
+                                self.log_result("Admin Support Tickets", True, 
+                                    f"Support tickets management working correctly. Found {len(tickets)} tickets, "
+                                    f"Status counts: {status_counts}, Successfully updated ticket {ticket_id}")
+                                return True
+                            else:
+                                self.log_result("Admin Support Tickets", False, f"Ticket update failed: {update_data}")
+                                return False
+                        else:
+                            self.log_result("Admin Support Tickets", False, f"Ticket update failed: HTTP {update_response.status_code}")
+                            return False
+                    else:
+                        self.log_result("Admin Support Tickets", False, "First ticket missing 'id' field")
+                        return False
+                else:
+                    self.log_result("Admin Support Tickets", True, 
+                        f"Support tickets list accessible but no tickets found. Status counts: {status_counts}")
+                    return True
+                
+            else:
+                self.log_result("Admin Support Tickets", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Support Tickets", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_ai_settings(self):
+        """Test admin AI system settings API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin AI Settings", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            response = requests.get(f"{API_BASE}/admin/ai/settings", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                if 'settings' not in data:
+                    self.log_result("Admin AI Settings", False, f"Expected 'settings' field in response, got keys: {list(data.keys())}")
+                    return False
+                
+                settings = data['settings']
+                
+                # Check for expected AI settings fields
+                expected_fields = [
+                    'behavioral_tags_enabled', 'auto_report_generation', 'report_types',
+                    'trend_analysis_enabled', 'sentiment_analysis_enabled', 
+                    'min_sessions_for_report', 'notification_on_concerns'
+                ]
+                
+                missing_fields = []
+                for field in expected_fields:
+                    if field not in settings:
+                        missing_fields.append(field)
+                
+                if missing_fields:
+                    self.log_result("Admin AI Settings", False, f"Missing AI settings fields: {missing_fields}")
+                    return False
+                
+                # Check data types
+                boolean_fields = ['behavioral_tags_enabled', 'auto_report_generation', 'trend_analysis_enabled', 
+                                'sentiment_analysis_enabled', 'notification_on_concerns']
+                for field in boolean_fields:
+                    if not isinstance(settings.get(field), bool):
+                        self.log_result("Admin AI Settings", False, f"Field '{field}' should be boolean, got {type(settings.get(field))}")
+                        return False
+                
+                if not isinstance(settings.get('min_sessions_for_report'), int):
+                    self.log_result("Admin AI Settings", False, f"Field 'min_sessions_for_report' should be int, got {type(settings.get('min_sessions_for_report'))}")
+                    return False
+                
+                if not isinstance(settings.get('report_types'), list):
+                    self.log_result("Admin AI Settings", False, f"Field 'report_types' should be list, got {type(settings.get('report_types'))}")
+                    return False
+                
+                self.log_result("Admin AI Settings", True, 
+                    f"AI settings API working correctly. Auto reports: {settings['auto_report_generation']}, "
+                    f"Min sessions: {settings['min_sessions_for_report']}, "
+                    f"Report types: {len(settings['report_types'])}")
+                return True
+                
+            else:
+                self.log_result("Admin AI Settings", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin AI Settings", False, f"Request error: {str(e)}")
+            return False
+    
+    def test_admin_analytics_overview(self):
+        """Test admin analytics overview API"""
+        try:
+            # First login to get token
+            login_success, token = self.test_admin_login()
+            if not login_success or not token:
+                self.log_result("Admin Analytics Overview", False, "Failed to login to admin")
+                return False
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            response = requests.get(f"{API_BASE}/admin/analytics/overview?days=30", headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Check response structure
+                required_fields = ['period_days', 'sessions', 'enrollments', 'schools']
+                for field in required_fields:
+                    if field not in data:
+                        self.log_result("Admin Analytics Overview", False, f"Missing required field '{field}' in response")
+                        return False
+                
+                # Check period_days
+                if data['period_days'] != 30:
+                    self.log_result("Admin Analytics Overview", False, f"Expected period_days=30, got {data['period_days']}")
+                    return False
+                
+                # Check sessions structure
+                sessions = data['sessions']
+                if 'by_date' not in sessions or 'total' not in sessions:
+                    self.log_result("Admin Analytics Overview", False, f"Sessions missing 'by_date' or 'total' fields")
+                    return False
+                
+                if not isinstance(sessions['by_date'], dict):
+                    self.log_result("Admin Analytics Overview", False, f"Expected sessions.by_date to be dict, got {type(sessions['by_date'])}")
+                    return False
+                
+                # Check enrollments structure
+                enrollments = data['enrollments']
+                if 'by_date' not in enrollments or 'total' not in enrollments:
+                    self.log_result("Admin Analytics Overview", False, f"Enrollments missing 'by_date' or 'total' fields")
+                    return False
+                
+                if not isinstance(enrollments['by_date'], dict):
+                    self.log_result("Admin Analytics Overview", False, f"Expected enrollments.by_date to be dict, got {type(enrollments['by_date'])}")
+                    return False
+                
+                # Check schools structure
+                schools = data['schools']
+                if not isinstance(schools, list):
+                    self.log_result("Admin Analytics Overview", False, f"Expected schools to be list, got {type(schools)}")
+                    return False
+                
+                # Check school structure if we have schools
+                if len(schools) > 0:
+                    first_school = schools[0]
+                    if 'school' not in first_school or 'students' not in first_school:
+                        self.log_result("Admin Analytics Overview", False, "School data missing 'school' or 'students' fields")
+                        return False
+                
+                self.log_result("Admin Analytics Overview", True, 
+                    f"Analytics overview working correctly. Sessions: {sessions['total']}, "
+                    f"Enrollments: {enrollments['total']}, Schools: {len(schools)}, "
+                    f"Session dates tracked: {len(sessions['by_date'])}")
+                return True
+                
+            else:
+                self.log_result("Admin Analytics Overview", False, f"HTTP {response.status_code}: {response.text}")
+                return False
+                
+        except Exception as e:
+            self.log_result("Admin Analytics Overview", False, f"Request error: {str(e)}")
+            return False
+
     # ===== PARENT PORTAL PHASE 1 TESTS =====
     
     def test_parent_authentication(self):
