@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from admin_routes import router as admin_router
 from admin_management_routes import router as admin_mgmt_router
+from admin_advanced_routes import router as admin_adv_router
 from parent_routes import router as parent_router
 from phase2_routes import router as phase2_router
 from phase3_routes import router as phase3_router
@@ -469,10 +470,15 @@ google_routes.set_database(db)
 import admin_management_routes
 admin_management_routes.set_database(db)
 
+# Set database for admin advanced routes
+import admin_advanced_routes
+admin_advanced_routes.set_database(db)
+
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
 app.include_router(admin_mgmt_router, prefix="/api")
+app.include_router(admin_adv_router, prefix="/api")
 app.include_router(parent_router, prefix="/api")
 app.include_router(phase2_router, prefix="/api")
 app.include_router(phase3_router, prefix="/api")
