@@ -5,7 +5,9 @@ import {
   LayoutDashboard, Users, GraduationCap, UserCog, BarChart3,
   Ticket, Settings, CreditCard, Brain, Mail, FileText,
   LogOut, Menu, X, ChevronRight, Bell, Search,
-  TrendingUp, AlertCircle, CheckCircle, Clock, Plus
+  TrendingUp, AlertCircle, CheckCircle, Clock, Plus,
+  Shield, Activity, Building, Flag, FileWarning, HelpCircle,
+  Database, Lock, Eye, Trash2, RefreshCw
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
@@ -17,15 +19,21 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 // Sidebar Navigation Items
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'schools', label: 'Schools & Programs', icon: Building },
   { id: 'students', label: 'Student Enrollment', icon: GraduationCap },
   { id: 'users', label: 'User Management', icon: Users },
-  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'safety', label: 'Safety & Escalation', icon: Shield },
+  { id: 'incidents', label: 'Incidents', icon: FileWarning },
   { id: 'support', label: 'Support Tickets', icon: Ticket },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'ai-settings', label: 'AI System', icon: Brain },
+  { id: 'ai-guardrails', label: 'AI Guardrails', icon: Lock },
+  { id: 'privacy', label: 'Data Privacy', icon: Database },
+  { id: 'audit', label: 'Audit Logs', icon: Eye },
+  { id: 'system', label: 'System Health', icon: Activity },
   { id: 'billing', label: 'Billing', icon: CreditCard },
+  { id: 'help', label: 'Help & FAQs', icon: HelpCircle },
   { id: 'communications', label: 'Communications', icon: Mail },
-  { id: 'content', label: 'Website Content', icon: FileText },
-  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export default function AdminPanel() {
