@@ -89,15 +89,23 @@ Build a website for **Sanjaya**, a governed listening ecosystem for children wit
 ### Principal Module (100% Complete)
 - [x] Principal Login/Authentication
 - [x] Dashboard with school statistics
-- [x] Students list view
-- [x] Observers list view
-- [x] Analytics dashboard
+- [x] Session Recordings Review (review, rate, approve/flag)
+- [x] Daily Reports Review (reports + AI insights)
+- [x] Observer Performance Dashboard (metrics, consistency, details)
+- [x] Parent Consultations (schedule, manage, requests)
+- [x] Business Summary (revenue, children, team)
+- [x] Observer Payment Monitoring
+- [x] Principal Earnings Tracking
+- [x] Student-Observer Assignment
 - [x] Events & Celebrations
 - [x] Earnings tracking
 - [x] Support Center
-- [x] Student-Observer Assignment (assign/unassign students)
-- [x] Observer Performance Dashboard (metrics, status, details)
-- [x] Parent Consultations (schedule, manage, requests)
+
+### Admin Module - Pay Rate Management (NEW)
+- [x] View/set default pay rates
+- [x] Update individual observer rates
+- [x] Update individual principal rates
+- [x] Payment management (create, update status)
 - [x] Help & FAQs
 
 ### Observer & Principal Portals
