@@ -1024,7 +1024,7 @@ function BillingManagement() {
       </Card>
     </div>
   );
-
+}
 
 // Schools Management Component
 function SchoolsManagement() {
