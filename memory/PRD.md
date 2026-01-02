@@ -33,23 +33,19 @@ Build a website for **Sanjaya**, a governed listening ecosystem for children wit
 - **Billing**: Subscriptions and payment tracking
 - **Help & FAQs**: Manage help documentation
 
-### 2. Principal Platform (Human Oversight) ✅ COMPLETED
-- Dashboard with school overview
+### 2. Principal Platform (SUPERVISOR Role) ✅ COMPLETED
+- Dashboard with school overview and statistics
+- **Supervisor Actions (NEW):**
+  - **Session Recordings Review** - Review observer-child call recordings, rate, approve/flag
+  - **Daily Reports Review** - Check observer daily reports and AI insights
+  - **Observer Performance** - Track observer metrics, consistency scores, detailed views
+  - **Parent Consultations** - Conduct premium parent counseling sessions (1-2x/month)
+  - **Business Tracking** - View revenue, children stats (premium/standard), team overview
+  - **Payment Monitoring** - Track observer payments, view own consultation earnings
+- **Student-Observer Assignment** - Assign/unassign students to observers
 - Events & Celebrations ✅
 - Earnings tracking ✅
 - Support Center ✅
-- **Student-Observer Assignment** ✅ NEW
-  - View all students with assignment status
-  - View available observers with capacity info
-  - Assign/unassign students to observers
-- **Observer Performance Dashboard** ✅ NEW
-  - View observer metrics (students, sessions, consistency, rating)
-  - Performance status (excellent/good/needs attention)
-  - Detailed observer view with assigned students and recent sessions
-- **Parent Consultations** ✅ NEW
-  - Schedule consultations with parents
-  - View/manage consultation requests
-  - Track consultation status (scheduled/completed/cancelled)
 
 ### 3. Observer Platform (Listening Layer)
 - Dashboard with assigned children
