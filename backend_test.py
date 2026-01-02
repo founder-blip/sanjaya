@@ -2472,6 +2472,14 @@ class BackendTester:
             self.test_inquiry_submission,
             self.test_inquiry_validation,
             self.test_admin_inquiries_view,
+            # Admin Panel Comprehensive Tests
+            self.test_admin_dashboard_stats,
+            self.test_admin_student_enrollment,
+            self.test_admin_students_list,
+            self.test_admin_users_management,
+            self.test_admin_support_tickets,
+            self.test_admin_ai_settings,
+            self.test_admin_analytics_overview,
             # Parent Portal Phase 1 Tests
             self.test_parent_authentication,
             self.test_parent_dashboard_api,
