@@ -152,25 +152,21 @@ Build a website for **Sanjaya**, a governed listening ecosystem for children wit
 
 ## Upcoming Tasks (Priority Order)
 
-### P1: Principal Platform Enhancements
-- Assign students to observers
-- Observer performance dashboard
-- Parent consultation process
-
-### P2: Observer Platform Enhancements
+### P1: Observer Platform Enhancements
 - Pre-session readiness check
 - Self-reflection log
 - Formal escalation process
 
-### P3: Parent Platform Enhancements
+### P2: Parent Platform Enhancements
 - Guidance resources
 - Progress tracking improvements
+- Consultation request from parent side
 
-### P4: Public Website Additions
+### P3: Public Website Additions
 - "What Sanjaya IS / IS NOT" disclosure pages
 - Enhanced consent and ethics pages
 
-### P5: Program Lifecycle
+### P4: Program Lifecycle
 - Renewal, pause, completion flows
 - Exit surveys
 
