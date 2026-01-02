@@ -13,6 +13,7 @@ import uuid
 from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from admin_routes import router as admin_router
+from admin_management_routes import router as admin_mgmt_router
 from parent_routes import router as parent_router
 from phase2_routes import router as phase2_router
 from phase3_routes import router as phase3_router
