@@ -103,15 +103,15 @@ const PrincipalStudentAssignment = () => {
     <div className="min-h-screen bg-gray-50">
       <PrincipalNav />
       
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-6">
-          <Button variant="outline" onClick={() => navigate('/principal/dashboard')}>
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back
-          </Button>
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Student-Observer Assignment</h1>
             <p className="text-gray-600">Assign students to observers for daily sessions</p>
           </div>
+          <Button variant="outline" onClick={fetchData}>
+            <RefreshCw className="w-4 h-4 mr-2" /> Refresh
+          </Button>
         </div>
 
         {/* Summary Cards */}
