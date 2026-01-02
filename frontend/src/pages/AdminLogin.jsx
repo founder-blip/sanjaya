@@ -30,7 +30,7 @@ const AdminLogin = () => {
 
       localStorage.setItem('admin_token', response.data.access_token);
       localStorage.setItem('admin_username', response.data.username);
-      navigate('/admin/dashboard');
+      navigate('/admin/panel');
     } catch (err) {
       setError(err.response?.data?.detail || 'Login failed. Please try again.');
     } finally {
