@@ -472,7 +472,7 @@ admin_management_routes.set_database(db)
 # Include the router in the main app
 app.include_router(api_router)
 app.include_router(admin_router)
-app.include_router(admin_mgmt_router)
+app.include_router(admin_mgmt_router, prefix="/api")
 app.include_router(parent_router, prefix="/api")
 app.include_router(phase2_router, prefix="/api")
 app.include_router(phase3_router, prefix="/api")
