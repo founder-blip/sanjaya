@@ -892,3 +892,259 @@ async def get_activity_log(
         return {"activities": activities[:limit]}
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to load activity log")
+
+
+# ==================== PAY RATE MANAGEMENT ====================
+
+@router.get("/admin/pay-rates")
+async def get_pay_rates(current_user: dict = Depends(verify_admin_token)):
+    """Get all pay rates for observers and principals"""
+    try:
+        # Get default rates from settings
+        settings = await db.system_settings.find_one({"type": "pay_rates"}, {"_id": 0})
+        default_rates = settings or {
+            "observer_session_rate": 100,
+            "principal_consultation_rate": 500,
+            "premium_multiplier": 1.5
+        }
+        
+        # Get all observers with their rates
+        observers = await db.observers.find(
+            {},
+            {"_id": 0, "hashed_password": 0}
+        ).to_list(1000)
+        
+        observer_rates = []
+        for obs in observers:
+            observer_rates.append({
+                "id": obs.get('id'),
+                "name": obs.get('name'),
+                "email": obs.get('email'),
+                "session_rate": obs.get('session_rate', default_rates['observer_session_rate']),
+                "is_custom_rate": 'session_rate' in obs
+            })
+        
+        # Get all principals with their rates
+        principals = await db.principals.find(
+            {},
+            {"_id": 0, "hashed_password": 0}
+        ).to_list(500)
+        
+        principal_rates = []
+        for prin in principals:
+            principal_rates.append({
+                "id": prin.get('id'),
+                "name": prin.get('name'),
+                "email": prin.get('email'),
+                "school": prin.get('school'),
+                "consultation_rate": prin.get('consultation_rate', default_rates['principal_consultation_rate']),
+                "is_custom_rate": 'consultation_rate' in prin
+            })
+        
+        return {
+            "default_rates": default_rates,
+            "observer_rates": observer_rates,
+            "principal_rates": principal_rates
+        }
+    except Exception as e:
+        logger.error(f"Get pay rates error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to load pay rates")
+
+@router.put("/admin/pay-rates/defaults")
+async def update_default_pay_rates(
+    observer_session_rate: int = None,
+    principal_consultation_rate: int = None,
+    premium_multiplier: float = None,
+    current_user: dict = Depends(verify_admin_token)
+):
+    """Update default pay rates"""
+    try:
+        update_data = {"type": "pay_rates", "updated_at": datetime.now(timezone.utc).isoformat()}
+        
+        if observer_session_rate is not None:
+            update_data["observer_session_rate"] = observer_session_rate
+        if principal_consultation_rate is not None:
+            update_data["principal_consultation_rate"] = principal_consultation_rate
+        if premium_multiplier is not None:
+            update_data["premium_multiplier"] = premium_multiplier
+        
+        await db.system_settings.update_one(
+            {"type": "pay_rates"},
+            {"$set": update_data},
+            upsert=True
+        )
+        
+        return {"success": True, "message": "Default pay rates updated"}
+    except Exception as e:
+        logger.error(f"Update pay rates error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update pay rates")
+
+@router.put("/admin/pay-rates/observer/{observer_id}")
+async def update_observer_pay_rate(
+    observer_id: str,
+    session_rate: int,
+    current_user: dict = Depends(verify_admin_token)
+):
+    """Update individual observer's pay rate"""
+    try:
+        observer = await db.observers.find_one({"id": observer_id})
+        if not observer:
+            raise HTTPException(status_code=404, detail="Observer not found")
+        
+        await db.observers.update_one(
+            {"id": observer_id},
+            {"$set": {
+                "session_rate": session_rate,
+                "rate_updated_at": datetime.now(timezone.utc).isoformat(),
+                "rate_updated_by": current_user.get('sub', 'admin')
+            }}
+        )
+        
+        return {"success": True, "message": f"Observer rate updated to {session_rate}"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Update observer rate error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update observer rate")
+
+@router.put("/admin/pay-rates/principal/{principal_id}")
+async def update_principal_pay_rate(
+    principal_id: str,
+    consultation_rate: int,
+    current_user: dict = Depends(verify_admin_token)
+):
+    """Update individual principal's pay rate"""
+    try:
+        principal = await db.principals.find_one({"id": principal_id})
+        if not principal:
+            raise HTTPException(status_code=404, detail="Principal not found")
+        
+        await db.principals.update_one(
+            {"id": principal_id},
+            {"$set": {
+                "consultation_rate": consultation_rate,
+                "rate_updated_at": datetime.now(timezone.utc).isoformat(),
+                "rate_updated_by": current_user.get('sub', 'admin')
+            }}
+        )
+        
+        return {"success": True, "message": f"Principal rate updated to {consultation_rate}"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Update principal rate error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update principal rate")
+
+# ==================== PAYMENT MANAGEMENT ====================
+
+@router.get("/admin/payments")
+async def get_all_payments(
+    month: str = None,
+    recipient_type: str = None,
+    status: str = None,
+    current_user: dict = Depends(verify_admin_token)
+):
+    """Get all payments with filtering"""
+    try:
+        query = {}
+        if month:
+            query["month"] = month
+        if recipient_type:
+            query["recipient_type"] = recipient_type
+        if status:
+            query["status"] = status
+        
+        payments = await db.payments.find(query, {"_id": 0}).sort("created_at", -1).to_list(1000)
+        
+        # Enrich with recipient info
+        for payment in payments:
+            if payment.get('recipient_type') == 'observer':
+                recipient = await db.observers.find_one({"id": payment.get('recipient_id')}, {"_id": 0, "hashed_password": 0})
+            elif payment.get('recipient_type') == 'principal':
+                recipient = await db.principals.find_one({"id": payment.get('recipient_id')}, {"_id": 0, "hashed_password": 0})
+            else:
+                recipient = None
+            payment['recipient'] = {"name": recipient.get('name'), "email": recipient.get('email')} if recipient else None
+        
+        # Summary
+        summary = {
+            "total_payments": len(payments),
+            "total_amount": sum([p.get('amount', 0) for p in payments]),
+            "completed": sum([p.get('amount', 0) for p in payments if p.get('status') == 'completed']),
+            "pending": sum([p.get('amount', 0) for p in payments if p.get('status') == 'pending'])
+        }
+        
+        return {"payments": payments, "summary": summary}
+    except Exception as e:
+        logger.error(f"Get payments error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to load payments")
+
+@router.post("/admin/payments")
+async def create_payment(
+    recipient_id: str,
+    recipient_type: str,
+    amount: int,
+    month: str,
+    payment_method: str = "bank_transfer",
+    notes: str = "",
+    current_user: dict = Depends(verify_admin_token)
+):
+    """Create a new payment record"""
+    try:
+        payment_id = f"pay_{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}_{recipient_id[:6]}"
+        
+        payment = {
+            "id": payment_id,
+            "recipient_id": recipient_id,
+            "recipient_type": recipient_type,  # 'observer' or 'principal'
+            "amount": amount,
+            "month": month,
+            "payment_method": payment_method,
+            "status": "pending",
+            "notes": notes,
+            "created_by": current_user.get('sub', 'admin'),
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        await db.payments.insert_one(payment)
+        
+        return {"success": True, "payment_id": payment_id}
+    except Exception as e:
+        logger.error(f"Create payment error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to create payment")
+
+@router.put("/admin/payments/{payment_id}")
+async def update_payment_status(
+    payment_id: str,
+    status: str,
+    transaction_id: str = "",
+    notes: str = "",
+    current_user: dict = Depends(verify_admin_token)
+):
+    """Update payment status"""
+    try:
+        payment = await db.payments.find_one({"id": payment_id})
+        if not payment:
+            raise HTTPException(status_code=404, detail="Payment not found")
+        
+        update_data = {
+            "status": status,
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "updated_by": current_user.get('sub', 'admin')
+        }
+        
+        if status == "completed":
+            update_data["completed_at"] = datetime.now(timezone.utc).isoformat()
+        if transaction_id:
+            update_data["transaction_id"] = transaction_id
+        if notes:
+            update_data["notes"] = notes
+        
+        await db.payments.update_one({"id": payment_id}, {"$set": update_data})
+        
+        return {"success": True, "message": f"Payment status updated to {status}"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Update payment error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update payment")
