@@ -64,20 +64,14 @@ const PrincipalDashboard = () => {
       
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Welcome, {principal.name}</h1>
-              <p className="text-blue-100 mt-1">{school}</p>
-            </div>
-            <Button onClick={handleLogout} variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div>
+            <h1 className="text-2xl font-bold">Welcome, {principal.name}</h1>
+            <p className="text-blue-100">{school}</p>
           </div>
 
           {/* Statistics */}
-          <div className="grid grid-cols-4 gap-4 mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
             <Card className="bg-white/10 border-white/20 backdrop-blur">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
