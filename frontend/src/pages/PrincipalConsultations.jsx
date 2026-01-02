@@ -204,7 +204,7 @@ const PrincipalConsultations = () => {
             <h1 className="text-2xl font-bold text-gray-900">Parent Consultations</h1>
             <p className="text-gray-600">Schedule and manage parent meetings</p>
           </div>
-          <Button onClick={() => setShowForm(true)} className="bg-blue-500 hover:bg-blue-600">
+          <Button onClick={() => setShowForm(true)} className="bg-blue-500 hover:bg-blue-600" data-testid="schedule-consultation-btn">
             <Plus className="w-4 h-4 mr-2" /> Schedule Consultation
           </Button>
         </div>
