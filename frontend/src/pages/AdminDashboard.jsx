@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Textarea } from '../components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { LogOut, Save, RefreshCw } from 'lucide-react';
+import { LogOut, Save, RefreshCw, Mail } from 'lucide-react';
 import axios from 'axios';
 import { toast } from '../hooks/use-toast';
 import InquiriesManager from '../components/InquiriesManager';
@@ -194,6 +194,10 @@ const AdminDashboard = () => {
             <p className="text-sm text-gray-600">Welcome, {localStorage.getItem('admin_username')}</p>
           </div>
           <div className="flex gap-3">
+            <Button onClick={() => navigate('/admin/communications')} variant="outline" className="gap-2 border-orange-300 text-orange-600 hover:bg-orange-50">
+              <Mail className="w-4 h-4" />
+              Communications
+            </Button>
             <Button onClick={loadContent} variant="outline" className="gap-2">
               <RefreshCw className="w-4 h-4" />
               Reload
