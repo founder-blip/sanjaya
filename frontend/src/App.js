@@ -92,6 +92,9 @@ function App() {
           <Route path="/principal/events" element={<PrincipalEvents />} />
           <Route path="/principal/earnings" element={<PrincipalEarnings />} />
           <Route path="/principal/support" element={<PrincipalSupport />} />
+          <Route path="/principal/student-assignment" element={<PrincipalStudentAssignment />} />
+          <Route path="/principal/observer-performance" element={<PrincipalObserverPerformance />} />
+          <Route path="/principal/consultations" element={<PrincipalConsultations />} />
           
           {/* Footer Pages */}
           <Route path="/contact" element={<Contact />} />
