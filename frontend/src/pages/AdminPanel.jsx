@@ -84,23 +84,36 @@ export default function AdminPanel() {
     switch (activeSection) {
       case 'dashboard':
         return <DashboardOverview stats={stats} onNavigate={setActiveSection} />;
+      case 'schools':
+        return <SchoolsManagement />;
       case 'students':
         return <StudentEnrollment />;
       case 'users':
         return <UserManagement />;
-      case 'analytics':
-        return <AnalyticsDashboard />;
+      case 'safety':
+        return <SafetyEscalation />;
+      case 'incidents':
+        return <IncidentManagement />;
       case 'support':
         return <SupportManagement />;
+      case 'analytics':
+        return <AnalyticsDashboard />;
       case 'ai-settings':
         return <AISystemSettings />;
+      case 'ai-guardrails':
+        return <AIGuardrails />;
+      case 'privacy':
+        return <DataPrivacy />;
+      case 'audit':
+        return <AuditLogs />;
+      case 'system':
+        return <SystemHealth />;
       case 'billing':
         return <BillingManagement />;
+      case 'help':
+        return <HelpFAQs />;
       case 'communications':
         navigate('/admin/communications');
-        return null;
-      case 'content':
-        navigate('/admin/dashboard');
         return null;
       default:
         return <DashboardOverview stats={stats} onNavigate={setActiveSection} />;
