@@ -60,31 +60,25 @@ const ObserverDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      <ObserverNav />
       
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Welcome, {observer.name}</h1>
-              <p className="text-purple-100 mt-1">{observer.title}</p>
-            </div>
-            <Button onClick={handleLogout} variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div>
+            <h1 className="text-2xl font-bold">Welcome, {observer.name}</h1>
+            <p className="text-purple-100">{observer.title}</p>
           </div>
 
           {/* Statistics */}
-          <div className="grid grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
             <Card className="bg-white/10 border-white/20 backdrop-blur">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <User className="w-8 h-8 text-white" />
                   <div>
                     <p className="text-2xl font-bold">{statistics.total_children}</p>
-                    <p className="text-sm text-purple-100">Assigned Children</p>
+                    <p className="text-sm text-purple-100">Children</p>
                   </div>
                 </div>
               </CardContent>
@@ -96,7 +90,7 @@ const ObserverDashboard = () => {
                   <TrendingUp className="w-8 h-8 text-white" />
                   <div>
                     <p className="text-2xl font-bold">{statistics.active_children}</p>
-                    <p className="text-sm text-purple-100">Active Children</p>
+                    <p className="text-sm text-purple-100">Active</p>
                   </div>
                 </div>
               </CardContent>
